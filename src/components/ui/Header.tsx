@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import BellIcon from "./Icons/Header_bell_icon";
+import BellIcon from "../Icons/Header_bell_icon";
 
 const Header: React.FC = () => {
   return (
