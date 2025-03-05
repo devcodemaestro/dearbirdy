@@ -1,9 +1,9 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import HomeMainAdult from "@/components/home/HomeMainAdult";
 import HomeMainYouth from "@/components/home/HomeMainYouth";
 import Limit from "@/components/home/Limit";
 import Report from "@/components/home/Report";
+import Footer from "@/components/ui/Footer";
+import Header from "@/components/ui/Header";
 
 import React from "react";
 
