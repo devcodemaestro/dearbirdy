@@ -2,24 +2,20 @@ import React from "react";
 import HomeLetterIcon from "@/components/Icons/Home_letter_icon";
 import Image from "next/image";
 import Banner from "./Banner";
+import SendMessage from "./SendMessage";
+import SendMessageLimit from "./SendMessageLimit";
 
-const HomeMainAdult: React.FC = () => {
+const HomeMainSenior: React.FC = () => {
   //임시
   const stat = "empty";
+  const serviceLimit = true;
 
   return (
-    <main className="flex-grow mt-[8px]">
+    <main className="flex-grow mt-[8px]  px-4">
       <div className="">
         <Banner />
         <div className="flex flex-col items-center mt-4 self-stretch p-[24px_16px] rounded-[24px] border border-[#F0F1EC] bg-[#FFF]">
-          <div className="flex justify-end w-full">
-            <div className="flex justify-start items-center gap-[2px] p-[4px_8px_4px_6px] w-[82px] h-[32px] rounded-[8px] bg-[#D6E173]">
-              <HomeLetterIcon fill="#292D32" />
-              <span className="text-[#292D32] text-center font-bold text-[12px] leading-[16px] tracking-[-0.048px]">
-                🚩data
-              </span>
-            </div>
-          </div>
+          {serviceLimit ? <SendMessageLimit /> : <SendMessage />}
           <Image
             src="/images/birds/crowtit_280.svg"
             alt="홈 나의 새 프로필사진"
@@ -54,4 +50,4 @@ const HomeMainAdult: React.FC = () => {
   );
 };
 
-export default HomeMainAdult;
+export default HomeMainSenior;

@@ -9,12 +9,11 @@ const Banner: React.FC = () => {
         <span className="text-[#CAB29A] text-[12px] leading-[16px] font-normal">
           편지 보내기 전 읽어봐요
         </span>
-        <span className="text-[#292D32] font-bold text-[16px] leading-[24px]">
+        <p className="text-[#292D32] font-bold text-[16px] leading-[24px]">
           답답한 마음을 어떻게
-        </span>
-        <span className="text-[#292D32] font-bold text-[16px] leading-[24px]">
+          <br />
           풀어내야할지 막막할 때는
-        </span>
+        </p>
       </div>
       <Image
         src="/images/birds/home_birds.svg"
