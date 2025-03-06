@@ -1,9 +1,12 @@
+"use client";
 import SeniorNotificationPage from "@/components/notification/SeniorNotificationPage";
 import YouthNotificationPage from "@/components/notification/YouthNotificationPage";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const NotificationBox: React.FC = () => {
+  const router = useRouter();
   const data = true;
   const type = "youth";
 
@@ -16,6 +19,7 @@ const NotificationBox: React.FC = () => {
           width={24}
           height={24}
           className="absolute left-0"
+          onClick={() => router.push("/home")}
         />
         <span className="text-[#292D32] text-[16px] font-bold leading-[24px] tracking-[-0.064px]">
           알림함

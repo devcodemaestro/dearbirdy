@@ -1,3 +1,6 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import React from "react";
 
 interface SvgIconProps {
@@ -5,8 +8,14 @@ interface SvgIconProps {
 }
 
 const BellIcon: React.FC<SvgIconProps> = ({ check }) => {
+  const router = useRouter();
+
   return (
-    <>
+    <div
+      onClick={() => {
+        router.push("/notification-box");
+      }}
+    >
       {check ? (
         <svg
           width="24"
@@ -41,7 +50,7 @@ const BellIcon: React.FC<SvgIconProps> = ({ check }) => {
           />
         </svg>
       )}
-    </>
+    </div>
   );
 };
 
