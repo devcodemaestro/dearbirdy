@@ -8,7 +8,7 @@ const BuddyTest = ({ setFormData, formData }) => {
     "문제를 해결할 때 논리적으로 접근하는 편인가요?",
   ];
 
-  const handleAnswer = (score) => {
+  const handleAnswer = () => {
     if (progress < questions.length - 1) {
       setProgress((prev) => prev + 1);
     } else {

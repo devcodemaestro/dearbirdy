@@ -1,22 +1,35 @@
 "use client";
 
-import Link from "next/link";
-import { useAuthStore } from "@/store/authStore";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export default function Main() {
-  const { user } = useAuthStore();
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <div className="p-4 bg-gray-800 text-white">
-        <h1 className="text-xl font-bold">Dear Birdy</h1>
-        <nav>
-          {user ? (
-            <span>{user.name}님 환영합니다!</span>
-          ) : (
-            <Link href="/login">카카오톡 회원가입</Link>
-          )}
-        </nav>
+export default function RootPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const onboardingComplete = localStorage.getItem("onboardingComplete");
+
+    if (!onboardingComplete) {
+      console.log("✅ 온보딩이 필요함 → /onboarding 이동");
+      router.push("/onboarding");
+    } else {
+      console.log("✅ 온보딩 완료된 사용자 → /main 이동");
+      router.push("/main");
+    }
+
+    // ✅ 로딩 상태를 false로 설정하여 UI 업데이트
+    setLoading(false);
+  }, [router]);
+
+  // ✅ 로딩 화면 추가하여 화면 깜빡임 방지
+  if (loading) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <p className="text-lg text-gray-500">로딩 중...</p>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return null;
 }

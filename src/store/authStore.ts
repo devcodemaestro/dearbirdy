@@ -13,5 +13,8 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   setAuth: (accessToken, refreshToken) => set({ accessToken, refreshToken }),
 
-  logout: () => set({ accessToken: null, refreshToken: null }),
+  logout: () => {
+    localStorage.removeItem("onboardingComplete");
+    set({ accessToken: null, refreshToken: null });
+  },
 }));
