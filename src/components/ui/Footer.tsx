@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import HomeIcon from "../Icons/Footer_home_icon";
 import LetterIcon from "../Icons/Footer_letter_icon";
@@ -8,25 +8,21 @@ import MyBirdyIcon from "../Icons/Footer_mybirdy_icon";
 
 const Footer: React.FC = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const menuItems = [
-    { id: 1, Icon: HomeIcon, label: "홈" },
-    { id: 2, Icon: LetterIcon, label: "편지 보관함" },
-    { id: 3, Icon: MyBirdyIcon, label: "마이버디" },
+    { id: 1, Icon: HomeIcon, label: "홈", path: "/home" },
+    { id: 2, Icon: LetterIcon, label: "편지 보관함", path: "/letter-storage" },
+    { id: 3, Icon: MyBirdyIcon, label: "마이버디", path: "/new-page" },
   ];
 
-  const [selectedIcon, setSelectedIcon] = useState<number>(1);
-  const [check, setCheck] = useState<boolean>(true);
+  const initialIcon = menuItems.find((item) => item.path === pathname)?.id || 1;
+  const [selectedIcon, setSelectedIcon] = useState<number>(initialIcon);
 
   const iconClicked = (id: number) => {
     setSelectedIcon(id);
-
-    if (id === 1) {
-      router.push("/home");
-    } else if (id === 2) {
-      router.push("/letter-storage");
-      setCheck(false);
-    } else if (id === 3) {
-      router.push("/new-page");
+    const selectedItem = menuItems.find((item) => item.id === id);
+    if (selectedItem) {
+      router.push(selectedItem.path);
     }
   };
 
@@ -38,10 +34,7 @@ const Footer: React.FC = () => {
           className="flex flex-col items-center justify-center gap-1 cursor-pointer"
           onClick={() => iconClicked(id)}
         >
-          <Icon
-            fill={selectedIcon === id ? "#292D32" : "#AEAEB2"}
-            check={check}
-          />
+          <Icon fill={selectedIcon === id ? "#292D32" : "#AEAEB2"} />
           <span
             className={`text-center font-pretendard text-xs font-medium leading-4 tracking-tight ${
               selectedIcon === id ? "text-[#292D32]" : "text-[#AEAEB2]"
