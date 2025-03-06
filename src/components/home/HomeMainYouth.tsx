@@ -1,40 +1,18 @@
 import React from "react";
 import HomeLetterIcon from "@/components/Icons/Home_letter_icon";
 import Image from "next/image";
+import SendMessage from "./SendMessage";
+import SendMessageLimit from "./SendMessageLimit";
+import Banner from "./Banner";
 
 const HomeMainYouth: React.FC = () => {
+  const serviceLimit = true;
   return (
-    <main className="flex-grow mt-[8px]">
+    <main className="flex-grow mt-[8px] px-4">
       <div className="">
-        <div className="relative flex px-4 justify-between items-center content-center rounded-[12px] opacity-[0.99] bg-white overflow-hidden">
-          <div className="absolute left-[16px] bottom-[-26px] w-[261px] h-[34px] rounded-full bg-[#FFD85BB2] bg-opacity-70 blur-[37px]"></div>
-          <div className="flex flex-col">
-            <span className="text-[#CAB29A] text-[12px] leading-[16px] font-normal">
-              편지 보내기 전 읽어봐요
-            </span>
-            <span className="text-[#292D32] font-bold text-[16px] leading-[24px]">
-              답답한 마음을 어떻게
-            </span>
-            <span className="text-[#292D32] font-bold text-[16px] leading-[24px]">
-              풀어내야할지 막막할 때는
-            </span>
-          </div>
-          <Image
-            src="/images/birds/home_birds.svg"
-            alt="홈 새두마리"
-            width={126}
-            height={92}
-          />
-        </div>
+        <Banner />
         <div className="flex flex-col items-center mt-4 self-stretch p-[24px_16px] rounded-[24px] border border-[#F0F1EC] bg-[#FFF]">
-          <div className="flex justify-end w-full">
-            <div className="flex justify-start items-center gap-[2px] p-[4px_8px_4px_6px] w-[82px] h-[32px] rounded-[8px] bg-[#D6E173]">
-              <HomeLetterIcon fill="#292D32" />
-              <span className="text-[#292D32] text-center font-bold text-[12px] leading-[16px] tracking-[-0.048px]">
-                🚩data
-              </span>
-            </div>
-          </div>
+          {serviceLimit ? <SendMessageLimit /> : <SendMessage />}
           <Image
             src="/images/birds/hummingbird_280.svg"
             alt="홈 나의 새 프로필사진"
