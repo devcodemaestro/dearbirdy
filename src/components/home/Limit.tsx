@@ -6,7 +6,7 @@ const Limit: React.FC = () => {
     // 오버레이
     <div className="absolute w-full h-screen bg-[#333]/80 z-50">
       <div className="absolute bottom-0 w-full h-[360px] bg-[#F9F8F3] p-[24px_16px_44px_16px] rounded-t-[30px]">
-        <div className="w-full flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center w-full">
           <div className="flex justify-end w-full">
             <Image
               src="/images/icons/close_icon.svg"
@@ -19,7 +19,7 @@ const Limit: React.FC = () => {
           <Image
             src="/images/icons/home_report_icon.svg"
             alt="신고 아이콘"
-            width={60}
+            width={61}
             height={60}
             className="mt-4"
           />
