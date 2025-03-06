@@ -6,15 +6,43 @@
 }
 
 :root {
-  --background: #ffffff;
+  --background: #f9f8f3;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #f9f8f3;
     --foreground: #ededed;
   }
+}
+/* 기존 스타일 */
+.swiper-pagination-bullet {
+  background-color: #e5e5ea !important;
+  width: 8px;
+  height: 8px;
+}
+
+/* 활성화된 bullet 색상 */
+.swiper-pagination-bullet-active {
+  background-color: #ff6365 !important;
+}
+
+/* 페이지네이션 위치 커스텀 */
+.swiper-pagination {
+  position: absolute;
+  top: 8.5rem !important;
+  bottom: auto !important;
+  left: 0 !important;
+  width: auto !important;
+  transform: translateY(-100px);
+  z-index: 10;
+  text-align: left !important;
+  padding-left: 24px;
+}
+
+.pagination-placeholder {
+  height: 20px;
 }
 
 body {
