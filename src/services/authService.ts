@@ -10,10 +10,8 @@ export const getAccessToken = async (code: string) => {
     console.log("✅ 백엔드 응답 헤더 확인:", response.headers);
 
     // ✅ Axios가 헤더 키를 소문자로 변환할 수 있으므로 소문자 변환을 고려하여 접근
-    const accessToken =
-      response.headers["access"] || response.headers["access".toLowerCase()];
-    const refreshToken =
-      response.headers["refresh"] || response.headers["refresh".toLowerCase()];
+    const accessToken = response.headers["access"];
+    const refreshToken = response.headers["refresh"];
 
     if (!accessToken) {
       throw new Error("❌ access_token이 응답에 없음");
@@ -28,7 +26,7 @@ export const getAccessToken = async (code: string) => {
     console.log(`✅ ${isNewUser ? "신규 가입" : "기존 회원"} 확인됨`);
 
     // ✅ Zustand에 저장
-    useAuthStore.getState().setAuth(accessToken, refreshToken || "", isNewUser);
+    useAuthStore.getState().setAuth(accessToken, refreshToken);
 
     return { access_token: accessToken, isNewUser };
   } catch (error) {
@@ -63,7 +61,7 @@ export const postAdditionalInfo = async (userData: {
 
     const response = await api.post("/user/additional-info", userData, {
       headers: {
-        Authorization: accessToken,
+        access: accessToken,
       },
     });
 

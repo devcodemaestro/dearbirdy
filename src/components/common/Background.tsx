@@ -14,7 +14,7 @@ const Background: React.FC<BackgroundProps> = ({
 }) => {
   return (
     <div className={className}>
-      <Image src={src} alt={alt} fill priority style={{ objectFit: "cover" }} />
+      <Image src={src} alt={alt} sizes="max-width: 352px" fill priority />
     </div>
   );
 };

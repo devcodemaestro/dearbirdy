@@ -8,7 +8,7 @@ export const getUserInfo = async () => {
 
     const response = await axios.get(`${API_BASE_URL}/user/info`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        access: `Bearer ${token}`,
       },
       withCredentials: true,
     });
