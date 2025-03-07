@@ -16,7 +16,7 @@ const KakaoCallback = () => {
 
     if (!code) {
       console.error("❌ 카카오 로그인 실패: code 값 없음");
-      router.push("/login");
+      router.push("/main");
       return;
     }
 
@@ -29,7 +29,7 @@ const KakaoCallback = () => {
         router.push("/signup");
       } catch (error) {
         console.error("❌ 카카오 로그인 요청 실패:", error);
-        router.push("/login");
+        router.push("/main");
       }
     };
 
