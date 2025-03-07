@@ -8,7 +8,9 @@ interface KakaoLoginProps {
 
 const KakaoLogin: React.FC<KakaoLoginProps> = ({ className }) => {
   const handleLogin = () => {
-    window.location.href = getKakaoLoginUrl();
+    const url = getKakaoLoginUrl();
+    console.log("카카오 로그인 URL:", url);
+    window.location.href = url;
   };
   return (
     <svg

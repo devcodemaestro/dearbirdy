@@ -6,13 +6,14 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 api.interceptors.request.use(
   (config) => {
     const accessToken = useAuthStore.getState().accessToken;
     if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers.access = accessToken;
     }
     return config;
   },
@@ -53,12 +54,12 @@ api.interceptors.response.use(
 
         useAuthStore.getState().setAuth(newAccessToken, newRefreshToken);
 
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        originalRequest.headers.access = newAccessToken;
         return api(originalRequest);
       } catch (refreshError) {
         console.error("❌ Refresh Token 갱신 실패:", refreshError);
         useAuthStore.getState().logout();
-        window.location.href = "/login"; // 로그인 페이지로 이동
+        window.location.href = "/"; // 로그인 페이지로 이동
       }
     }
     return Promise.reject(error);
