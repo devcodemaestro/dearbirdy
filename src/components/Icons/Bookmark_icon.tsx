@@ -1,13 +1,27 @@
+import { LetterSave } from "@/services/letterStorage";
+import { useBookMarkStore } from "@/store/bookMarkStore";
 import React from "react";
 
 interface SvgIconProps {
   fill?: string;
   stroke?: string;
+  letterStatusSeq: number;
+  setBookMark?: React.Dispatch<React.SetStateAction<number>>;
 }
 //#C7C7CC
-const BookMarkIcon: React.FC<SvgIconProps> = ({ fill, stroke }) => {
+const BookMarkIcon: React.FC<SvgIconProps> = ({
+  letterStatusSeq,
+  fill,
+  stroke,
+}) => {
+  const { setBookMark } = useBookMarkStore();
+  const BookMarkClicked = async () => {
+    await LetterSave(letterStatusSeq);
+    setBookMark(letterStatusSeq);
+  };
   return (
     <svg
+      onClick={BookMarkClicked}
       xmlns="http://www.w3.org/2000/svg"
       width="25"
       height="24"
