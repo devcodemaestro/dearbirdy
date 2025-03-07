@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import SeniorLetterStorage from "@/components/letter-storage/SeniorLetterStorage";
 import YouthLetterStorage from "@/components/letter-storage/YouthLetterStorage";
-import { IUserData } from "@/app/(footershare)/home/page";
+import { IUserData } from "../home/page";
 
 export interface IDataListItem {
   letterStatusSeq: number;

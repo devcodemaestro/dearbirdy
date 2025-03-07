@@ -15,7 +15,7 @@ interface ILetter {
   letterTitle: string;
   categoryName: string;
   letter: string;
-  creatAt: string; // 날짜 형식이므로 string으로 처리
+  creatAt: string;
   sendUserBird: string;
   sendUser: string;
 }
