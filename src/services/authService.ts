@@ -8,6 +8,9 @@ export const getAccessToken = async (code: string) => {
     const response = await api.get(`/auth/kakao?code=${code}`);
 
     console.log("✅ 백엔드 응답 헤더 확인:", response.headers);
+    // console.log("response : ", response.data);
+    // 로그인시 user정보 담기
+    sessionStorage.setItem("userData", JSON.stringify(response.data.data));
 
     // ✅ Axios가 헤더 키를 소문자로 변환할 수 있으므로 소문자 변환을 고려하여 접근
     const accessToken =
