@@ -1,120 +1,74 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import HomeLetterIcon from "../Icons/Home_letter_icon";
 import BookMarkIcon from "../Icons/Bookmark_icon";
-
-interface IData {
-  letterStatusSeq: number;
-  birdName: string;
-  nickname: string;
-  title: string;
-  read: boolean;
-  saved: boolean;
-}
-
-interface IDummy {
-  pageNumber: number;
-  totalPage: number;
-  totalData: number;
-  dataList: IData[];
-}
+import BirdyTip from "./BirdyTip";
+import { IDataListItem } from "@/app/(footershare)/letter-storage/page";
+import {
+  getLetterAll,
+  getLetterSaved,
+  getLetterWait,
+} from "@/services/letterStorage";
+import { useRouter } from "next/navigation";
+import { useBookMarkStore } from "@/store/bookMarkStore";
 
 const YouthLetterStorage: React.FC = () => {
   const category = ["전체", "답장 기다리는 편지", "저장한 편지"];
   const [cateNum, setCateNum] = useState<number>(1);
+  const [letters, setLetters] = useState<IDataListItem[] | undefined>(
+    undefined
+  );
+  const { bookMark } = useBookMarkStore();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const router = useRouter();
+  const isFirstRender = useRef(true); // 첫 렌더링 여부를 추적
+
+  // 페이지 어떻게 할지? pageNum 처리
+  const pageNum = 1;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isFirstRender.current) {
+        setIsLoading(true);
+      }
+
+      try {
+        let data;
+        if (cateNum === 1) {
+          data = await getLetterAll(pageNum);
+        } else if (cateNum === 2) {
+          data = await getLetterWait(pageNum);
+        } else {
+          data = await getLetterSaved(pageNum);
+        }
+        setLetters(data.data.dataList);
+      } catch (error) {
+        console.error("편지 데이터 불러오기 실패:", error);
+      } finally {
+        if (isFirstRender.current) {
+          setIsLoading(false); // 첫 로딩 완료 후 로딩 해제
+          isFirstRender.current = false; // 이후에는 로딩 안 보이도록 설정
+        }
+      }
+    };
+
+    fetchData();
+  }, [cateNum, bookMark]);
+
   const categoryClicked = (idx: number) => {
     console.log(idx);
 
     setCateNum(idx);
   };
-
-  const dummy: IDummy = {
-    pageNumber: 1,
-    totalPage: 1,
-    totalData: 2,
-    dataList: [
-      {
-        letterStatusSeq: 4,
-        birdName: "벌새",
-        nickname: "새새벌",
-        title: "젤최신",
-        read: true,
-        saved: true,
-      },
-      {
-        letterStatusSeq: 3,
-        birdName: "카나리아",
-        nickname: "카타",
-        title: "최신순",
-        read: true,
-        saved: false,
-      },
-      {
-        letterStatusSeq: 2,
-        birdName: "파랑새",
-        nickname: "희망찬 블루버드",
-        title: "dear 짱구2",
-        read: false,
-        saved: false,
-      },
-      {
-        letterStatusSeq: 1,
-        birdName: "올빼미",
-        nickname: "짱구",
-        title: "dear 단지공주1",
-        read: true,
-        saved: true,
-      },
-    ],
+  const cardClicked = (id: number) => {
+    router.push(`/letter-detail/${id}`);
   };
 
-  const dummyWait: IDummy = {
-    pageNumber: 1,
-    totalPage: 1,
-    totalData: 1,
-    dataList: [
-      {
-        letterStatusSeq: 2,
-        birdName: "익명새",
-        nickname: "익명새",
-        title: "아직 답장안옴",
-        read: false,
-        saved: false,
-      },
-      {
-        letterStatusSeq: 1,
-        birdName: "익명새",
-        nickname: "익명새",
-        title: "읽어주세요",
-        read: false,
-        saved: false,
-      },
-    ],
-  };
-  const dummySaved: IDummy = {
-    pageNumber: 1,
-    totalPage: 1,
-    totalData: 1,
-    dataList: [
-      {
-        letterStatusSeq: 2,
-        birdName: "벌새",
-        nickname: "새새벌",
-        title: "젤최신",
-        read: true,
-        saved: true,
-      },
-      {
-        letterStatusSeq: 1,
-        birdName: "올빼미",
-        nickname: "짱구",
-        title: "dear 단지공주1",
-        read: true,
-        saved: true,
-      },
-    ],
-  };
+  if (isLoading) {
+    return <div className="mt-10 text-center">로딩 중...</div>;
+  }
 
   return (
     <>
@@ -133,147 +87,74 @@ const YouthLetterStorage: React.FC = () => {
           </span>
         ))}
       </header>
-      {dummy ? (
-        cateNum === 1 ? (
-          // 데이터 있을때 전체 UI (카테고리 1)
-          <main className="">
-            <div className="grid w-full grid-cols-2 gap-2">
-              {dummy.dataList.map((data, idx) => (
-                <div
-                  key={idx}
-                  className={`rounded-[16px] h-[182px] ${
-                    data.read ? "" : "border border-[#84A667]"
-                  } bg-white flex flex-col flex-1 p-4`}
-                >
-                  <div className="flex justify-between">
-                    <Image
-                      src={`/images/birds/${data.birdName}_60.svg`}
-                      alt="보관함 새 프로필"
-                      width={60}
-                      height={60}
-                    />
+      {letters ? (
+        <main className="">
+          <div className="grid w-full grid-cols-2 gap-2">
+            {letters.map((data, idx) => (
+              <div
+                onClick={() => cardClicked(data.letterStatusSeq)}
+                key={idx}
+                className={`rounded-[16px] h-[182px] bg-white flex flex-col flex-1 p-4`}
+              >
+                <div className="flex justify-between">
+                  <Image
+                    src={`/images/birds/${data.birdName}_60.svg`}
+                    alt="보관함 새 프로필"
+                    width={60}
+                    height={60}
+                  />
+                  <div onClick={(e) => e.stopPropagation()}>
+                    {" "}
+                    {/* 이벤트 전파 방지 */}
                     <BookMarkIcon
+                      letterStatusSeq={data.letterStatusSeq}
                       fill={data.saved ? "#84A667" : "none"}
                       stroke={data.saved ? "#84A667" : "#C7C7CC"}
                     />
                   </div>
-                  <div className="text-[#292D32] text-[14px] font-normal leading-[22px] tracking-[-0.056px] mt-[5px]">
-                    {data.nickname}
-                  </div>
-                  <div className="text-[#292D32] text-[16px] font-bold leading-[24px] tracking-[-0.064px]">
-                    {data.title}
-                  </div>
-                  {data.read ? null : (
-                    <div className="flex w-[61px] h-[24px] px-[8px] py-[1px] justify-center items-center rounded-[6px] bg-[#D6E173] mt-[15px]">
-                      <span className="text-center text-[#292D32] text-[12px] font-medium leading-[16px] tracking-[-0.048px]">
-                        답장 도착
-                      </span>
-                    </div>
-                  )}
                 </div>
-              ))}
-            </div>
-          </main>
-        ) : cateNum === 2 ? (
-          // 데이터 있을때 답장기다리는 편지 UI (카테고리 2)
-          <main className="">
-            <div className="grid w-full grid-cols-2 gap-2">
-              {dummyWait.dataList.map((data, idx) => (
-                <div
-                  key={idx}
-                  className={`rounded-[16px] h-[182px] bg-white flex flex-col flex-1 p-4`}
-                >
-                  <div className="flex justify-between">
-                    <Image
-                      src={`/images/birds/${data.birdName}_60.svg`}
-                      alt="보관함 새 프로필"
-                      width={60}
-                      height={60}
-                    />
-                    <BookMarkIcon
-                      fill={data.saved ? "#84A667" : "none"}
-                      stroke={data.saved ? "#84A667" : "#C7C7CC"}
-                    />
-                  </div>
-                  <div className="text-[#292D32] text-[14px] font-normal leading-[22px] tracking-[-0.056px] mt-[5px]">
-                    {data.birdName}
-                  </div>
-                  <div className="text-[#292D32] text-[16px] font-bold leading-[24px] tracking-[-0.064px] mb-[39px]">
-                    {data.title}
-                  </div>
+                <div className="text-[#292D32] text-[14px] font-normal leading-[22px] tracking-[-0.056px] mt-[5px]">
+                  {data.birdName}
                 </div>
-              ))}
-            </div>
-          </main>
-        ) : cateNum === 3 ? (
-          // 데이터 있을때 저장한 편지 UI (카테고리 3)
-          <main className="">
-            <div className="grid w-full grid-cols-2 gap-2">
-              {dummySaved.dataList.map((data, idx) => (
-                <div
-                  key={idx}
-                  className={`rounded-[16px] h-[182px] ${
-                    data.read ? "" : "border border-[#84A667]"
-                  } bg-white flex flex-col flex-1 p-4`}
-                >
-                  <div className="flex justify-between">
-                    <Image
-                      src={`/images/birds/${data.birdName}_60.svg`}
-                      alt="보관함 새 프로필"
-                      width={60}
-                      height={60}
-                    />
-                    <BookMarkIcon
-                      fill={data.saved ? "#84A667" : "none"}
-                      stroke={data.saved ? "#84A667" : "#C7C7CC"}
-                    />
-                  </div>
-                  <div className="text-[#292D32] text-[14px] font-normal leading-[22px] tracking-[-0.056px] mt-[5px]">
-                    {data.nickname}
-                  </div>
-                  <div className="text-[#292D32] text-[16px] font-bold leading-[24px] tracking-[-0.064px]">
-                    {data.title}
-                  </div>
-                  {data.read ? null : (
-                    <div className="flex w-[61px] h-[24px] px-[8px] py-[1px] justify-center items-center rounded-[6px] bg-[#D6E173] mt-[15px]">
-                      <span className="text-center text-[#292D32] text-[12px] font-medium leading-[16px] tracking-[-0.048px]">
-                        답장 도착
-                      </span>
-                    </div>
-                  )}
+                <div className="text-[#292D32] text-[16px] font-bold leading-[24px] tracking-[-0.064px] mb-[39px]">
+                  {data.title}
                 </div>
-              ))}
-            </div>
-          </main>
-        ) : null
-      ) : (
-        // 데이터 없을때 UI
-        <main className="flex flex-grow">
-          <div className="flex flex-col items-center w-full rounded-[30px] border border-[#F4F5EF] bg-white px-4">
-            <p className="text-[#292D32] text-center font-medium text-[16px] leading-[24px] tracking-[-0.064px] mt-[32px]">
-              편지를 써보세요
-            </p>
-            <p className="text-[#292D32] text-center font-bold text-[18px] leading-[26px] tracking-[-0.072px] mt-2">
-              나의 현재 고민을 편지에 쓰고 <br />
-              버디에게 보내볼까요?
-            </p>
-
-            <Image
-              src="/images/birds/letter_storage_bird.svg"
-              alt="편지보관함 새 이미지"
-              width={300}
-              height={260}
-              className="mt-8"
-            />
-
-            <div className="flex w-full h-[50px] justify-center items-center gap-1 rounded-[12px] bg-[#292D32] mt-8 mb-6">
-              <HomeLetterIcon fill="#FFF" />
-              <span className="text-center text-white font-pretendard text-base leading-6 tracking-[-0.064px]">
-                편지쓰기
-              </span>
-            </div>
+              </div>
+            ))}
           </div>
         </main>
+      ) : (
+        // 데이터 없을때 UI
+        <>
+          <main className="flex flex-grow">
+            <div className="flex flex-col items-center w-full rounded-[30px] border border-[#F4F5EF] bg-white px-4">
+              <p className="text-[#292D32] text-center font-medium text-[16px] leading-[24px] tracking-[-0.064px] mt-[32px]">
+                편지를 써보세요
+              </p>
+              <p className="text-[#292D32] text-center font-bold text-[18px] leading-[26px] tracking-[-0.072px] mt-2">
+                나의 현재 고민을 편지에 쓰고 <br />
+                버디에게 보내볼까요?
+              </p>
+
+              <Image
+                src="/images/birds/letter_storage_bird.svg"
+                alt="편지보관함 새 이미지"
+                width={300}
+                height={260}
+                className="mt-8"
+              />
+
+              <div className="flex w-full h-[50px] justify-center items-center gap-1 rounded-[12px] bg-[#292D32] mt-8 mb-6">
+                <HomeLetterIcon fill="#FFF" />
+                <span className="text-center text-white font-pretendard text-base leading-6 tracking-[-0.064px]">
+                  편지쓰기
+                </span>
+              </div>
+            </div>
+          </main>
+
+          <BirdyTip />
+        </>
       )}
     </>
   );
