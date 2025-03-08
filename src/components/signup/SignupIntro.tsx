@@ -8,7 +8,7 @@ const SignupIntro = () => {
   const { nextStep } = useSignupStore(); // ✅ Zustand 상태 사용
   return (
     <div className="w-full h-full">
-      <div className=" px-4">
+      <div>
         {/* 인트로 텍스트 */}
         <div className="text-center mt-6">
           <p className="whitespace-pre-wrap text-2xl font-bold leading-[30px] tracking-tighter">
