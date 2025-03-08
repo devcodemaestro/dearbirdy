@@ -3,9 +3,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useSignupStore } from "@/store/useSignupStore";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
-import { processTestResults } from "@/util/buddyTestUtils";
+import { Answer, processTestResults } from "@/util/buddyTestUtils";
 import InfoBox from "@/components/common/InfoBox";
 import BuddyResultCard from "./BuddyResultCard";
+import loadingResult from "@/animations/loading_result.json";
 
 const BuddyTestLoading = ({ answers }: { answers: number[] }) => {
   const { updateFormData, formData } = useSignupStore();
@@ -16,8 +17,13 @@ const BuddyTestLoading = ({ answers }: { answers: number[] }) => {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   useEffect(() => {
+    // answers를 Answer[] 타입으로 변환
+    const formattedAnswers: Answer[] = answers.map(
+      (answer) => answer as Answer
+    );
+
     // 결과 계산 및 저장
-    const result = processTestResults(answers);
+    const result = processTestResults(formattedAnswers);
     updateFormData({ birdName: result.result.name });
     setBirdType(result.result.name);
   }, [answers, updateFormData]);
@@ -71,7 +77,7 @@ const BuddyTestLoading = ({ answers }: { answers: number[] }) => {
       >
         <Lottie
           lottieRef={lottieRef}
-          path="/images/animations/loading_result.json"
+          animationData={loadingResult}
           loop={false}
           autoplay={false}
           onComplete={handleAnimationComplete}
@@ -89,7 +95,7 @@ const BuddyTestLoading = ({ answers }: { answers: number[] }) => {
       {/* 결과 카드 - 애니메이션 위에 표시 */}
       {showResultCard && (
         <div className="z-20 absolute inset-0 flex flex-col items-center justify-center">
-          <BuddyResultCard nickname={nickname} birdType={birdType} />
+          <BuddyResultCard birdType={birdType} />
         </div>
       )}
     </div>

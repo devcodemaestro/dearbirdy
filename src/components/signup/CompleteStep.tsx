@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Lottie from "lottie-react";
 import { useSignupStore } from "@/store/useSignupStore";
+import loadingEgg from "@/animations/loading_egg.json";
 
 const CompleteStep = () => {
   const { nextStep } = useSignupStore();
@@ -28,7 +29,7 @@ const CompleteStep = () => {
       <div className="w-[250px] h-[250px]">
         <Lottie
           lottieRef={lottieRef}
-          path="/images/animations/loading_egg.json"
+          animationData={loadingEgg}
           loop={true}
           autoplay={true}
         />

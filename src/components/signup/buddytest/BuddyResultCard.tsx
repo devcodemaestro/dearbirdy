@@ -1,14 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import NextButton from "@/components/common/NextButton";
 import { getBirdData } from "@/services/buddyService";
-import { birdStyleMap, defaultBirdStyle } from "@/constants/birdStyles"; // 🔥 스타일 맵 가져오기
+import { birdStyleMap, defaultBirdStyle } from "@/constants/birdStyles";
 
 interface BuddyResultCardProps {
   birdType: string;
+  setShowResult?: (value: boolean) => void; // ✅ 선택적 prop으로 추가
 }
 
 interface BirdData {
@@ -17,10 +18,16 @@ interface BirdData {
   explanation: string;
 }
 
-const BuddyResultCard = ({ birdType }: BuddyResultCardProps) => {
+const BuddyResultCard = ({ birdType, setShowResult }: BuddyResultCardProps) => {
   const router = useRouter();
   const [birdData, setBirdData] = useState<BirdData | null>(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (setShowResult) {
+      setShowResult(true); // ✅ 결과 화면이 나타나면 SignupNav 숨기기
+    }
+  }, [setShowResult]);
 
   useEffect(() => {
     const loadBirdData = async () => {
