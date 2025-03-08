@@ -54,7 +54,7 @@ const birdTypes = [
 const calculateScore = (answers: Answer[], direction: Direction): number => {
   return answers
     .filter((_, index) => questions[index].direction === direction)
-    .reduce((sum, answer) => sum + answer, 0);
+    .reduce((sum, answer) => (sum + answer) as Answer, 0 as Answer); // ✅ 타입 명확하게 지정
 };
 
 /** ✅ 새 유형 매칭 */
