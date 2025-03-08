@@ -12,6 +12,7 @@ export interface IDataListItem {
   title: string;
   read: boolean;
   saved: boolean;
+  thanksToMentor: boolean;
 }
 
 export interface IData {

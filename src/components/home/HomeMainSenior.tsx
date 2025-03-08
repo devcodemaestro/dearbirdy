@@ -5,6 +5,7 @@ import Banner from "./Banner";
 import SendMessage from "./SendMessage";
 import SendMessageLimit from "./SendMessageLimit";
 import { IUserData } from "@/app/(footershare)/home/page";
+import { useRouter } from "next/navigation";
 
 interface IProps {
   userData: IUserData;
@@ -12,6 +13,8 @@ interface IProps {
 
 const HomeMainSenior: React.FC<IProps> = ({ userData }) => {
   const serviceLimit = false;
+
+  const router = useRouter();
   console.log(userData);
 
   return (
@@ -37,21 +40,16 @@ const HomeMainSenior: React.FC<IProps> = ({ userData }) => {
           <span className="text-[#292D32] text-center font-bold text-[18px] leading-[26px] tracking-[-0.072px]">
             고민을 들어주러 오셨군요!
           </span>
-          {userData.quota === 0 ? (
-            <div className="flex w-full h-[50px] justify-center items-center  gap-1 mt-4 align-stretch rounded-lg bg-[#EBEBEE]">
-              <HomeLetterIcon fill="#C7C7CC" />
-              <span className="text-center text-[#C7C7CC] font-pretendard text-base leading-6 tracking-[-0.064px]">
-                편지쓰기
-              </span>
-            </div>
-          ) : (
-            <div className="flex w-full h-[50px] justify-center items-center  gap-1 mt-4 align-stretch rounded-lg bg-[#292D32]">
-              <HomeLetterIcon fill="#FFF" />
-              <span className="text-center text-white font-pretendard text-base leading-6 tracking-[-0.064px]">
-                편지쓰기
-              </span>
-            </div>
-          )}
+
+          <div
+            className="flex w-full h-[50px] justify-center items-center  gap-1 mt-4 align-stretch rounded-lg bg-[#292D32]"
+            onClick={() => router.push("/letter-storage")}
+          >
+            <HomeLetterIcon fill="#FFF" />
+            <span className="text-center text-white font-pretendard text-base leading-6 tracking-[-0.064px]">
+              편지 보기
+            </span>
+          </div>
         </div>
       </div>
     </main>

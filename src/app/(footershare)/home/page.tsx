@@ -11,6 +11,7 @@ export interface IUserData {
   nickname: string;
   quota: number;
   roleName: string;
+  read: boolean;
 }
 
 const Home: React.FC = () => {
@@ -33,7 +34,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header userData={userData} />
       {userData.roleName === "MENTOR" ? (
         <HomeMainSenior userData={userData} />
       ) : (
