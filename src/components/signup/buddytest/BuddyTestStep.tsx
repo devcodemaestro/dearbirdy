@@ -1,8 +1,7 @@
 "use client";
 
 import { questions } from "@/constants/buddyTestQuestions";
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface BuddyTestStepProps {
   step: number;
