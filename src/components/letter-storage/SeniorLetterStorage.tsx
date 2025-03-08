@@ -17,8 +17,10 @@ const SeniorLetterStorage: React.FC = () => {
   const [cateNum, setCateNum] = useState<number>(1);
   const [letters, setLetters] = useState<IData | undefined>(undefined);
   const [totalLetters, setTotalLetters] = useState<IData | undefined>();
+
   const { bookMark } = useBookMarkStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [showToast, setShowToast] = useState(false);
 
   const router = useRouter();
   const isFirstRender = useRef(true); // 첫 렌더링 여부를 추적
@@ -65,7 +67,11 @@ const SeniorLetterStorage: React.FC = () => {
   const cardClicked = (id: number) => {
     router.push(`/letter-detail/${id}`);
   };
-  console.log(totalLetters?.dataList?.length);
+
+  const handleShowToast = () => {
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
 
   if (isLoading) {
     return <div className="mt-10 text-center">로딩 중...</div>;
@@ -78,7 +84,7 @@ const SeniorLetterStorage: React.FC = () => {
           <span
             key={idx}
             onClick={() => {
-              if (totalLetters?.dataList?.length !== 0) {
+              if (totalLetters?.totalData !== 0) {
                 categoryClicked(idx + 1);
               }
             }}
@@ -92,9 +98,9 @@ const SeniorLetterStorage: React.FC = () => {
           </span>
         ))}
       </header>
-      {totalLetters?.dataList?.length !== 0 ? (
+      {totalLetters?.totalData !== 0 ? (
         <main className="">
-          <div className="grid w-full grid-cols-2 gap-2">
+          <div className="grid w-full min-w-[343px] grid-cols-2 gap-2">
             {letters?.dataList.map((data, idx) => (
               <div
                 onClick={() => cardClicked(data.letterStatusSeq)}
@@ -112,6 +118,8 @@ const SeniorLetterStorage: React.FC = () => {
                     {" "}
                     {/* 이벤트 전파 방지 */}
                     <BookMarkIcon
+                      bookMarkToast={data.saved}
+                      handleShowToast={handleShowToast}
                       letterStatusSeq={data.letterStatusSeq}
                       fill={data.saved ? "#84A667" : "none"}
                       stroke={data.saved ? "#84A667" : "#C7C7CC"}
@@ -119,11 +127,21 @@ const SeniorLetterStorage: React.FC = () => {
                   </div>
                 </div>
                 <div className="text-[#292D32] text-[14px] font-normal leading-[22px] tracking-[-0.056px] mt-[5px]">
-                  {data.birdName}
+                  {data.nickname}
                 </div>
-                <div className="text-[#292D32] text-[16px] font-bold leading-[24px] tracking-[-0.064px] mb-[39px]">
+                <div className="text-[#292D32] text-[16px] font-bold leading-[24px] tracking-[-0.064px] mb-[15px] overflow-hidden text-ellipsis whitespace-nowrap">
                   {data.title}
                 </div>
+                {!data.read && (
+                  <span className="inline-flex rounded-md bg-[#D6E173] h-6 px-2 w-fit items-center text-[#292D32] text-[12px] font-medium leading-[16px] tracking-[-0.048px] text-center">
+                    편지 도착
+                  </span>
+                )}
+                {data.thanksToMentor && (
+                  <span className="inline-flex rounded-md bg-[#FFD85B] h-6 px-2 w-fit items-center text-[#292D32] text-[12px] font-medium leading-[16px] tracking-[-0.048px] text-center">
+                    고마움 도착
+                  </span>
+                )}
               </div>
             ))}
           </div>
@@ -154,6 +172,13 @@ const SeniorLetterStorage: React.FC = () => {
           <BirdyTip />
         </>
       )}
+      <div className="fixed flex flex-col items-center translate-x-1/2 bottom-10 right-1/2">
+        {showToast && (
+          <div className="fixed text-sm text-white rounded-xl  bg-[rgba(100,100,100,0.8)] flex w-[323px] h-[56px] px-5 py-[19px] justify-center items-center shadow-lg bottom-10 animate-bounce">
+            책갈피는 &apos;저장한 편지&apos;에서 확인할 수 있어요!
+          </div>
+        )}
+      </div>
     </>
   );
 };
