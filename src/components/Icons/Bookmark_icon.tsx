@@ -7,9 +7,13 @@ interface SvgIconProps {
   stroke?: string;
   letterStatusSeq: number;
   setBookMark?: React.Dispatch<React.SetStateAction<number>>;
+  handleShowToast?: () => void;
+  bookMarkToast?: boolean;
 }
 //#C7C7CC
 const BookMarkIcon: React.FC<SvgIconProps> = ({
+  bookMarkToast,
+  handleShowToast,
   letterStatusSeq,
   fill,
   stroke,
@@ -18,6 +22,9 @@ const BookMarkIcon: React.FC<SvgIconProps> = ({
   const BookMarkClicked = async () => {
     await LetterSave(letterStatusSeq);
     setBookMark(letterStatusSeq);
+    if (!bookMarkToast && handleShowToast) {
+      handleShowToast();
+    }
   };
   return (
     <svg

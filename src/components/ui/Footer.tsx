@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HomeIcon from "../Icons/Footer_home_icon";
 import LetterIcon from "../Icons/Footer_letter_icon";
 import MyBirdyIcon from "../Icons/Footer_mybirdy_icon";
@@ -17,6 +17,13 @@ const Footer: React.FC = () => {
 
   const initialIcon = menuItems.find((item) => item.path === pathname)?.id || 1;
   const [selectedIcon, setSelectedIcon] = useState<number>(initialIcon);
+
+  useEffect(() => {
+    const currentItem = menuItems.find((item) => item.path === pathname);
+    if (currentItem) {
+      setSelectedIcon(currentItem.id);
+    }
+  }, [pathname]);
 
   const iconClicked = (id: number) => {
     setSelectedIcon(id);

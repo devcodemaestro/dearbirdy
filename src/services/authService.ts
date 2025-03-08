@@ -8,7 +8,7 @@ export const getAccessToken = async (code: string) => {
     const response = await api.get(`/auth/kakao?code=${code}`);
 
     console.log("✅ 백엔드 응답 헤더 확인:", response.headers);
-    // console.log("response : ", response.data);
+    console.log("response : ", response.data);
     // 로그인시 user정보 담기
     sessionStorage.setItem("userData", JSON.stringify(response.data.data));
 
