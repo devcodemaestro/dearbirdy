@@ -84,7 +84,7 @@ const NicknameStep = () => {
         altText="닉네임 아이콘"
         text="고마워요! 우선은요. 제가 당신을 기억할 수 있게 이름을 알려주세요!"
       />
-      <div className="px-4">
+      <div>
         {/* ✅ 닉네임 입력 영역 */}
         <div className="relative mt-14 w-full">
           <input
@@ -111,7 +111,7 @@ const NicknameStep = () => {
           {isAvailable && !errorType && (
             <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
               <Image
-                src="/images/icons/Icon_check.svg"
+                src="/images/icons/icon_check.svg"
                 alt="사용 가능"
                 width={24}
                 height={24}
