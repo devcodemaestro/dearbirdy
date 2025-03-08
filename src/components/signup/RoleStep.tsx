@@ -8,7 +8,7 @@ import TermsStep from "./TermsStep"; // ✅ 약관 동의 모달 추가
 import RoleCard from "./RoleCard";
 
 const RoleStep = () => {
-  const { updateFormData, nextStep } = useSignupStore();
+  const { updateFormData } = useSignupStore();
   const [selectedRole, setSelectedRole] = useState<"MENTEE" | "MENTOR" | null>(
     null
   );
