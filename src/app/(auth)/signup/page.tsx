@@ -7,34 +7,20 @@ import NicknameStep from "@/components/signup/NicknameStep";
 import RoleStep from "@/components/signup/RoleStep";
 import SignupIntro from "@/components/signup/SignupIntro";
 import SignupNav from "@/components/signup/SignupNav";
-import TermsStep from "@/components/signup/TermsStep";
-import { postAdditionalInfo } from "@/services/authService";
-import { useSignupStore } from "@/store/useSignupStore"; // ✅ Zustand 가져오기
+import { useSignupStore } from "@/store/useSignupStore";
 
 const SignUp = () => {
-  const { step, nextStep, formData } = useSignupStore(); // ✅ Zustand 상태 사용
-
-  const handleSubmit = async () => {
-    try {
-      console.log("✅ 전송할 데이터:", formData);
-      await postAdditionalInfo(formData);
-      console.log("✅ 회원가입 완료");
-      nextStep(); // ✅ 회원가입 완료 후 다음 단계로 이동
-    } catch (error) {
-      console.error("❌ 회원가입 실패:", error);
-    }
-  };
+  const { step } = useSignupStore();
 
   return (
-    <div className="p-4 w-full">
+    <div className="px-4 w-full">
       <SignupNav />
       {step === 0 && <SignupIntro />}
       {step === 1 && <NicknameStep />}
       {step === 2 && <RoleStep />}
-      {step === 3 && <TermsStep />}
       {step === 4 && <CategoryStep />}
-      {step === 5 && <CompleteStep onSubmit={handleSubmit} />}
-      {step === 6 && <BuddyTest />}
+      {step === 5 && <CompleteStep />}
+      {step === 6 && <BuddyTest />} {/* ✅ handleTestComplete 제거 */}
     </div>
   );
 };
