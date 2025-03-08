@@ -1,9 +1,12 @@
 "use client";
 
+import dynamic from "next/dynamic";
+
 import { useEffect, useRef } from "react";
-import Lottie from "lottie-react";
 import { useSignupStore } from "@/store/useSignupStore";
 import loadingEgg from "@/animations/loading_egg.json";
+
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false }); // ✅ 서버 사이드 렌더링 방지
 
 const CompleteStep = () => {
   const { nextStep } = useSignupStore();
