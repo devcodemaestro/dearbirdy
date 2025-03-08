@@ -52,6 +52,8 @@ export default function OnboardingPage() {
       >
         {onboardingSlides.map((slide, index) => (
           <SwiperSlide key={index} className="relative">
+            {/* swiper로 인해 Image 미사용 vercel 배포 에러로 ESLint 경고 무시 처리 */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={slide.image}
               alt={`onboarding-step-${index + 1}`}

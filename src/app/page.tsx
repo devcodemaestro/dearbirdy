@@ -8,19 +8,21 @@ export default function RootPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const onboardingComplete = localStorage.getItem("onboardingComplete");
+    // ✅ 클라이언트 환경인지 확인 (Next.js는 SSR에서 실행될 수도 있음)
+    if (typeof window !== "undefined") {
+      const onboardingComplete = localStorage.getItem("onboardingComplete");
 
-    if (!onboardingComplete) {
-      console.log("✅ 온보딩이 필요함 → /onboarding 이동");
-      router.push("/onboarding");
-    } else {
-      console.log("✅ 온보딩 완료된 사용자 → /main 이동");
-      router.push("/main");
+      if (!onboardingComplete) {
+        console.log("✅ 온보딩이 필요함 → /onboarding 이동");
+        router.replace("/onboarding"); // ✅ router.push → router.replace로 변경 (뒤로 가기 방지)
+      } else {
+        console.log("✅ 온보딩 완료된 사용자 → /main 이동");
+        router.replace("/main");
+      }
+
+      setLoading(false);
     }
-
-    // ✅ 로딩 상태를 false로 설정하여 UI 업데이트
-    setLoading(false);
-  }, [router]);
+  }, []);
 
   // ✅ 로딩 화면 추가하여 화면 깜빡임 방지
   if (loading) {
