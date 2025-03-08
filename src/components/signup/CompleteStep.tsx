@@ -18,7 +18,7 @@ const CompleteStep = () => {
   }, [nextStep]);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center">
       {/* ✅ 메시지 */}
       <p className="text-xl font-bold text-center text-[#292D32] mb-12">
         이제 나의 버디들을 만나러 가볼까요?
