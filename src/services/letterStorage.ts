@@ -90,3 +90,22 @@ export const LetterSave = async (letterStatusSeq: number) => {
     return null;
   }
 };
+
+// 버디팁
+export const birdyTip = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/v1/birdy/tip`, {
+      headers: {
+        "Content-Type": "application/json",
+        access: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
