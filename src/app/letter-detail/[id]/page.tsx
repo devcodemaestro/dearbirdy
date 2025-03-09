@@ -2,7 +2,9 @@
 
 import { IUserData } from "@/app/(footershare)/home/page";
 import BookMarkIcon from "@/components/Icons/Bookmark_icon";
-import { getLetterDetail, getThanks, getThrow } from "@/services/letterDetail";
+import ThrowAfterModal from "@/components/letter-storage/ThrowAfterModal";
+import ThrowModal from "@/components/letter-storage/ThrowModal";
+import { getLetterDetail, getThanks } from "@/services/letterDetail";
 import { useBookMarkStore } from "@/store/bookMarkStore";
 import { useLetterInfoStore } from "@/store/letterInfoStore";
 import Image from "next/image";
@@ -37,6 +39,8 @@ const LetterDetailId: React.FC = () => {
 
   const [letter, setLetter] = useState<IData | undefined>(undefined);
   const [showModal, setModal] = useState<boolean>(false);
+  const [showThrowModal, setShowThrowModal] = useState(false);
+  const [showThrowAfterModal, setShowThrowAfterModal] = useState(false);
 
   const { bookMark } = useBookMarkStore();
   const { setCategoryName, setLetterStatusSeq } = useLetterInfoStore();
@@ -101,9 +105,8 @@ const LetterDetailId: React.FC = () => {
 
   console.log("letter:", letter);
 
-  const throwClicked = async (letterStatusSeq: number) => {
-    await getThrow(letterStatusSeq);
-    router.push("/letter-storage");
+  const throwClicked = () => {
+    setShowThrowModal(true);
   };
 
   if (!letter) return <div>Loading</div>;
@@ -397,7 +400,17 @@ const LetterDetailId: React.FC = () => {
     </div>
   ) : (
     // 장년 버전
-    <div className="min-h-screen bg-[#f9f8f3] flex flex-col px-4 gap-2">
+    <div className="relative min-h-screen bg-[#f9f8f3] flex flex-col px-4 gap-2">
+      {showThrowModal && (
+        <ThrowModal
+          letterStatusSeq={letter.letterStatusSeq}
+          setShowThrowModal={setShowThrowModal}
+          setShowThrowAfterModal={setShowThrowAfterModal}
+        />
+      )}
+      {showThrowAfterModal && (
+        <ThrowAfterModal setShowThrowAfterModal={setShowThrowAfterModal} />
+      )}
       <header className="relative w-full h-[56px] mt-[59px] flex items-center">
         <Image
           src="/images/icons/arrow_left_icon.svg"
@@ -560,9 +573,7 @@ const LetterDetailId: React.FC = () => {
           <div className="flex items-center justify-center mt-16">
             <p
               className="text-[#84A667] text-[14px] font-medium leading-[20px] tracking-[-0.056px]"
-              onClick={() => {
-                throwClicked(letter.letterStatusSeq);
-              }}
+              onClick={throwClicked}
             >
               답하기 어렵다면, 다른 새에게 맡기기
             </p>
