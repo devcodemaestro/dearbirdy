@@ -19,7 +19,7 @@ export const getLetterAll = async (pageNum: number) => {
     );
 
     console.log("편지 전체 데이터:", response.data);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error fetching user info:", error);
     return null;
@@ -39,7 +39,7 @@ export const getLetterWait = async (pageNum: number) => {
         withCredentials: true,
       }
     );
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error fetching user info:", error);
     return null;
@@ -60,7 +60,7 @@ export const getLetterSaved = async (pageNum: number) => {
       }
     );
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error fetching user info:", error);
     return null;

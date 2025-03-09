@@ -1,5 +1,6 @@
 "use client";
 
+import { IUserData } from "@/app/(footershare)/home/page";
 import { menuItems } from "@/constants/menuItems";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ const Footer: React.FC = () => {
 
   const initialIcon = menuItems.find((item) => item.path === pathname)?.id || 1;
   const [selectedIcon, setSelectedIcon] = useState<number>(initialIcon);
+  const [userData, setUserData] = useState<IUserData>();
 
   useEffect(() => {
     const currentItem = menuItems.find((item) => item.path === pathname);
@@ -36,7 +38,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-[60px] flex justify-around items-center self-stretch border-t border-[#F0F1EC] bg-[#F9F8F3]">
+    <div className="fixed bottom-0 w-full h-[60px] flex justify-around items-center self-stretch border-t border-[#F0F1EC] bg-[#F9F8F3]">
       {menuItems.map(({ id, Icon, label }) => (
         <div
           key={id}

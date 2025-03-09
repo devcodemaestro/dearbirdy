@@ -14,7 +14,7 @@ export default function SharedLayout({
     <>
       {report && <Report />}
       {limit && <Limit />}
-      <div className="min-h-screen bg-[#f9f8f3] flex flex-col">
+      <div className="w-[375px] min-h-screen bg-[#f9f8f3] flex flex-col">
         <main className="flex-1">{children}</main>
         <Footer />
       </div>
