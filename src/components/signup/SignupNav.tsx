@@ -1,45 +1,29 @@
-import React, { useEffect } from "react";
+import React from "react";
 import LeftArrow from "../Icons/common/LeftArrow";
-import { useRouter } from "next/navigation";
 import { useSignupStore } from "@/store/useSignupStore";
+import { useBuddyTestStore } from "@/store/useBuddyTestStore"; // ✅ 버디테스트 상태 가져오기
 
-interface SignupNavProps {
-  isResultVisible?: boolean; // 버디 결과 화면이 보일 때 숨김 여부
-}
-
-const SignupNav = ({ isResultVisible = false }: SignupNavProps) => {
+const SignupNav = () => {
   const { step, prevStep } = useSignupStore();
-  const router = useRouter();
-
-  // 현재 단계에 따라 제목 텍스트 결정
-  const getNavTitle = () => {
-    return step >= 5 ? "버디테스트" : "회원가입";
-  };
-  useEffect(() => {
-    console.log(`🔄 현재 step: ${step}`);
-  }, [step]);
+  const { testStep, prevTestStep } = useBuddyTestStore(); // ✅ Zustand에서 상태 가져오기
 
   const handleBack = () => {
-    if (step === 0) {
-      router.back();
+    if (step === 5 && testStep > 0) {
+      prevTestStep(); // ✅ 버디테스트 진행 중이면 내부 단계 감소
     } else {
-      prevStep();
+      prevStep(); // ✅ 기본 회원가입 뒤로 가기
     }
   };
 
   return (
-    <div
-      className={`mt-14 flex items-center relative ${
-        isResultVisible ? "hidden" : ""
-      }`}
-    >
+    <div className="mt-14 flex items-center relative">
       <LeftArrow
         onClick={handleBack}
         className="w-6 h-6 absolute cursor-pointer"
         stroke="#292D32"
       />
       <p className="text-base font-bold m-4 leading-6 tracking-[-0.064px] w-full text-center">
-        {getNavTitle()}
+        {step >= 5 ? "버디테스트" : "회원가입"}
       </p>
     </div>
   );

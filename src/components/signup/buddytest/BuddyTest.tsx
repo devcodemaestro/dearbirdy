@@ -1,28 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import BuddyTestIntro from "./BuddyTestIntro";
 import BuddyTestStep from "./BuddyTestStep";
 import BuddyTestLoading from "./BuddyTestLoading";
+import { useBuddyTestStore } from "@/store/useBuddyTestStore";
 
 const BuddyTest = () => {
-  const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<number[]>(Array(12).fill(null));
+  const { testStep, setTestStep, setAnswer, calculateResults } =
+    useBuddyTestStore();
+
+  // ✅ 새로고침 시 `sessionStorage`에서 `testStep` 값을 불러오기
+  useEffect(() => {
+    const savedTestStep = sessionStorage.getItem("buddytest-storage");
+    if (savedTestStep) {
+      try {
+        setTestStep(JSON.parse(savedTestStep).state.testStep);
+      } catch (error) {
+        console.error("❌ BuddyTest: sessionStorage 데이터 복원 오류", error);
+      }
+    }
+  }, [setTestStep]);
 
   const handleAnswer = (answer: number) => {
-    const newAnswers = [...answers];
-    newAnswers[step - 1] = answer;
-    setAnswers(newAnswers);
-    setStep(step === 12 ? 13 : step + 1);
+    setAnswer(testStep - 1, answer); // ✅ 응답 저장
+    if (testStep === 12) {
+      calculateResults(); // ✅ 마지막 질문에 도달하면 결과 계산
+      setTestStep(13);
+    } else {
+      setTestStep(testStep + 1);
+    }
   };
 
   return (
     <div>
-      {step === 0 && <BuddyTestIntro onStart={() => setStep(1)} />}
-      {step > 0 && step <= 12 && (
-        <BuddyTestStep step={step} onAnswer={handleAnswer} />
+      {testStep === 0 && <BuddyTestIntro onStart={() => setTestStep(1)} />}
+      {testStep > 0 && testStep <= 12 && (
+        <BuddyTestStep step={testStep} onAnswer={handleAnswer} />
       )}
-      {step === 13 && <BuddyTestLoading answers={answers} />}
+      {testStep === 13 && <BuddyTestLoading />}
     </div>
   );
 };

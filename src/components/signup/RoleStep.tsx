@@ -30,6 +30,9 @@ const RoleStep = () => {
   /** ✅ 약관 동의 모달 닫기 핸들러 */
   const handleTermsClose = () => {
     setIsTermsOpen(false);
+    if (selectedRole === "MENTEE") {
+      nextStep();
+    }
     nextStep(); // ✅ 다음 단계(CategoryStep)로 이동
   };
 

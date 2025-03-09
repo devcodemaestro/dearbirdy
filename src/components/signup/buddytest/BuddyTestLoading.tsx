@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useState, useEffect, useRef } from "react";
 import { useSignupStore } from "@/store/useSignupStore";
+import { useBuddyTestStore } from "@/store/useBuddyTestStore"; // ✅ Zustand 사용
 import { Answer, processTestResults } from "@/util/buddyTestUtils";
 import InfoBox from "@/components/common/InfoBox";
 import BuddyResultCard from "./BuddyResultCard";
@@ -12,8 +13,9 @@ import { LottieRefCurrentProps } from "lottie-react";
 // ✅ Lottie를 동적으로 로드 (SSR 방지)
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
-const BuddyTestLoading = ({ answers }: { answers: number[] }) => {
+const BuddyTestLoading = () => {
   const { updateFormData, formData } = useSignupStore();
+  const { answers } = useBuddyTestStore(); // ✅ Zustand에서 answers 가져오기
   const nickname = formData.nickname || "";
   const [isAnimationClicked, setIsAnimationClicked] = useState(false);
   const [showResultCard, setShowResultCard] = useState(false);
@@ -23,15 +25,24 @@ const BuddyTestLoading = ({ answers }: { answers: number[] }) => {
   const lottieRef = useRef<LottieRefCurrentProps | null>(null);
 
   useEffect(() => {
-    // ✅ answers를 Answer[] 타입으로 변환
-    const formattedAnswers: Answer[] = answers.map(
-      (answer) => answer as Answer
-    );
+    if (!answers || answers.length === 0) return; // ✅ answers가 undefined 또는 빈 배열일 경우 실행 방지
 
-    // ✅ 결과 계산 및 저장
-    const response = processTestResults(formattedAnswers);
-    updateFormData({ birdName: response.result.name });
-    setBirdType(response.result.name);
+    try {
+      // ✅ answers를 Answer[] 타입으로 변환 (값이 올바른지 검증)
+      const safeAnswers: Answer[] = answers.map((answer) => {
+        if (![0, 1, 2].includes(answer))
+          throw new Error("Invalid answer value");
+        return answer as Answer;
+      });
+
+      // ✅ 결과 계산 및 저장
+      const response = processTestResults(safeAnswers);
+      console.log("response", response);
+      updateFormData({ birdName: response.result.name });
+      setBirdType(response.result.name);
+    } catch (error) {
+      console.error("❌ BuddyTestLoading: answers 처리 중 오류 발생", error);
+    }
   }, [answers, updateFormData]);
 
   // ✅ 애니메이션 완료 핸들러
