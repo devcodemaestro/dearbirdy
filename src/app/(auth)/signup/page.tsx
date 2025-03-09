@@ -12,22 +12,17 @@ import { useSignupStore } from "@/store/useSignupStore";
 import BuddyTest from "@/components/signup/buddytest/BuddyTest";
 
 const SignUp = () => {
-  const { step } = useSignupStore();
-  const [showResult, setShowResult] = useState(false); // ✅ 상태 관리
+  const { step, hideNav } = useSignupStore();
 
   return (
     <div className="px-4 w-full">
-      {!showResult && <SignupNav />} {/* ✅ 결과 화면이면 SignupNav 숨김 */}
+      {!hideNav && step !== 4 && <SignupNav />}
       {step === 0 && <SignupIntro />}
       {step === 1 && <NicknameStep />}
       {step === 2 && <RoleStep />}
-      {step === 4 && <CategoryStep />}
-      {step === 5 && <CompleteStep />}
-      {step === 6 && !showResult && <BuddyTest />}
-      {/* ✅ BuddyResultCard에 `setShowResult` 필수로 전달 */}
-      {showResult && (
-        <BuddyResultCard birdType="앵무새" setShowResult={setShowResult} />
-      )}
+      {step === 3 && <CategoryStep />}
+      {step === 4 && <CompleteStep />}
+      {step === 5 && <BuddyTest />}
     </div>
   );
 };

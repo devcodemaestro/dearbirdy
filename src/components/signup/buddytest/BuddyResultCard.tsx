@@ -6,10 +6,10 @@ import Image from "next/image";
 import NextButton from "@/components/common/NextButton";
 import { getBirdData } from "@/services/buddyService";
 import { birdStyleMap, defaultBirdStyle } from "@/constants/birdStyles";
+import { useSignupStore } from "@/store/useSignupStore";
 
 interface BuddyResultCardProps {
   birdType: string;
-  setShowResult?: (value: boolean) => void; // ✅ 선택적 prop으로 추가
 }
 
 interface BirdData {
@@ -18,27 +18,33 @@ interface BirdData {
   explanation: string;
 }
 
-const BuddyResultCard = ({ birdType, setShowResult }: BuddyResultCardProps) => {
+const BuddyResultCard = ({ birdType }: BuddyResultCardProps) => {
   const router = useRouter();
+  const { setHideNav } = useSignupStore(); // ✅ Zustand에서 `hideNav` 상태 변경 함수 가져오기
   const [birdData, setBirdData] = useState<BirdData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (setShowResult) {
-      setShowResult(true); // ✅ 결과 화면이 나타나면 SignupNav 숨기기
-    }
-  }, [setShowResult]);
-
-  useEffect(() => {
-    const loadBirdData = async () => {
+    // ✅ `BuddyResultCard` 실행 시 `SignupNav` 숨김
+    setHideNav((prev: boolean) => {
+      if (!prev) return true; // ✅ 상태가 false일 때만 업데이트 (무한 루프 방지)
+      return prev;
+    });
+    const fetchData = async () => {
       setLoading(true);
+
       const data = await getBirdData(birdType);
       setBirdData(data);
+
       setLoading(false);
     };
 
-    loadBirdData();
-  }, [birdType]);
+    fetchData();
+
+    return () => {
+      setHideNav(false); // ✅ 언마운트될 때 `SignupNav` 다시 표시
+    };
+  }, []);
 
   const handleGoHome = () => {
     router.push("/home");

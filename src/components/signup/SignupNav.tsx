@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LeftArrow from "../Icons/common/LeftArrow";
 import { useRouter } from "next/navigation";
 import { useSignupStore } from "@/store/useSignupStore";
@@ -13,8 +13,11 @@ const SignupNav = ({ isResultVisible = false }: SignupNavProps) => {
 
   // 현재 단계에 따라 제목 텍스트 결정
   const getNavTitle = () => {
-    return step >= 6 ? "버디테스트" : "회원가입";
+    return step >= 5 ? "버디테스트" : "회원가입";
   };
+  useEffect(() => {
+    console.log(`🔄 현재 step: ${step}`);
+  }, [step]);
 
   const handleBack = () => {
     if (step === 0) {
