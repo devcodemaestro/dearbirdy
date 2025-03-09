@@ -61,7 +61,7 @@ const LetterDetailId: React.FC = () => {
       }
     };
     fetchLetterDetail();
-  }, [id, bookMark]);
+  }, [id, bookMark, showModal]);
 
   // 날짜 형식
   const formatDate = (dateString: string): string => {

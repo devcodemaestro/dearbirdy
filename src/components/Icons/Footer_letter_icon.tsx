@@ -2,13 +2,13 @@ import React from "react";
 
 interface SvgIconProps {
   fill?: string;
-  check?: boolean;
+  read?: boolean;
 }
 
-const LetterIcon: React.FC<SvgIconProps> = ({ fill, check }) => {
+const LetterIcon: React.FC<SvgIconProps> = ({ read, fill }) => {
   return (
     <>
-      {check ? (
+      {read ? (
         <svg
           width="25"
           height="24"
