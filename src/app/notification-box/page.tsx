@@ -65,7 +65,10 @@ const NotificationBox: React.FC = () => {
       </header>
       <main className="flex flex-col items-center justify-center">
         {notifications && notifications.length > 0 ? (
-          <YouthNotificationPage notifications={notifications} />
+          <YouthNotificationPage
+            userData={userData}
+            notifications={notifications}
+          />
         ) : (
           <div className="flex flex-col items-center justify-center w-screen mt-2">
             <Image

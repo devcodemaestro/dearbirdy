@@ -16,6 +16,15 @@ const Footer: React.FC = () => {
     if (currentItem) {
       setSelectedIcon(currentItem.id);
     }
+
+    const storedData = sessionStorage.getItem("userData");
+
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      console.log(parsedData);
+
+      setUserData(parsedData);
+    }
   }, [pathname]);
 
   const iconClicked = (id: number) => {
@@ -34,7 +43,10 @@ const Footer: React.FC = () => {
           className="flex flex-col items-center justify-center gap-1 cursor-pointer"
           onClick={() => iconClicked(id)}
         >
-          <Icon fill={selectedIcon === id ? "#292D32" : "#AEAEB2"} />
+          <Icon
+            read={userData?.read}
+            fill={selectedIcon === id ? "#292D32" : "#AEAEB2"}
+          />
           <span
             className={`text-center font-pretendard text-xs font-medium leading-4 tracking-tight ${
               selectedIcon === id ? "text-[#292D32]" : "text-[#AEAEB2]"
