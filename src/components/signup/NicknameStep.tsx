@@ -14,7 +14,7 @@ const isValidNickname = (nickname: string) => {
 };
 
 const NicknameStep = () => {
-  const { updateFormData, nextStep } = useSignupStore();
+  const { updateFormData, nextStep, step } = useSignupStore();
   const [nickname, setNickname] = useState(""); // 입력값
   const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(false);
@@ -72,9 +72,18 @@ const NicknameStep = () => {
 
   /** ✅ "다음" 버튼 클릭 시 닉네임 상태 최종 업데이트 후 단계 이동 */
   const handleNextStep = () => {
+    if (step !== 1) return; // ✅ 중복 실행 방지
     updateFormData({ nickname }); // ✅ 닉네임 최종 저장
-    nextStep(); // ✅ 다음 단계로 이동
+
+    // ✅ 상태가 업데이트된 후 `nextStep()` 실행
+    setTimeout(() => {
+      nextStep();
+    }, 0);
   };
+
+  useEffect(() => {
+    console.log(`📌 현재 step 상태 변경 감지: ${step}`);
+  }, [step]);
 
   return (
     <div>
