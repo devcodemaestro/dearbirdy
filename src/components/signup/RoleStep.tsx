@@ -27,15 +27,10 @@ const RoleStep = () => {
     }
   };
 
-  /** ✅ 약관 동의 모달 닫기 핸들러 - 순서 중요 */
+  /** ✅ 약관 동의 모달 닫기 핸들러 */
   const handleTermsClose = () => {
-    // 상태 업데이트를 비동기적으로 처리하기 위해 setTimeout 사용
-    setTimeout(() => {
-      setIsTermsOpen(false);
-      // 모달이 닫힌 후 다음 단계로 이동
-      const { setStep } = useSignupStore.getState();
-      setStep(4); // TermsStep(3)을 건너뛰고 CategoryStep(4)으로 직접 이동
-    }, 0);
+    setIsTermsOpen(false);
+    nextStep(); // ✅ 다음 단계(CategoryStep)로 이동
   };
 
   return (
@@ -69,7 +64,7 @@ const RoleStep = () => {
           />
         </div>
 
-        {/* ✅ 다음 버튼 (약관 모달이 열려도 위치 유지) */}
+        {/* ✅ 다음 버튼 */}
         <div
           className={`absolute bottom-10 flex justify-center ${
             isTermsOpen ? "opacity-0 pointer-events-none" : ""

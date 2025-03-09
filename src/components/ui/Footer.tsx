@@ -1,21 +1,12 @@
 "use client";
 
+import { menuItems } from "@/constants/menuItems";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import HomeIcon from "../Icons/Footer_home_icon";
-import LetterIcon from "../Icons/Footer_letter_icon";
-import MyBirdyIcon from "../Icons/Footer_mybirdy_icon";
-import { IUserData } from "@/app/(footershare)/home/page";
 
 const Footer: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const menuItems = [
-    { id: 1, Icon: HomeIcon, label: "홈", path: "/home" },
-    { id: 2, Icon: LetterIcon, label: "편지 보관함", path: "/letter-storage" },
-    { id: 3, Icon: MyBirdyIcon, label: "마이버디", path: "/new-page" },
-  ];
-  const [userData, setUserData] = useState<IUserData>();
 
   const initialIcon = menuItems.find((item) => item.path === pathname)?.id || 1;
   const [selectedIcon, setSelectedIcon] = useState<number>(initialIcon);

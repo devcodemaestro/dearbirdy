@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 interface SignupState {
   step: number;
+  hideNav: boolean; // ✅ 특정 상황에서 `SignupNav` 숨기는 상태 추가
   formData: {
     nickname: string;
     userRole: string;
@@ -18,6 +19,7 @@ interface SignupState {
     birdName: string;
   };
   setStep: (step: number) => void;
+  setHideNav: (hide: boolean | ((prev: boolean) => boolean)) => void;
   nextStep: () => void;
   prevStep: () => void;
   updateFormData: (data: Partial<SignupState["formData"]>) => void;
@@ -26,6 +28,7 @@ interface SignupState {
 
 export const useSignupStore = create<SignupState>((set) => ({
   step: 0,
+  hideNav: false, // 기본값은 false (SignupNav 표시)
   formData: {
     nickname: "",
     userRole: "",
@@ -42,6 +45,10 @@ export const useSignupStore = create<SignupState>((set) => ({
     birdName: "",
   },
   setStep: (step) => set({ step }),
+  setHideNav: (hide) =>
+    set((state) => ({
+      hideNav: typeof hide === "function" ? hide(state.hideNav) : hide,
+    })),
   nextStep: () => set((state) => ({ step: state.step + 1 })),
   prevStep: () => set((state) => ({ step: Math.max(0, state.step - 1) })),
   updateFormData: (data) =>
