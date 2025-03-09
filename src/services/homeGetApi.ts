@@ -23,7 +23,29 @@ export const getUserInfo = async () => {
   }
 };
 
-// 홈화면 전체 알림
+// 홈화면 실시간 알림
+
+export const getNotification = async () => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/v1/notification/subscribe`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          access: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
+
+// 홈화면 전체 알림 리스트
 
 export const getNotificationList = async () => {
   try {

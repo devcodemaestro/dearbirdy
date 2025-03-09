@@ -8,8 +8,6 @@ interface IProps {
 }
 
 const Header: React.FC<IProps> = ({ userData }) => {
-  console.log(userData.read);
-
   return (
     <header className="flex items-center justify-center w-full h-[56px] mt-[59px]  px-4">
       <div className="container flex items-center justify-between mx-auto">

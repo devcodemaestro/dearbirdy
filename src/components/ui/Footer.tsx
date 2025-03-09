@@ -23,7 +23,6 @@ const Footer: React.FC = () => {
 
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-      console.log(parsedData);
 
       setUserData(parsedData);
     }

@@ -15,7 +15,6 @@ const HomeMainSenior: React.FC<IProps> = ({ userData }) => {
   const serviceLimit = false;
 
   const router = useRouter();
-  console.log(userData);
 
   return (
     <main className="flex-grow mt-[8px]  px-4">

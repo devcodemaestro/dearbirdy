@@ -86,7 +86,7 @@ const YouthLetterStorage: React.FC = () => {
         </header>
         {/* 메인 */}
         {data?.pageParams ? (
-          <main className="overflow-y-auto mt-[110px] min-h-[calc(100vh)]">
+          <main className="overflow-y-auto mt-[120px] min-h-[calc(100vh)]">
             <div className="grid w-full grid-cols-2 gap-2">
               {data?.pages.map((page) =>
                 page.dataList.map((letter: Letter) => (
@@ -95,7 +95,11 @@ const YouthLetterStorage: React.FC = () => {
                     onClick={() =>
                       router.push(`/letter-detail/${letter.letterStatusSeq}`)
                     }
-                    className="rounded-[16px] h-[182px] bg-white flex flex-col flex-1 p-4"
+                    className={`rounded-[16px] h-[182px] bg-white flex flex-col flex-1 p-4 ${
+                      !letter.read && letter.nickname !== "익명새"
+                        ? "border border-[#84A667] rounded-[16px] "
+                        : "none"
+                    } `}
                   >
                     <div className="flex justify-between">
                       <Image

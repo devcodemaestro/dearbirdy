@@ -17,16 +17,18 @@ import {
   useInfiniteQuery,
 } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
+import { useLetterInfoStore } from "@/store/letterInfoStore";
 
 const queryClient = new QueryClient();
 
 const SeniorLetterStorage: React.FC = () => {
   const category = ["전체", "답장 해야하는 편지", "저장한 편지"];
-  const [cateNum, setCateNum] = useState<number>(1);
-  const { bookMark } = useBookMarkStore();
   const router = useRouter();
-
+  const [cateNum, setCateNum] = useState<number>(1);
   const [showToast, setShowToast] = useState(false);
+
+  const { bookMark } = useBookMarkStore();
+  const { setBirdName, setLetterStatusSeq, setNickname } = useLetterInfoStore();
 
   const fetchLetters = async ({ pageParam }: { pageParam: number }) => {
     if (cateNum === 1) return await getLetterAll(pageParam);
@@ -50,9 +52,6 @@ const SeniorLetterStorage: React.FC = () => {
   const { ref, inView } = useInView();
 
   useEffect(() => {
-    console.log(data);
-    console.log("hasNextPage: ", hasNextPage);
-    console.log("isFetchingNextPage: ", isFetchingNextPage);
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
@@ -87,16 +86,28 @@ const SeniorLetterStorage: React.FC = () => {
           ))}
         </header>
         {data?.pageParams ? (
-          <main className="overflow-y-auto mt-[110px] min-h-[calc(100vh)]">
+          <main className="overflow-y-auto mt-[120px] min-h-[calc(100vh)]">
             <div className="grid w-full min-w-[343px] grid-cols-2 gap-2">
               {data?.pages.map((page) =>
                 page.dataList.map((letter: Letter) => (
                   <div
                     key={letter.letterStatusSeq}
-                    onClick={() =>
-                      router.push(`/letter-detail/${letter.letterStatusSeq}`)
-                    }
-                    className="rounded-[16px] h-[182px] bg-white flex flex-col flex-1 p-4"
+                    onClick={() => {
+                      if (letter.read) {
+                        router.push(`/letter-detail/${letter.letterStatusSeq}`);
+                      } else {
+                        setNickname(letter.nickname);
+                        setBirdName(letter.birdName);
+                        setLetterStatusSeq(letter.letterStatusSeq);
+
+                        router.push(`/letter-open`);
+                      }
+                    }}
+                    className={`rounded-[16px] h-[182px] bg-white flex flex-col flex-1 p-4 ${
+                      !letter.read && letter.nickname !== "익명새"
+                        ? "border border-[#84A667] rounded-[16px] "
+                        : "none"
+                    } `}
                   >
                     <div className="flex justify-between">
                       <Image
