@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BookMarkIcon from "../Icons/Bookmark_icon";
 import {
   getLetterAll,
@@ -48,7 +48,15 @@ const SeniorLetterStorage: React.FC = () => {
         return undefined;
       },
     });
+  const isFirstRender = useRef(true);
+  const [shouldApplyCondition, setShouldApplyCondition] = useState(false);
 
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false; // 첫 렌더링 후 false로 변경
+      setShouldApplyCondition(data?.pages[0].totalPage !== 0);
+    }
+  }, []);
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -66,6 +74,8 @@ const SeniorLetterStorage: React.FC = () => {
     return <div className="mt-10 text-center">로딩 중...</div>;
   }
 
+  console.log(data?.pages[0].totalPage);
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="mb-[60px]">
@@ -74,7 +84,11 @@ const SeniorLetterStorage: React.FC = () => {
           {category.map((title, idx) => (
             <span
               key={idx}
-              onClick={() => setCateNum(idx + 1)}
+              onClick={() => {
+                if (shouldApplyCondition) {
+                  setCateNum(idx + 1);
+                }
+              }}
               className={`px-3.5 py-1.5 rounded-[20px] min-w-[53px] text-center ${
                 cateNum === idx + 1
                   ? "bg-[#292D32] text-[#FFF]"
@@ -85,7 +99,7 @@ const SeniorLetterStorage: React.FC = () => {
             </span>
           ))}
         </header>
-        {data?.pageParams ? (
+        {shouldApplyCondition ? (
           <main className="overflow-y-auto mt-[120px] min-h-[calc(100vh)]">
             <div className="grid w-full min-w-[343px] grid-cols-2 gap-2">
               {data?.pages.map((page) =>
@@ -152,7 +166,7 @@ const SeniorLetterStorage: React.FC = () => {
         ) : (
           // 데이터 없을때 UI
           <>
-            <main className="flex flex-grow">
+            <main className="flex flex-grow mt-[120px]">
               <div className="flex flex-col items-center w-full rounded-[30px] border border-[#F4F5EF] bg-white px-4">
                 <p className="text-[#292D32] text-center font-medium text-[16px] leading-[24px] tracking-[-0.064px] mt-[32px]">
                   조금만 기다려 주세요

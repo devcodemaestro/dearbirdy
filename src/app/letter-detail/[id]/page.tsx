@@ -9,7 +9,7 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-interface ILetter {
+export interface ILetter {
   letterSeq: number;
   replyUserBird: string;
   replyUser: string;
@@ -21,7 +21,7 @@ interface ILetter {
   sendUser: string;
 }
 
-interface IData {
+export interface IData {
   replyLetter: ILetter;
   sendLetter: ILetter;
   saved: boolean;

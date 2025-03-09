@@ -25,6 +25,8 @@ const BirdyTip: React.FC = () => {
     fetchData();
   }, []);
 
+  if (!tip) return;
+
   return (
     <div className="flex flex-col p-[20px_24px] justify-center items-start rounded-[16px] bg-[#FFF] mt-4 px-6 py-5">
       <div className="flex items-center w-full gap-4">
