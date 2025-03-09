@@ -4,17 +4,33 @@ import Image from "next/image";
 import InfoBox from "../../common/InfoBox";
 import NextButton from "../../common/NextButton";
 import { useSignupStore } from "@/store/useSignupStore";
+import { useEffect } from "react";
 
 interface BuddyTestIntroProps {
   onStart: () => void;
 }
 
 const BuddyTestIntro: React.FC<BuddyTestIntroProps> = ({ onStart }) => {
+  const { setHideNav } = useSignupStore(); // ✅ Zustand에서 `hideNav` 상태 변경 함수 가져오기
+
   // Zustand 스토어에서 사용자 닉네임 가져오기
   const { formData } = useSignupStore();
   const nickname = formData.nickname || ""; // 닉네임이 없을 경우 빈 문자열로 처리
+
+  useEffect(() => {
+    // ✅ `BuddyResultCard` 실행 시 `SignupNav` 숨김
+    setHideNav((prev: boolean) => {
+      if (!prev) return true; // ✅ 상태가 false일 때만 업데이트 (무한 루프 방지)
+      return prev;
+    });
+
+    return () => {
+      setHideNav(false); // ✅ 언마운트될 때 `SignupNav` 다시 표시
+    };
+  }, []);
+
   return (
-    <div className="p-4">
+    <div className="p-4 mt-24">
       {/* InfoBox 컴포넌트 적용 */}
       <InfoBox
         imageSrc="/images/signup/bluebird-2.svg"
