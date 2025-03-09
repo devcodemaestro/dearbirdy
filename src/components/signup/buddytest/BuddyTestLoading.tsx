@@ -29,9 +29,9 @@ const BuddyTestLoading = ({ answers }: { answers: number[] }) => {
     );
 
     // ✅ 결과 계산 및 저장
-    const result = processTestResults(formattedAnswers);
-    updateFormData({ birdName: result.result.name });
-    setBirdType(result.result.name);
+    const response = processTestResults(formattedAnswers);
+    updateFormData({ birdName: response.result.name });
+    setBirdType(response.result.name);
   }, [answers, updateFormData]);
 
   // ✅ 애니메이션 완료 핸들러
