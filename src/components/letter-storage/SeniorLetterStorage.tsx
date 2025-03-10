@@ -45,14 +45,15 @@ const SeniorLetterStorage: React.FC = () => {
       },
     });
   const isFirstRender = useRef(true);
-  const [shouldApplyCondition, setShouldApplyCondition] = useState(false);
+  const [shouldApplyCondition, setShouldApplyCondition] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false; // 첫 렌더링 후 false로 변경
-      setShouldApplyCondition(data?.pages[0].totalPage !== 0);
     }
-  }, []);
+    setShouldApplyCondition(data?.pages[0].totalPage !== 0);
+  }, [isLoading]);
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -69,8 +70,6 @@ const SeniorLetterStorage: React.FC = () => {
   if (isLoading) {
     return <div className="mt-10 text-center">로딩 중...</div>;
   }
-
-  console.log(data?.pages[0].totalPage);
 
   return (
     <QueryClientProvider client={queryClient}>

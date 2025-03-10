@@ -85,8 +85,8 @@ const ReplyPreview: React.FC<IProps> = ({ setPreviewModal }) => {
             width={50}
             height={50}
           />
-          <p className="text-[#000] text-[23px] font-normal leading-[27.6px]">
-            Dear, {letter?.replyLetter.replyUser}
+          <p className="text-[#000] text-[23px] font-normal leading-[27.6px] text-bold iceJaram-Rg">
+            Dear. {letter?.replyLetter.replyUser}
           </p>
           <span className="p-[1px_6px] rounded-[6px] bg-[#E5E5EA] text-[#6B7178] text-center text-[14px] font-medium leading-[20px] tracking-[-0.056px]">
             {letter?.replyLetter.categoryName}
@@ -98,8 +98,8 @@ const ReplyPreview: React.FC<IProps> = ({ setPreviewModal }) => {
         <p className="text-[#8E8E93] text-right text-[12px] font-normal leading-[16px] tracking-[-0.048px]">
           {replyDate}
         </p>
-        <span className="text-[#292D32] text-right font-[Sandoll BaikzongyulPil] text-[18px] font-normal leading-[21.6px]">
-          {letter?.replyLetter.sendUser}
+        <span className="text-[#292D32] text-right font-[Sandoll BaikzongyulPil] text-[18px] font-normal leading-[21.6px] text-bold iceJaram-Rg">
+          from. {letter?.replyLetter.sendUser}
         </span>
       </div>
     </div>

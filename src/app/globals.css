@@ -1,5 +1,27 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Ownglyph_wiseelist-Rg";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/Ownglyph_wiseelist-Rg.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "iceJaram-Rg";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/iceJaram-Rg.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  .iceJaram-Rg {
+    font-family: "iceJaram-Rg", cursive;
+  }
+}
+
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

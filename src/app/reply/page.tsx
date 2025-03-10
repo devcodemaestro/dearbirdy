@@ -33,7 +33,7 @@ const ReplyPage: React.FC = () => {
 
   const [charCount, setCharCount] = useState<string>("");
 
-  const [previewModal, setPreviewModal] = useState(true);
+  const [previewModal, setPreviewModal] = useState(false);
 
   const [guideModal, setGuideModal] = useState(false);
   const { categoryName, letterStatusSeq } = useLetterInfoStore();
@@ -119,7 +119,7 @@ const ReplyPage: React.FC = () => {
                 required: "편지 제목을 입력 해 주세요",
               })}
               placeholder="이 편지의 제목을 알려주세요"
-              className="text-[#000] placeholder-[#C7C7CC] text-[16px] font-medium leading-6 tracking-[-0.064px] 
+              className="text-[#292D32] placeholder-[#C7C7CC] text-[16px] font-medium leading-6 tracking-[-0.064px] 
               focus:outline-none"
             />
             {errors.title && (
@@ -135,7 +135,7 @@ const ReplyPage: React.FC = () => {
                 required: "편지 내용을 입력해주세요",
               })}
               placeholder="편지 내용을 입력해주세요"
-              className="text-[#000] placeholder-[#C7C7CC] text-[16px] font-medium leading-6 tracking-[-0.064px] min-h-[280px] focus:outline-none"
+              className="text-[#292D32] placeholder-[#C7C7CC] text-[16px] font-medium leading-6 tracking-[-0.064px] min-h-[280px] focus:outline-none"
               onChange={(e) => handleChange(e.target.value)}
             />
             {errors.letter && (

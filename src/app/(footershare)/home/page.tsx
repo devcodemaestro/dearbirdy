@@ -63,7 +63,8 @@ const Home: React.FC = () => {
   return (
     <>
       <Header userData={userData} />
-      {userData.userRole === "MENTOR" ? (
+
+      {userData.roleName === "MENTOR" ? (
         <HomeMainSenior userData={userData} />
       ) : (
         <HomeMainYouth userData={userData} />

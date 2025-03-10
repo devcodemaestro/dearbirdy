@@ -78,7 +78,7 @@ const NotificationBox: React.FC = () => {
               height={70}
               className="mt-[54px]"
             />
-            <span className="text-[#000] text-[14px] font-normal leading-[22px] tracking-[-0.056px] mt-4">
+            <span className="text-[#292D32] text-[14px] font-normal leading-[22px] tracking-[-0.056px] mt-4">
               새로운 알림이 없어요
             </span>
           </div>
