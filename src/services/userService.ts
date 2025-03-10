@@ -1,5 +1,6 @@
 "use client";
 
+import { Bird } from "@/components/letter/SelectBird";
 import api from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
 
@@ -34,5 +35,176 @@ export const checkNickname = async (nickname: string): Promise<boolean> => {
   } catch (error) {
     console.error("❌ 닉네임 중복 확인 실패:", error);
     return false; // 오류 발생 시 중복된 것으로 처리
+  }
+};
+
+// 편지 보관함 전체
+export const getLetterAll = async (pageNum: number) => {
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+
+    const response = await api.get(`/letter/list/all?pageNumber=${pageNum}`, {
+      headers: {
+        access: accessToken,
+      },
+    });
+
+    console.log("편지 전체 데이터:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
+
+// 편지 보관함 답장 기다리는 편지
+export const getLetterWait = async (pageNum: number) => {
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+
+    const response = await api.get(
+      `/letter/list/pending?pageNumber=${pageNum}`,
+      {
+        headers: {
+          access: accessToken,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
+
+// 편지 보관함 저장한 편지
+export const getLetterSaved = async (pageNum: number) => {
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+
+    const response = await api.get(
+      `/letter/list/archive?pageNumber=${pageNum}`,
+      {
+        headers: {
+          access: accessToken,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
+
+// 편지 보관함 저장
+export const LetterSave = async (letterStatusSeq: number) => {
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+    console.log("letterStatusSeq: ", letterStatusSeq);
+
+    const response = await api.get(
+      `/letter/archive?letterStatusSeq=${letterStatusSeq}`,
+      {
+        headers: {
+          access: accessToken,
+        },
+      }
+    );
+    console.log("저장", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
+
+// 버디팁
+export const birdyTip = async () => {
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+    const response = await api.get(`/birdy/tip`, {
+      headers: {
+        access: accessToken,
+      },
+    });
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
+
+/** ✅ 편지 작성시 버디 유형 조회 API */
+// 📌 API 응답 타입 정의
+export interface Bird {
+  birdName: string;
+  traits: string;
+  explanation: string;
+}
+
+export interface BirdApiResponse {
+  code: number;
+  status: string;
+  message: string;
+  data: {
+    birdyList: Bird[];
+  };
+}
+
+// ✅ API 호출 함수의 반환 타입을 명확하게 지정
+export const getBirdyInfo = async (): Promise<BirdApiResponse> => {
+  console.log("✅ 사용자 정보 요청 시작");
+
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+    if (!accessToken) {
+      throw new Error("❌ access_token이 없음. 로그인 필요");
+    }
+
+    const response = await api.get<BirdApiResponse>(`/birdy/letter/birdy`, {
+      headers: {
+        access: `{${accessToken}}`,
+      },
+    });
+
+    console.log("✅ 사용자 정보 조회 성공:", response.data);
+    return response.data; // ✅ response.data를 반환하여 활용 가능
+  } catch (error) {
+    console.error("❌ 사용자 정보 조회 실패:", error);
+    throw error;
+  }
+};
+
+/** ✅ 편지 전송 API */
+export interface LetterPayload {
+  birdName: string;
+  categoryName: string;
+  title: string;
+  letter: string;
+}
+
+export const postLetter = async (payload: LetterPayload) => {
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+    if (!accessToken) {
+      throw new Error("❌ access_token이 없음. 로그인 필요");
+    }
+
+    const response = await api.post(`/letter/send`, payload, {
+      headers: {
+        access: accessToken,
+      },
+    });
+
+    console.log("✅ 편지 전송 성공:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("❌ 편지 전송 실패:", error);
+    throw error;
   }
 };

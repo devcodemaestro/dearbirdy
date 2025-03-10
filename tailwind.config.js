@@ -20,17 +20,13 @@ module.exports = {
         white2: "#F9F8F3",
       },
       keyframes: {
-        "slide-up": {
-          "0%": {
-            transform: "translateY(100%)",
-          },
-          "100%": {
-            transform: "translateY(0)",
-          },
+        slideUp: {
+          "0%": { transform: "translateY(100%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
         },
       },
       animation: {
-        "slide-up": "slideUp 1s ease-in-out infinite",
+        "slide-up": "slideUp 0.5s ease-in-out forwards",
       },
     },
   },

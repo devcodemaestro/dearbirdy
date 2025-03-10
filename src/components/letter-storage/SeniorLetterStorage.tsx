@@ -2,15 +2,16 @@
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import BookMarkIcon from "../Icons/Bookmark_icon";
-import {
-  getLetterAll,
-  getLetterSaved,
-  getLetterWait,
-} from "@/services/letterStorage";
+
 import { useRouter } from "next/navigation";
 import { useBookMarkStore } from "@/store/bookMarkStore";
 import { IData } from "@/app/(footershare)/letter-storage/page";
 import BirdyTip from "./BirdyTip";
+import {
+  getLetterAll,
+  getLetterSaved,
+  getLetterWait,
+} from "@/services/userService";
 
 const SeniorLetterStorage: React.FC = () => {
   const category = ["전체", "답장 해야하는 편지", "저장한 편지"];
