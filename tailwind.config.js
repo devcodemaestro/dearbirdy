@@ -1,9 +1,9 @@
-// tailwind.config.js
 module.exports = {
   content: [
     "./src/app/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
+
   theme: {
     extend: {
       screens: {
@@ -18,6 +18,9 @@ module.exports = {
         background: "#F9F8F3",
         white1: "#FFFFFF",
         white2: "#F9F8F3",
+      },
+      fontFamily: {
+        nanumBrush: ["var(--font-nanumBrush)", "cursive"],
       },
       keyframes: {
         "slide-up": {

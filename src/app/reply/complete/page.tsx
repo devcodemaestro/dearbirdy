@@ -17,13 +17,15 @@ const LetterReplyCompletePage: React.FC = () => {
             마음을 정성껏 전달할 거에요
           </p>
         </div>
-        <Image
-          src="/images/letter/답장_카나리아.svg"
-          alt="답장하는새 이미지"
-          width={217}
-          height={167}
-          className="mt-[117px]"
-        />
+        {/* 애니메이션 */}
+        {/* <div className="mt-[117px]">
+        {animationData && (
+          <Lottie
+            animationData={animationData}
+            style={{ width: 216, height: 167 }}
+          />
+        )}
+      </div> */}
         <div className="rounded-[12px] border border-[#E5E5EA] bg-[#F0F1EC] flex w-[343px] p-[10px_16px] justify-between items-center mt-[154px]">
           <div className="flex flex-col items-start justify-start">
             <p className="text-[#6B7178] text-center text-[14px] font-normal leading-[22px] tracking-[-0.056px]">

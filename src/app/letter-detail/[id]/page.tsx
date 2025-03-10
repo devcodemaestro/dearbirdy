@@ -255,8 +255,8 @@ const LetterDetailId: React.FC = () => {
                     width={50}
                     height={50}
                   />
-                  <p className="text-[#000] text-[23px] font-normal leading-[27.6px]">
-                    Dear, {letter.replyLetter.replyUser}
+                  <p className="text-[#292D32] text-[23px] leading-[27.6px] font-bold iceJaram-Rg">
+                    Dear. {letter.replyLetter.replyUser}
                   </p>
                   <span className="p-[1px_6px] rounded-[6px] bg-[#E5E5EA] text-[#6B7178] text-center text-[14px] font-medium leading-[20px] tracking-[-0.056px]">
                     {letter.replyLetter.categoryName}
@@ -277,8 +277,8 @@ const LetterDetailId: React.FC = () => {
                     width={24}
                     height={24}
                   />
-                  <span className="text-right text-[#292D32] font-sandoll-baikzongyulpil text-[18px] font-normal leading-[21.6px]">
-                    from, {letter.replyLetter.sendUser}
+                  <span className="text-right text-[#292D32] font-sandoll-baikzongyulpil text-[18px] leading-[21.6px] font-bold iceJaram-Rg">
+                    from. {letter.replyLetter.sendUser}
                   </span>
                 </div>
                 {/* 고마움 표시 및 고마움 전달 */}
@@ -366,8 +366,8 @@ const LetterDetailId: React.FC = () => {
                   width={50}
                   height={50}
                 />
-                <p className="text-[#000] text-[23px] font-normal leading-[27.6px]">
-                  Dear, {letter.sendLetter.replyUser}
+                <p className="text-[#292D32] text-[23px] leading-[27.6px] font-bold iceJaram-Rg">
+                  Dear. {letter.sendLetter.replyUser}
                 </p>
                 <span className="p-[1px_6px] rounded-[6px] bg-[#E5E5EA] text-[#6B7178] text-center text-[14px] font-medium leading-[20px] tracking-[-0.056px]">
                   {letter.sendLetter.categoryName}
@@ -388,8 +388,8 @@ const LetterDetailId: React.FC = () => {
                   width={24}
                   height={24}
                 />
-                <span className="text-right text-[#292D32] font-sandoll-baikzongyulpil text-[18px] font-normal leading-[21.6px]">
-                  from, {letter.sendLetter.sendUser}
+                <span className="text-right text-[#292D32] font-sandoll-baikzongyulpil text-[18px] leading-[21.6px] font-bold iceJaram-Rg">
+                  from. {letter.sendLetter.sendUser}
                 </span>
               </div>
             </div>
@@ -466,8 +466,8 @@ const LetterDetailId: React.FC = () => {
                   width={50}
                   height={50}
                 />
-                <p className="text-[#000] text-[23px] font-normal leading-[27.6px]">
-                  Dear, {letter.sendLetter.replyUser}
+                <p className="text-[#292D32] text-[23px] leading-[27.6px] font-bold iceJaram-Rg">
+                  Dear. {letter.sendLetter.replyUser}
                 </p>
                 <span className="p-[1px_6px] rounded-[6px] bg-[#E5E5EA] text-[#6B7178] text-center text-[14px] font-medium leading-[20px] tracking-[-0.056px]">
                   {letter.sendLetter.categoryName}
@@ -482,8 +482,8 @@ const LetterDetailId: React.FC = () => {
                 {sendDate}
               </p>
               <div className="flex items-center justify-center gap-2">
-                <span className="text-right text-[#292D32] font-sandoll-baikzongyulpil text-[18px] font-normal leading-[21.6px]">
-                  from, {letter.sendLetter.sendUser}
+                <span className="text-right text-[#292D32] font-sandoll-baikzongyulpil text-[18px] leading-[21.6px] font-bold iceJaram-Rg">
+                  from. {letter.sendLetter.sendUser}
                 </span>
               </div>
               {letter.thanksToMentor && (
@@ -513,9 +513,12 @@ const LetterDetailId: React.FC = () => {
       ) : (
         // 답장 기다리고 있을때 배너
         <div className="w-[342px] p-[14px] flex flex-col items-center gap-[8px] border border-[#4CA7D0] bg-[#F0FDFF] rounded-[14px]">
-          <p className="text-[#6B7178] text-center text-[14px] font-bold leading-[20px] tracking-[-0.056px]">
+          {/* <p className="text-[#6B7178] text-center text-[14px] font-bold leading-[20px] tracking-[-0.056px]">
             답장 시간이 D일 hh시간 남았어요
           </p>
+          <p className="text-[#292D32] text-center text-[16px] font-normal leading-[24px] track ing-[-0.064px]">
+            후배버디가 답장을 기다리고 있어요.
+          </p> */}
           <p className="text-[#292D32] text-center text-[16px] font-normal leading-[24px] track ing-[-0.064px]">
             후배버디가 답장을 기다리고 있어요.
           </p>
@@ -545,8 +548,8 @@ const LetterDetailId: React.FC = () => {
                 width={50}
                 height={50}
               />
-              <p className="text-[#000] text-[23px] font-normal leading-[27.6px]">
-                Dear, {letter.replyLetter.replyUser}
+              <p className="text-[#292D32] text-[23px]  leading-[27.6px] font-bold iceJaram-Rg">
+                Dear. {letter.replyLetter.replyUser}
               </p>
               <span className="p-[1px_6px] rounded-[6px] bg-[#E5E5EA] text-[#6B7178] text-center text-[14px] font-medium leading-[20px] tracking-[-0.056px]">
                 {letter.replyLetter.categoryName}
@@ -561,8 +564,8 @@ const LetterDetailId: React.FC = () => {
               {replyDate}
             </p>
             <div className="flex items-center justify-center gap-2">
-              <span className="text-right text-[#292D32] font-sandoll-baikzongyulpil text-[18px] font-normal leading-[21.6px]">
-                from, {letter.replyLetter.sendUser}
+              <span className="text-right text-[#292D32] font-sandoll-baikzongyulpil text-[18px] font-bold iceJaram-Rg leading-[21.6px]">
+                from. {letter.replyLetter.sendUser}
               </span>
             </div>
           </div>
