@@ -12,7 +12,6 @@ const Footer: React.FC = () => {
 
   const initialIcon = menuItems.find((item) => item.path === pathname)?.id || 1;
   const [selectedIcon, setSelectedIcon] = useState<number>(initialIcon);
-  const [userData, setUserData] = useState<IUserData>();
 
   useEffect(() => {
     const currentItem = menuItems.find((item) => item.path === pathname);

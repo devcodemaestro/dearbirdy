@@ -5,6 +5,7 @@ import BuddyTestIntro from "./BuddyTestIntro";
 import BuddyTestStep from "./BuddyTestStep";
 import BuddyTestLoading from "./BuddyTestLoading";
 import { useBuddyTestStore } from "@/store/useBuddyTestStore";
+import { Answer } from "@/constants/buddyTestQuestions";
 
 const BuddyTest = () => {
   const { testStep, setTestStep, setAnswer, calculateResults } =
@@ -22,7 +23,7 @@ const BuddyTest = () => {
     }
   }, [setTestStep]);
 
-  const handleAnswer = (answer: number) => {
+  const handleAnswer = (answer: Answer) => {
     setAnswer(testStep - 1, answer); // ✅ 응답 저장
     if (testStep === 12) {
       calculateResults(); // ✅ 마지막 질문에 도달하면 결과 계산
