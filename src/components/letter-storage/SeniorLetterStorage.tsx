@@ -14,6 +14,11 @@ import {
 } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import { useLetterInfoStore } from "@/store/letterInfoStore";
+import {
+  getLetterAll,
+  getLetterSaved,
+  getLetterWait,
+} from "@/services/letterStorage";
 
 const queryClient = new QueryClient();
 

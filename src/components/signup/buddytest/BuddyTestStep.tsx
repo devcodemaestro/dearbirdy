@@ -1,11 +1,11 @@
 "use client";
 
-import { questions } from "@/constants/buddyTestQuestions";
+import { Answer, questions } from "@/constants/buddyTestQuestions";
 import { useEffect, useState } from "react";
 
 interface BuddyTestStepProps {
   step: number;
-  onAnswer: (answer: number) => void;
+  onAnswer: (answer: Answer) => void;
 }
 
 const BuddyTestStep = ({ step, onAnswer }: BuddyTestStepProps) => {
@@ -22,7 +22,7 @@ const BuddyTestStep = ({ step, onAnswer }: BuddyTestStepProps) => {
 
     // ✅ 선택 후 다음 질문으로 이동
     setTimeout(() => {
-      onAnswer(answer);
+      onAnswer(answer as Answer);
     }, 300);
   };
 
@@ -63,7 +63,7 @@ const BuddyTestStep = ({ step, onAnswer }: BuddyTestStepProps) => {
             }`}
             onClick={() => handleSelect(option.value)}
           >
-            <span className="text-xl mr-2">{option.emoji}</span>
+            <span className="mr-2 text-xl">{option.emoji}</span>
             <span className="text-base font-medium">{option.label}</span>
           </button>
         ))}
