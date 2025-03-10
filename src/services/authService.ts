@@ -36,3 +36,66 @@ export const getAccessToken = async (code: string) => {
     throw error;
   }
 };
+
+// ✅ 추가 정보 등록 API
+export const postAdditionalInfo = async (userData: {
+  birdName: string;
+  nickname: string;
+  userRole: string;
+  userCategory: {
+    career: boolean;
+    mental: boolean;
+    relationship: boolean;
+    love: boolean;
+    life: boolean;
+    finance: boolean;
+    housing: boolean;
+    other: boolean;
+  };
+}) => {
+  console.log("✅ 추가 정보 등록 API 호출");
+
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+    if (!accessToken) {
+      throw new Error("❌ access_token이 없음. 로그인 필요");
+    }
+
+    const response = await api.post("/user/additional-info", userData, {
+      headers: {
+        access: accessToken,
+      },
+    });
+
+    console.log("✅ 추가 정보 등록 성공:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("❌ 추가 정보 등록 실패:", error);
+    throw error;
+  }
+};
+
+/** ✅ 사용자 정보 조회 API */
+export const getUserInfo = async () => {
+  console.log("✅ 사용자 정보 요청 시작");
+
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+    if (!accessToken) {
+      throw new Error("❌ access_token이 없음. 로그인 필요");
+    }
+
+    const response = await api.get(`/user/info`, {
+      headers: {
+        access: `{${accessToken}}`,
+      },
+    });
+
+    console.log("✅ 사용자 정보 조회 성공:", response.data);
+
+    return response.data; // ✅ response.data를 반환하여 활용 가능
+  } catch (error) {
+    console.error("❌ 사용자 정보 조회 실패:", error);
+    throw error;
+  }
+};

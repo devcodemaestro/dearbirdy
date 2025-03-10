@@ -1,8 +1,9 @@
 "use client";
 
 import Logo from "@/components/Icons/common/Logo";
-import KakaoLogin, { handleKakaoLogin } from "@/components/ui/KakaoLogin";
+import KakaoLogin from "@/components/ui/KakaoLogin";
 import { useAuthStore } from "@/store/authStore";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -20,7 +21,7 @@ export default function MainPage() {
       console.log("✅ 온보딩 완료된 사용자 → 메인 페이지로 이동");
       setLoading(false);
     }
-  }, []);
+  }, [router]);
 
   if (loading)
     return (
@@ -41,12 +42,12 @@ export default function MainPage() {
         <p className="text-base font-normal leading-6 tracking-tight">
           이미 디어버디 회원이신가요?
         </p>
-        <div
-          onClick={handleKakaoLogin}
-          className="hover:underline text-base font-bold leading-6 tracking-tight cursor-pointer"
+        <Link
+          href="/callback"
+          className="hover:underline text-base font-bold leading-6 tracking-tight"
         >
           로그인
-        </div>
+        </Link>
       </div>
 
       {/* 카카오 로그인 버튼 */}

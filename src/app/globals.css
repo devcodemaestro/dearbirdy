@@ -16,20 +16,28 @@
     --foreground: #ededed;
   }
 }
-/* 기존 스타일 */
-.swiper-pagination-bullet {
-  background-color: #e5e5ea !important;
-  width: 8px;
-  height: 8px;
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Pretendard", sans-serif;
 }
 
-/* 활성화된 bullet 색상 */
-.swiper-pagination-bullet-active {
+/* ✅ 온보딩 Swiper 전용 스타일 */
+.onboarding-swiper .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #e5e5ea !important;
+  opacity: 1;
+}
+
+.onboarding-swiper .swiper-pagination-bullet-active {
   background-color: #ff6365 !important;
 }
 
-/* 페이지네이션 위치 커스텀 */
-.swiper-pagination {
+/* 페이지네이션 위치 커스텀 (온보딩) */
+.onboarding-swiper .swiper-pagination {
   position: absolute;
   top: 8.5rem !important;
   bottom: auto !important;
@@ -45,8 +53,22 @@
   height: 20px;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: "Pretendard", sans-serif;
+/* ✅ SelectBird Swiper 전용 스타일 */
+.select-bird-swiper .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #e5e5ea !important;
+  opacity: 1;
+}
+
+.select-bird-swiper .swiper-pagination-bullet-active {
+  background-color: #84a667 !important;
+}
+
+/* 페이지네이션 위치 조정 (SelectBird) */
+.select-bird-swiper .swiper-pagination {
+  position: relative;
+  bottom: -15px;
+  text-align: center;
 }
