@@ -26,6 +26,7 @@ const LetterReplyCompletePage: React.FC = () => {
           />
         )}
       </div> */}
+        <div></div>
         <div className="rounded-[12px] border border-[#E5E5EA] bg-[#F0F1EC] flex w-[343px] p-[10px_16px] justify-between items-center mt-[154px]">
           <div className="flex flex-col items-start justify-start">
             <p className="text-[#6B7178] text-center text-[14px] font-normal leading-[22px] tracking-[-0.056px]">
