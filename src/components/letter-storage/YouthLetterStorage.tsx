@@ -5,13 +5,13 @@ import HomeLetterIcon from "../Icons/Home_letter_icon";
 import BookMarkIcon from "../Icons/Bookmark_icon";
 import BirdyTip from "./BirdyTip";
 import { IData } from "@/app/(footershare)/letter-storage/page";
+import { useRouter } from "next/navigation";
+import { useBookMarkStore } from "@/store/bookMarkStore";
 import {
   getLetterAll,
   getLetterSaved,
   getLetterWait,
-} from "@/services/letterStorage";
-import { useRouter } from "next/navigation";
-import { useBookMarkStore } from "@/store/bookMarkStore";
+} from "@/services/userService";
 
 const YouthLetterStorage: React.FC = () => {
   const category = ["전체", "답장 기다리는 편지", "저장한 편지"];

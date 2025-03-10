@@ -39,6 +39,7 @@ const Home: React.FC = () => {
 
         if (data) {
           setUserData(data);
+          console.log("home 페이지의 data", data);
           sessionStorage.setItem("userData", JSON.stringify(data)); // ✅ 캐싱
         }
       } catch (error) {
