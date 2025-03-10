@@ -130,7 +130,7 @@ const CategoryStep = () => {
 
       {/* 카테고리 선택 영역 - Grid 사용 */}
       <div className="mt-14 w-[342px] mx-auto">
-        <div className="grid grid-cols-3 gap-x-[6px] gap-y-[6px]">
+        <div className="select-none grid grid-cols-3 gap-x-[6px] gap-y-[6px]">
           {categories.map((category) => (
             <CategoryCard
               key={category.id}

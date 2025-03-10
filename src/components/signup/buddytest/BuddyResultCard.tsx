@@ -1,115 +1,57 @@
 "use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import NextButton from "@/components/common/NextButton";
-import { getBirdData } from "@/services/buddyService";
-import { birdStyleMap, defaultBirdStyle } from "@/constants/birdStyles";
+import { useFetchBirdData } from "@/app/hooks/useFetchBirdData";
 import { useSignupStore } from "@/store/useSignupStore";
+import { useEffect } from "react";
+import BuddyImage from "./BuddyImage";
+import BuddyTraits from "./BuddyTraits";
+import BuddyResultActions from "./BuddyResultActions";
+import { birdStyleMap, defaultBirdStyle } from "@/constants/birdStyles";
 
 interface BuddyResultCardProps {
   birdType: string;
 }
 
-interface BirdData {
-  birdName: string;
-  traits: string;
-  explanation: string;
-}
-
 const BuddyResultCard = ({ birdType }: BuddyResultCardProps) => {
-  const router = useRouter();
-  const { setHideNav } = useSignupStore(); // ✅ Zustand에서 `hideNav` 상태 변경 함수 가져오기
-  const [birdData, setBirdData] = useState<BirdData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { setHideNav } = useSignupStore();
+  const { birdData } = useFetchBirdData(birdType);
 
-  useEffect(() => {
-    // ✅ `BuddyResultCard` 실행 시 `SignupNav` 숨김
-    setHideNav((prev: boolean) => {
-      if (!prev) return true; // ✅ 상태가 false일 때만 업데이트 (무한 루프 방지)
-      return prev;
-    });
-    const fetchData = async () => {
-      setLoading(true);
-
-      const data = await getBirdData(birdType);
-      setBirdData(data);
-
-      setLoading(false);
-    };
-
-    fetchData();
-
-    return () => {
-      setHideNav(false); // ✅ 언마운트될 때 `SignupNav` 다시 표시
-    };
-  }, []);
-
-  const handleGoHome = () => {
-    router.push("/home");
+  // ✅ birdData가 null일 경우 기본 값 설정
+  const defaultBirdData = {
+    birdName: "익명새",
+    traits: "특성 정보 불명",
+    explanation: "정보 부족",
+    color: "#000000",
+    background: "#FFFFFF",
   };
 
-  // 버디 타입별 스타일 가져오기
-  const birdStyle = birdStyleMap[birdData?.birdName || ""] || defaultBirdStyle;
+  const userBirdData = birdData || defaultBirdData;
 
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full">
-        <div className="w-8 h-8 border-4 border-t-[#84A667] border-gray-200 rounded-full animate-spin"></div>
-      </div>
-    );
-  }
+  // ✅ birdData의 traits 값을 기반으로 색상 동적으로 가져오기
+  const birdStyle = birdStyleMap[userBirdData.birdName] || defaultBirdStyle;
+
+  useEffect(() => {
+    setHideNav(true);
+    return () => setHideNav(false);
+  }, []);
 
   return (
     <div className="flex flex-col items-center">
-      {/* 결과 카드 */}
-      <div className="w-[343px] bg-[#F9F8F3] rounded-[30px] shadow-[0px_0px_20px_0px_rgba(107,107,107,0.10)] p-4 mb-16">
+      <div className="w-[343px] bg-[#F9F8F3] rounded-[30px] shadow-[0px_0px_20px_0px_rgba(107,107,107,0.10)] p-4 mb-17">
         <p className="mt-8 text-center text-[#6B7178] text-[14px] font-normal leading-[22px] tracking-[-0.056px]">
-          나의 버디는?
+          나의 버디는
         </p>
-        <div className="flex flex-col items-center">
-          {/* 버디 이미지 */}
-          <div className="mb-4">
-            <Image
-              src={`/images/birds/${birdData?.birdName}_280.png`}
-              alt={birdData?.birdName || ""}
-              width={200}
-              height={200}
-            />
-          </div>
 
-          {/* 태그 (traits) */}
-          <div className="mb-[10px]">
-            <span
-              className="px-3 py-1 rounded-[4px] text-xs font-medium leading-4 tracking-[-0.048px]"
-              style={{
-                color: birdStyle.color,
-                backgroundColor: birdStyle.background,
-              }}
-            >
-              {birdData?.traits}
-            </span>
-          </div>
-
-          {/* 버디 타입 제목 */}
-          <h2 className="text-[20px] font-bold text-[#292D32] mb-6 leading-[28px] tracking-[-0.08px]">
-            {birdData?.birdName}
-          </h2>
-
-          {/* 버디 특성 설명 */}
-          <div className="mb-6">
-            <p className="text-[14px] text-[#292D32] leading-[22px] tracking-[-0.056px] font-normal">
-              {birdData?.explanation}
-            </p>
-          </div>
-        </div>
+        <BuddyImage birdName={userBirdData?.birdName || ""} />
+        <BuddyTraits
+          birdName={userBirdData.birdName}
+          traits={userBirdData.traits}
+          explanation={userBirdData.explanation}
+          color={birdStyle.color} // ✅ 조건부 색상 적용
+          background={birdStyle.background} // ✅ 조건부 배경색 적용
+        />
       </div>
 
-      {/* 다음 버튼 */}
-      <div className="absolute bottom-10 flex justify-center">
-        <NextButton text="환영해, 나의 버디!" onClick={handleGoHome} />
-      </div>
+      <BuddyResultActions birdData={userBirdData} />
     </div>
   );
 };
