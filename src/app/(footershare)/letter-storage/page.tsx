@@ -22,6 +22,35 @@ export interface IData {
   dataList: IDataListItem[];
 }
 
+//무한스크롤
+
+export interface Letter {
+  letterStatusSeq: number;
+  birdName: string;
+  nickname: string;
+  title: string;
+  read: boolean;
+  saved: boolean;
+  thanksToMentor: boolean;
+}
+
+export interface LetterPage {
+  code: number;
+  data: {
+    dataList: Letter[];
+  };
+  message: string;
+  status: string;
+  pageNumber: number;
+  totalData: number;
+  totalPage: number;
+}
+
+export interface InfiniteLetterQuery {
+  pageParams: number[];
+  pages: LetterPage[];
+}
+
 const LetterStorage: React.FC = () => {
   const [userData, setUserData] = useState<IUserData>();
 
@@ -42,7 +71,7 @@ const LetterStorage: React.FC = () => {
   console.log(userData);
 
   return (
-    <div className="px-4 ">
+    <div className="px-4">
       {userData.roleName === "MENTEE" ? (
         <YouthLetterStorage />
       ) : userData.roleName === "MENTOR" ? (

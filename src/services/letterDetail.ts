@@ -47,3 +47,26 @@ export const getThanks = async (letterSeq: number, type: string) => {
     return null;
   }
 };
+
+// 편지 넘기기
+export const getThrow = async (letterStatusSeq: number) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}
+/api/v1/letter/throw?letterStatusSeq=${letterStatusSeq}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          access: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    console.log("편지 던지기:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
