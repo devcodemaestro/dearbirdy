@@ -30,6 +30,9 @@ export const getAccessToken = async (code: string) => {
     // ✅ Zustand에 저장
     useAuthStore.getState().setAuth(accessToken, refreshToken);
 
+    // 로그인시 user기본정보 담기
+    sessionStorage.setItem("userData", JSON.stringify(response.data.data));
+
     return { access_token: accessToken, isNewUser };
   } catch (error) {
     console.error("❌ 카카오 로그인 요청 실패:", error);
@@ -68,6 +71,9 @@ export const postAdditionalInfo = async (userData: {
     });
 
     console.log("✅ 추가 정보 등록 성공:", response.data);
+    // 회원가입시 user기본정보 담기
+    sessionStorage.setItem("userData", JSON.stringify(response.data.data));
+
     return response.data;
   } catch (error) {
     console.error("❌ 추가 정보 등록 실패:", error);

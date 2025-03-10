@@ -10,14 +10,6 @@ const pretendard = localFont({
   variable: "--font-pretendard",
 });
 
-export const nanumBrush = localFont({
-  src: "../app/fonts/NanumBrushScript-Regular.ttf",
-  display: "swap",
-  weight: "400",
-  style: "normal",
-  variable: "--font-nanumBrush",
-});
-
 export const metadata: Metadata = {
   title: "DearBirdy",
   description: "편지로 연결되는 따뜻한 마음, 인생 선후배들의 만남",

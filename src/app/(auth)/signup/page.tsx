@@ -14,6 +14,7 @@ import { useBuddyTestStore } from "@/store/useBuddyTestStore";
 const SignUp = () => {
   const { step, setStep, hideNav } = useSignupStore();
   const { testStep, setTestStep } = useBuddyTestStore();
+  console.log(testStep);
 
   // ✅ 새로고침 시 `sessionStorage`에서 `step`과 `testStep` 값을 복원
   useEffect(() => {
@@ -37,7 +38,7 @@ const SignUp = () => {
   }, [setStep, setTestStep]);
 
   return (
-    <div className="px-4 w-full">
+    <div className="w-full px-4">
       {!hideNav && step !== 4 && <SignupNav />}
       {step === 0 && <SignupIntro />}
       {step === 1 && <NicknameStep />}

@@ -43,7 +43,8 @@ const LetterDetailId: React.FC = () => {
   const [showThrowAfterModal, setShowThrowAfterModal] = useState(false);
 
   const { bookMark } = useBookMarkStore();
-  const { setCategoryName, setLetterStatusSeq } = useLetterInfoStore();
+  const { setBirdName, setNickname, setCategoryName, setLetterStatusSeq } =
+    useLetterInfoStore();
 
   useEffect(() => {
     const storedData = sessionStorage.getItem("userData");
@@ -587,6 +588,9 @@ const LetterDetailId: React.FC = () => {
               router.push("/reply");
               setLetterStatusSeq(letter.letterStatusSeq);
               setCategoryName(letter.replyLetter.categoryName);
+              // 나의 장년의 새가 날아가야해서
+              setBirdName(letter.replyLetter.replyUserBird);
+              setNickname(letter.replyLetter.sendUser);
             }}
           >
             <Image

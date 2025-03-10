@@ -1,6 +1,5 @@
 "use client";
 
-import { Bird } from "@/components/letter/SelectBird";
 import api from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
 
