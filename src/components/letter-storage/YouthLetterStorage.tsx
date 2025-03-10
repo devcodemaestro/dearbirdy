@@ -52,9 +52,9 @@ const YouthLetterStorage: React.FC = () => {
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false; // 첫 렌더링 후 false로 변경
-      setShouldApplyCondition(data?.pages[0].totalPage !== 0);
     }
-  }, []);
+    setShouldApplyCondition(data?.pages[0].totalPage !== 0);
+  }, [isLoading]);
 
   const { ref, inView } = useInView();
 
@@ -70,9 +70,7 @@ const YouthLetterStorage: React.FC = () => {
   };
 
   if (isLoading) return <div className="mt-10 text-center">로딩 중...</div>;
-  console.log(data?.pageParams);
 
-  console.log(data?.pages[0].totalPage);
   return (
     <QueryClientProvider client={queryClient}>
       <div className="mb-[60px]">
