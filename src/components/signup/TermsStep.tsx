@@ -129,7 +129,11 @@ const TermsStep: React.FC<TermsStepProps> = ({ onClose, isModal = false }) => {
                   (필수) 서비스 이용약관
                 </p>
               </div>
-              <Link href="/terms/service">
+              <Link
+                href="https://important-pansy-82d.notion.site/Dearbirdy-1a01b9cea31e80c5b9b0db65096357b9?pvs=74"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Image
                   src="/images/terms/arrow-right.svg"
                   alt="약관 이동"
@@ -159,7 +163,11 @@ const TermsStep: React.FC<TermsStepProps> = ({ onClose, isModal = false }) => {
                   (필수) 개인정보 처리방침
                 </p>
               </div>
-              <Link href="/terms/privacy">
+              <Link
+                href="https://important-pansy-82d.notion.site/Dearbirdy-1a01b9cea31e8070b6f5ec4c08fe0485?pvs=74"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Image
                   src="/images/terms/arrow-right.svg"
                   alt="약관 이동"

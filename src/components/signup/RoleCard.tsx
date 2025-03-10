@@ -20,7 +20,7 @@ const RoleCard: React.FC<RoleCardProps> = ({
   return (
     <div
       onClick={() => onSelect(role)}
-      className={`w-[168px] h-[224px] flex flex-col items-center justify-center px-4 rounded-lg border-2 cursor-pointer transition-all ${
+      className={`w-[168px] h-[224px] select-none flex flex-col items-center justify-center px-4 rounded-lg border-2 cursor-pointer transition-all ${
         selectedRole === role ? "border-[#84A667]" : "border-[#D1D1D6]"
       }`}
     >

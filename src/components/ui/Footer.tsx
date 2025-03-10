@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Footer: React.FC = () => {
+  const [userData, setUserData] = useState<IUserData>();
   const router = useRouter();
   const pathname = usePathname();
 

@@ -18,7 +18,7 @@ export interface Question {
 export const questions: Question[] = [
   {
     id: 1,
-    text: "취미나 여가보다 자기계발이 더 중요하다",
+    text: `취미나 여가보다 자기계발 중\n뭐가 더 중요하다고 생각하나요?`,
     direction: "life",
     options: [
       { value: 2, emoji: "✏️", label: "자기계발이요!" },
@@ -28,7 +28,7 @@ export const questions: Question[] = [
   },
   {
     id: 2,
-    text: "즐거운 방식보다 효율적인 방식을 선호한다",
+    text: `즐거운 방식과 효율적인 방식 중\n무엇을 더 선호하시나요?`,
     direction: "life",
     options: [
       { value: 2, emoji: "👓", label: "효율이 중요하죠" },
@@ -36,10 +36,10 @@ export const questions: Question[] = [
       { value: 0, emoji: "😄", label: "즐거워야해요!" },
     ],
   },
-  // 추가 질문
+
   {
     id: 3,
-    text: "목표를 이루기 위해서라면 힘들어도 참을 수 있다",
+    text: `목표를 이루기 위해서라면\n힘들어도 참을 수 있으신가요?`,
     direction: "life",
     options: [
       { value: 2, emoji: "📈", label: "네, 참을수 있어요" },
@@ -49,7 +49,7 @@ export const questions: Question[] = [
   },
   {
     id: 4,
-    text: "하고 싶은 일보다 돈이 더 중요하다",
+    text: `하고 싶은 일보다\n돈이 더 중요하다고 생각하나요?`,
     direction: "life",
     options: [
       { value: 2, emoji: "💸", label: "돈이 제일 중요해요!" },
@@ -59,7 +59,7 @@ export const questions: Question[] = [
   },
   {
     id: 5,
-    text: "성공한 삶이 여유로운 삶보다 중요하다",
+    text: `성공한 삶이 여유로운 삶보다\n더 중요하다고 생각하시나요?`,
     direction: "life",
     options: [
       { value: 2, emoji: "💰", label: "성공한 삶을 사는 게 중요하죠" },
@@ -69,7 +69,7 @@ export const questions: Question[] = [
   },
   {
     id: 6,
-    text: "일과 삶의 균형에서 일이 우선이라고 생각한다",
+    text: `일과 삶의 균형에서\n일이 우선이신가요?`,
     direction: "life",
     options: [
       { value: 2, emoji: "🖥️", label: "일이 우선이에요!" },
@@ -79,7 +79,7 @@ export const questions: Question[] = [
   },
   {
     id: 7,
-    text: "여러 사람과 교류하는 것이 에너지를 준다",
+    text: `여러 사람과 교류하는 것이\n당신에게 에너지를 주나요?`,
     direction: "lifestyle",
     options: [
       { value: 2, emoji: "🙌", label: "네! 교류가 좋아요" },
@@ -89,7 +89,7 @@ export const questions: Question[] = [
   },
   {
     id: 8,
-    text: "혼자만의 시간보다 함께하는 시간이 더 즐겁다",
+    text: `혼자만의 시간보다\n누군가와 함께 하는 시간이 더 즐겁나요?`,
     direction: "lifestyle",
     options: [
       { value: 2, emoji: "🙌", label: "함께 하는 시간이 더 좋아요" },
@@ -99,7 +99,7 @@ export const questions: Question[] = [
   },
   {
     id: 9,
-    text: "새로운 사람을 만나는 것이 설렌다",
+    text: `새로운 사람을 만나는 것에\n설레는 편인가요?`,
     direction: "lifestyle",
     options: [
       { value: 2, emoji: "😄", label: "네, 설레요!" },
@@ -109,7 +109,7 @@ export const questions: Question[] = [
   },
   {
     id: 10,
-    text: "개인 활동보다 단체 활동이 편하다",
+    text: `개인활동, 단체활동 중\n더 편한 것은 무엇인가요?`,
     direction: "lifestyle",
     options: [
       { value: 2, emoji: "🙌", label: "단체활동이요" },
@@ -119,7 +119,7 @@ export const questions: Question[] = [
   },
   {
     id: 11,
-    text: "주말에 나는 주로 약속을 잡아 친구들과 만난다",
+    text: `주말에 주로 약속을 잡아\n친구들과 만나는 타입인가요?`,
     direction: "lifestyle",
     options: [
       { value: 2, emoji: "👟", label: "네, 주로 약속이 있어요!" },
@@ -129,7 +129,7 @@ export const questions: Question[] = [
   },
   {
     id: 12,
-    text: "모임에서 처음 보는 사람이 있다면 먼저 다가가 말을 건다",
+    text: `모임에서 처음 보는 사람이 있다면\n먼저 다가가 말을 거시나요?`,
     direction: "lifestyle",
     options: [
       { value: 2, emoji: "🗣️", label: "주로 말을 거는 타입이에요" },

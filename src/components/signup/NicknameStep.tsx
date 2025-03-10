@@ -20,7 +20,7 @@ const NicknameStep = () => {
   const [loading, setLoading] = useState(false);
   const [focused, setFocused] = useState(false);
   const [errorType, setErrorType] = useState<
-    "tooShort" | "tooLong" | "invalidChar" | "duplicate" | null
+    "tooShort" | "tooLong" | "invalidChar" | "fail" | null
   >(null);
   const [debouncedNickname, setDebouncedNickname] = useState(""); // 디바운싱 적용 값
 
@@ -63,9 +63,9 @@ const NicknameStep = () => {
       setLoading(true);
       const available = await checkNickname(debouncedNickname);
       setIsAvailable(available);
-      setErrorType(available ? null : "duplicate");
+      setErrorType(available ? null : "fail");
       setLoading(false);
-    }, 1500); // 1.5초 후 API 호출
+    }, 1000); // 1초 후 API 호출
 
     return () => clearTimeout(timer);
   }, [debouncedNickname]);
@@ -147,8 +147,8 @@ const NicknameStep = () => {
               ? "최대 글자수는 10자까지입니다."
               : errorType === "invalidChar"
               ? "특수문자 제외 한글, 영문, 숫자만 사용할 수 있어요."
-              : errorType === "duplicate"
-              ? "이미 존재하는 닉네임입니다."
+              : errorType === "fail"
+              ? "등록이 불가능한 닉네임입니다."
               : isAvailable
               ? "사용 가능한 닉네임입니다."
               : "특수문자 제외 한글, 영문, 숫자로만 작성해주세요."}

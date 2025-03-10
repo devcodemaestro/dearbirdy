@@ -6,17 +6,21 @@ export const getBirdData = async (birdType: string) => {
   console.log("🦜 버디 데이터 요청:", birdType);
 
   try {
-    const accessToken = useAuthStore.getState().accessToken;
-    if (!accessToken) {
+    const originaccessToken = useAuthStore.getState().accessToken;
+    if (!originaccessToken) {
       throw new Error("❌ access_token이 없음. 로그인 필요");
     }
 
     const response = await api.get(`birdy/test/birdy?birdName=${birdType}`, {
       headers: {
-        access: accessToken,
+        access: originaccessToken,
       },
     });
+    const accessToken = response.headers["access"];
+    const refreshToken = response.headers["refresh"];
 
+    console.log("✅ 교체된 access_token:", accessToken);
+    console.log("✅ 교체된 refresh_token:", refreshToken);
     console.log("✅ 버디 데이터 요청 성공:", response.data.data);
     return response.data.data;
   } catch (error) {
