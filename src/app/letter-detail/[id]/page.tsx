@@ -2,13 +2,16 @@
 
 import { IUserData } from "@/app/(footershare)/home/page";
 import BookMarkIcon from "@/components/Icons/Bookmark_icon";
+import ThrowAfterModal from "@/components/letter-storage/ThrowAfterModal";
+import ThrowModal from "@/components/letter-storage/ThrowModal";
 import { getLetterDetail, getThanks } from "@/services/letterDetail";
 import { useBookMarkStore } from "@/store/bookMarkStore";
+import { useLetterInfoStore } from "@/store/letterInfoStore";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-interface ILetter {
+export interface ILetter {
   letterSeq: number;
   replyUserBird: string;
   replyUser: string;
@@ -20,7 +23,7 @@ interface ILetter {
   sendUser: string;
 }
 
-interface IData {
+export interface IData {
   replyLetter: ILetter;
   sendLetter: ILetter;
   saved: boolean;
@@ -36,8 +39,12 @@ const LetterDetailId: React.FC = () => {
 
   const [letter, setLetter] = useState<IData | undefined>(undefined);
   const [showModal, setModal] = useState<boolean>(false);
+  const [showThrowModal, setShowThrowModal] = useState(false);
+  const [showThrowAfterModal, setShowThrowAfterModal] = useState(false);
 
   const { bookMark } = useBookMarkStore();
+  const { setCategoryName, setLetterStatusSeq } = useLetterInfoStore();
+
   useEffect(() => {
     const storedData = sessionStorage.getItem("userData");
 
@@ -61,7 +68,7 @@ const LetterDetailId: React.FC = () => {
       }
     };
     fetchLetterDetail();
-  }, [id, bookMark, showModal]);
+  }, [id, bookMark]);
 
   // 날짜 형식
   const formatDate = (dateString: string): string => {
@@ -98,7 +105,12 @@ const LetterDetailId: React.FC = () => {
 
   console.log("letter:", letter);
 
+  const throwClicked = () => {
+    setShowThrowModal(true);
+  };
+
   if (!letter) return <div>Loading</div>;
+
   // 청년 버전
   return userData?.roleName === "MENTEE" ? (
     <div className="relative">
@@ -129,6 +141,7 @@ const LetterDetailId: React.FC = () => {
               onClick={() => {
                 getThanks(letter.replyLetter.letterSeq, "MOVED");
                 setModal(false);
+                router.back();
               }}
             >
               <Image
@@ -147,6 +160,7 @@ const LetterDetailId: React.FC = () => {
               onClick={() => {
                 getThanks(letter.replyLetter.letterSeq, "HELPFUL");
                 setModal(false);
+                router.back();
               }}
             >
               <Image
@@ -165,6 +179,7 @@ const LetterDetailId: React.FC = () => {
               onClick={() => {
                 getThanks(letter.replyLetter.letterSeq, "NOT_ALONE");
                 setModal(false);
+                router.back();
               }}
             >
               <Image
@@ -268,7 +283,7 @@ const LetterDetailId: React.FC = () => {
                 </div>
                 {/* 고마움 표시 및 고마움 전달 */}
                 {letter.thanksToMentor ? (
-                  <div className="flex w-[311px] h-[50px] p-[13px_16px] justify-start                         items-center rounded-[12px] bg-[#F0F1EC]">
+                  <div className="flex w-[311px] h-[50px] p-[13px_16px] justify-start items-center rounded-[12px] bg-[#F0F1EC]">
                     <Image
                       src={`/images/birds/${
                         letter.thanksToMentor ===
@@ -385,7 +400,17 @@ const LetterDetailId: React.FC = () => {
     </div>
   ) : (
     // 장년 버전
-    <div className="min-h-screen bg-[#f9f8f3] flex flex-col px-4 gap-2">
+    <div className="relative min-h-screen bg-[#f9f8f3] flex flex-col px-4 gap-2">
+      {showThrowModal && (
+        <ThrowModal
+          letterStatusSeq={letter.letterStatusSeq}
+          setShowThrowModal={setShowThrowModal}
+          setShowThrowAfterModal={setShowThrowAfterModal}
+        />
+      )}
+      {showThrowAfterModal && (
+        <ThrowAfterModal setShowThrowAfterModal={setShowThrowAfterModal} />
+      )}
       <header className="relative w-full h-[56px] mt-[59px] flex items-center">
         <Image
           src="/images/icons/arrow_left_icon.svg"
@@ -461,24 +486,27 @@ const LetterDetailId: React.FC = () => {
                   from, {letter.sendLetter.sendUser}
                 </span>
               </div>
-              <div className="flex w-[311px] h-[50px] p-[13px_16px] justify-start items-center rounded-[12px] bg-[#F0F1EC]">
-                <Image
-                  src={`/images/birds/${
-                    letter.thanksToMentor === "정성어린 답장에 감동 받았어요!"
-                      ? "MOVED"
-                      : letter.thanksToMentor === "편지 내용이 도움이 되었어요!"
-                      ? "HELPFUL"
-                      : "NOT_ALONE"
-                  }_24.svg`}
-                  alt="고마움 새 24"
-                  width={24}
-                  height={24}
-                  className="mr-1"
-                />
-                <p className="text-[#292D32] text-center text-[16px] font-medium leading-[24px] tracking-[-0.064px]">
-                  {letter.thanksToMentor}
-                </p>
-              </div>
+              {letter.thanksToMentor && (
+                <div className="flex w-[311px] h-[50px] p-[13px_16px] justify-start items-center rounded-[12px] bg-[#F0F1EC]">
+                  <Image
+                    src={`/images/birds/${
+                      letter.thanksToMentor === "정성어린 답장에 감동 받았어요!"
+                        ? "MOVED"
+                        : letter.thanksToMentor ===
+                          "편지 내용이 도움이 되었어요!"
+                        ? "HELPFUL"
+                        : "NOT_ALONE"
+                    }_24.svg`}
+                    alt="고마움 새 24"
+                    width={24}
+                    height={24}
+                    className="mr-1"
+                  />
+                  <p className="text-[#292D32] text-center text-[16px] font-medium leading-[24px] tracking-[-0.064px]">
+                    {letter.thanksToMentor}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </main>
@@ -543,11 +571,21 @@ const LetterDetailId: React.FC = () => {
       {!letter.sendLetter ? (
         <>
           <div className="flex items-center justify-center mt-16">
-            <p className="text-[#84A667] text-[14px] font-medium leading-[20px] tracking-[-0.056px]">
+            <p
+              className="text-[#84A667] text-[14px] font-medium leading-[20px] tracking-[-0.056px]"
+              onClick={throwClicked}
+            >
               답하기 어렵다면, 다른 새에게 맡기기
             </p>
           </div>
-          <div className="flex w-full h-[50px] justify-center items-center  gap-1 align-stretch rounded-lg bg-[#292D32]">
+          <div
+            className="flex w-full h-[50px] justify-center items-center  gap-1 align-stretch rounded-lg bg-[#292D32]"
+            onClick={() => {
+              router.push("/reply");
+              setLetterStatusSeq(letter.letterStatusSeq);
+              setCategoryName(letter.replyLetter.categoryName);
+            }}
+          >
             <Image
               src="/images/icons/letter_icon.svg"
               alt="편지쓰기 아이콘"
