@@ -3,7 +3,7 @@ import { useAuthStore } from "@/store/authStore";
 
 // ✅ 버디 데이터 가져오기
 export const getBirdData = async (birdType: string) => {
-  console.log("🦜 버디 데이터 요청:", birdType);
+  // console.log("🦜 버디 데이터 요청:", birdType);
 
   try {
     const originaccessToken = useAuthStore.getState().accessToken;
@@ -11,17 +11,17 @@ export const getBirdData = async (birdType: string) => {
       throw new Error("❌ access_token이 없음. 로그인 필요");
     }
 
-    const response = await api.get(`birdy/test/birdy?birdName=${birdType}`, {
+    const response = await api.get(`/birdy/test/birdy?birdName=${birdType}`, {
       headers: {
         access: originaccessToken,
       },
     });
-    const accessToken = response.headers["access"];
-    const refreshToken = response.headers["refresh"];
+    // const accessToken = response.headers["access"];
+    // const refreshToken = response.headers["refresh"];
 
-    console.log("✅ 교체된 access_token:", accessToken);
-    console.log("✅ 교체된 refresh_token:", refreshToken);
-    console.log("✅ 버디 데이터 요청 성공:", response.data.data);
+    // console.log("✅ 교체된 access_token:", accessToken);
+    // console.log("✅ 교체된 refresh_token:", refreshToken);
+    // console.log("✅ 버디 데이터 요청 성공:", response.data.data);
     return response.data.data;
   } catch (error) {
     console.error("❌ 버디 데이터 가져오기 실패:", error);

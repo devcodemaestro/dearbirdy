@@ -32,7 +32,7 @@ export default function SelectBird() {
     async function fetchBirds() {
       try {
         const response = await getBirdyInfo();
-        console.log("🐦 가져온 새 데이터:", response);
+        // console.log("🐦 가져온 새 데이터:", response);
 
         if (response?.data?.birdyList) {
           setBirds(response.data.birdyList);
@@ -64,7 +64,7 @@ export default function SelectBird() {
         letter,
       });
 
-      console.log("✅ 편지 전송 성공:", response);
+      console.log("✅ 편지 전송 성공:", response.message);
       setStep(4);
     } catch (error) {
       console.error("❌ 편지 전송 실패:", error);

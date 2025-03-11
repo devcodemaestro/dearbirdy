@@ -27,7 +27,7 @@ const BuddyTestIntro: React.FC<BuddyTestIntroProps> = ({ onStart }) => {
     return () => {
       setHideNav(false); // ✅ 언마운트될 때 `SignupNav` 다시 표시
     };
-  }, []);
+  }, [setHideNav]);
 
   return (
     <div className="p-4 mt-24">

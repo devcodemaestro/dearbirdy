@@ -58,7 +58,7 @@ export const postReply = async (formData: {
       }
     );
 
-    console.log("답장 성공:", response.data);
+    // console.log("답장 성공:", response.data);
     return response.data;
   } catch (error) {
     console.error("답장 실패:", error);

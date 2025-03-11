@@ -82,7 +82,7 @@ const NicknameStep = () => {
   };
 
   useEffect(() => {
-    console.log(`📌 현재 step 상태 변경 감지: ${step}`);
+    // console.log(`📌 현재 step 상태 변경 감지: ${step}`);
   }, [step]);
 
   return (

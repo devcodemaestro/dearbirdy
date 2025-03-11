@@ -12,8 +12,8 @@ export default function OnboardingPage() {
 
   const handleSkip = () => {
     localStorage.setItem("onboardingComplete", "true");
-    console.log("✅ 온보딩 완료 저장");
-    console.log("✅ 온보딩 건너뛰기 → /main 이동");
+    // console.log("✅ 온보딩 완료 저장");
+    // console.log("✅ 온보딩 건너뛰기 → /main 이동");
     router.push("/main");
   };
 

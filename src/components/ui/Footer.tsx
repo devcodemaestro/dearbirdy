@@ -37,26 +37,28 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-0 w-full h-[60px] flex justify-around items-center self-stretch border-t border-[#F0F1EC] bg-[#F9F8F3]">
-      {menuItems.map(({ id, Icon, label }) => (
-        <div
-          key={id}
-          className="flex flex-col items-center justify-center gap-1 cursor-pointer"
-          onClick={() => iconClicked(id)}
-        >
-          <Icon
-            read={userData?.read}
-            fill={selectedIcon === id ? "#292D32" : "#AEAEB2"}
-          />
-          <span
-            className={`text-center font-pretendard text-xs font-medium leading-4 tracking-tight ${
-              selectedIcon === id ? "text-[#292D32]" : "text-[#AEAEB2]"
-            }`}
+    <div className="w-[375px] flex justify-center">
+      <div className="fixed w-full max-w-[375px] bottom-0 h-[60px] flex justify-around items-center  border-t border-[#F0F1EC] bg-[#F9F8F3]">
+        {menuItems.map(({ id, Icon, label }) => (
+          <div
+            key={id}
+            className="flex flex-col items-center justify-center gap-1 cursor-pointer"
+            onClick={() => iconClicked(id)}
           >
-            {label}
-          </span>
-        </div>
-      ))}
+            <Icon
+              read={userData?.read}
+              fill={selectedIcon === id ? "#292D32" : "#AEAEB2"}
+            />
+            <span
+              className={`select-none cursor-pointer text-center font-pretendard text-xs font-medium leading-4 tracking-tight ${
+                selectedIcon === id ? "text-[#292D32]" : "text-[#AEAEB2]"
+              }`}
+            >
+              {label}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -54,7 +54,7 @@ const YouthLetterStorage: React.FC = () => {
       isFirstRender.current = false; // 첫 렌더링 후 false로 변경
     }
     setShouldApplyCondition(data?.pages[0].totalPage !== 0);
-  }, [isLoading]);
+  }, [data]);
 
   const { ref, inView } = useInView();
 
@@ -62,7 +62,7 @@ const YouthLetterStorage: React.FC = () => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [fetchNextPage, inView, hasNextPage, isFetchingNextPage]);
 
   const handleShowToast = () => {
     setShowToast(true);
@@ -97,7 +97,7 @@ const YouthLetterStorage: React.FC = () => {
         {/* 메인 */}
         {shouldApplyCondition ? (
           <main className="overflow-y-auto mt-[120px] min-h-[calc(100vh)]">
-            <div className="grid w-full grid-cols-2 gap-2">
+            <div className="cursor-pointer select-none grid w-full grid-cols-2 gap-2">
               {data?.pages.map((page) =>
                 page.dataList.map((letter: Letter) => (
                   <div

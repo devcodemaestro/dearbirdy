@@ -49,11 +49,11 @@ const TermsStep: React.FC<TermsStepProps> = ({ onClose, isModal = false }) => {
     if (isServiceChecked && isPrivacyChecked) {
       if (isModal && onClose) {
         // 모달 모드일 때는 onClose를 호출
-        console.log("✅ 모달 모드: 약관 동의 완료, 모달 닫기");
+        // console.log("✅ 모달 모드: 약관 동의 완료, 모달 닫기");
         onClose();
       } else {
         // 단계 모드일 때는 nextStep 호출
-        console.log("✅ 단계 모드: 약관 동의 완료, 다음 단계로 이동");
+        // console.log("✅ 단계 모드: 약관 동의 완료, 다음 단계로 이동");
         nextStep();
       }
     }
