@@ -1,6 +1,6 @@
 "use client";
 
-import SettingItem from "@/components/settings/SettingItem";
+import SettingItem from "@/components/settings/settingItem";
 import MybuddyHeader from "@/components/ui/MybuddyHeader";
 import { SETTINGS_OPTIONS, SettingSection } from "@/constants/settings";
 import { useState } from "react";
