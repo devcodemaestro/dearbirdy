@@ -30,11 +30,7 @@ export default function ProfileSection() {
     fetchUserInfo();
   }, []);
 
-<<<<<<< HEAD
-  const roleText = myBirdName === "MENTEE" ? "인생후배" : "인생선배";
-=======
   const roleText = roleName === "MENTEE" ? "인생후배" : "인생선배";
->>>>>>> 42b2d6c (fix: 병합 후 발생 에러 처리)
 
   return (
     <>
