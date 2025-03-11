@@ -4,11 +4,13 @@ import LeftArrow from "@/components/Icons/common/LeftArrow";
 import { categories } from "@/constants/letterCategoryList";
 import { useLetterStore } from "@/store/useLetterStore";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Category() {
   const { categoryName, setCategory, setStep } = useLetterStore();
   const [blinkingCategory, setBlinkingCategory] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleCategoryClick = (categoryId: string, categoryName: string) => {
     setCategory(categoryName); // category.name 저장
@@ -23,7 +25,11 @@ export default function Category() {
   return (
     <div className="relative text-black">
       <nav className="pl-4 mt-[58px] w-[343px] justify-between py-4">
-        <LeftArrow className="w-6 h-6 cursor-pointer" stroke="#292D32" />
+        <LeftArrow
+          className="w-6 h-6 cursor-pointer"
+          stroke="#292D32"
+          onClick={() => router.back()}
+        />
       </nav>
       <div className="pl-4 mt-2">
         <p className="whitespace-break-spaces text-xl font-bold leading-7 tracking-tight">
@@ -31,11 +37,11 @@ export default function Category() {
         </p>
         <p className="mt-1.5">아래 카테고리 중에서 선택해주세요</p>
       </div>
-      <div className="text-center w-[334px] h-[572px] flex justify-center flex-wrap gap-2 mt-4">
+      <div className="text-center w-[343x] h-[572px] flex justify-center gap-2 mt-4 flex-wrap">
         {categories.map((category) => (
           <div
             key={category.id}
-            className={`w-[153px] h-[137px] select-none flex flex-col items-center justify-center 
+            className={`w-[167px] h-[137px] select-none flex flex-col items-center justify-center 
                         bg-white rounded-2xl shadow-sm cursor-pointer border 
                         ${
                           categoryName === category.name

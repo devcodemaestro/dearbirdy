@@ -36,8 +36,9 @@ const NotificationBox: React.FC = () => {
       try {
         const data = await getNotificationList();
         setNotifications(data);
+        // eslint-disable-next-line
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -49,8 +50,8 @@ const NotificationBox: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#f9f8f3] flex flex-col px-4">
-      <header className="relative w-full h-[56px] mt-[59px] flex justify-center items-center">
+    <div className="max-h-[852px] max-w-[352px] bg-[#f9f8f3] flex flex-col px-4">
+      <header className="relative cursor-pointer select-none w-full h-[56px] mt-[59px] flex justify-center items-center">
         <Image
           src="/images/icons/arrow_left_icon.svg"
           alt="왼쪽 방향 아이콘"

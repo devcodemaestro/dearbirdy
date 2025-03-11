@@ -47,7 +47,7 @@ export const SETTINGS_OPTIONS: SettingSection[] = [
       },
       {
         type: "link",
-        label: "피드백 보기",
+        label: "피드백 보내기",
         url: "#",
       },
     ],

@@ -26,14 +26,17 @@ const getImageSrc = (birdName: string) => {
 export default function SelectBird() {
   const {
     setStep,
-    selectedBird,
     setSelectedBird,
+    selectedBird,
+    setMyBirdName, // ✅ 사용자 새 저장 추가
     categoryName,
     title,
     letter,
   } = useLetterStore();
+
   const [birds, setBirds] = useState<Bird[]>([]);
   const [isSending, setIsSending] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0); // ✅ 현재 Swiper에서 보이는 새의 인덱스
 
   useEffect(() => {
     const fetchBirds = async () => {
@@ -41,8 +44,9 @@ export default function SelectBird() {
         const response = await getBirdyInfo();
         if (response?.data?.birdyList) {
           setBirds(response.data.birdyList);
+          setSelectedBird(response.data.birdyList[0]?.birdName); // ✅ 첫 번째 새를 기본 선택
         } else {
-          console.warn("🚨 API 응답이 없어서 기본 데이터를 사용합니다.");
+          // console.warn("🚨 API 응답이 없어서 기본 데이터를 사용합니다.");
           setBirds([]);
         }
       } catch (error) {
@@ -69,7 +73,11 @@ export default function SelectBird() {
         letter,
       });
 
-      console.log("✅ 편지 전송 성공:", response.message);
+      if (response?.data?.myBirdName) {
+        setMyBirdName(response.data.myBirdName); // ✅ 사용자 새 저장
+      }
+
+      // console.log("✅ 편지 전송 성공");
       setStep(4);
     } catch (error) {
       console.error("❌ 편지 전송 실패:", error);
@@ -112,25 +120,23 @@ export default function SelectBird() {
           spaceBetween={10} // ✅ 카드 간격 유지
           slidesPerView="auto" // ✅ Centered Auto 적용
           centeredSlides={true} // ✅ 가운데 정렬
+          onSlideChange={(swiper) => {
+            setActiveIndex(swiper.realIndex); // ✅ 현재 보여지는 슬라이드의 인덱스 저장
+            setSelectedBird(birds[swiper.realIndex]?.birdName); // ✅ 자동으로 선택된 새 변경
+          }}
           className="select-bird-swiper"
           pagination={{
             clickable: true,
             renderBullet: (index, className) => {
               return `<span class="${className}" style="background-color: ${
-                index ===
-                birds.findIndex((bird) => bird.birdName === selectedBird)
-                  ? "#84A667"
-                  : "#E5E5EA"
-              }; width: 8px; height: 8px; border-radius: 50%; margin: 0 4px;"></span>`;
+                index === activeIndex ? "#84A667" : "#E5E5EA"
+              }; width: 8px; height: 8px; border-radius: 50%; margin: 21px 4px 0 4px;"></span>`;
             },
           }}
         >
           {birds.map((bird, index) => (
             <SwiperSlide key={index} className="max-w-[306px]">
-              <div
-                className="w-full h-[492px] bg-white rounded-xl flex flex-col items-center justify-center px-4 py-10 cursor-pointer"
-                onClick={() => setSelectedBird(bird.birdName)}
-              >
+              <div className="w-full h-[492px] bg-white rounded-xl flex flex-col items-center justify-center px-4 py-10 cursor-pointer">
                 {/* 🐦 프로필 이미지 */}
                 <Image
                   src={getImageSrc(bird.birdName)} // ✅ 한글 → 영문 변환 후 이미지 적용
@@ -175,7 +181,7 @@ export default function SelectBird() {
 
       {/* 하단 버튼 */}
       <button
-        className="w-[343px] h-[50px] bg-[#292D32] text-white text-[16px] font-semibold rounded-[12px] flex items-center justify-center mt-6"
+        className="cursor-pointer select-none w-[343px] h-[50px] bg-[#292D32] text-white text-[16px] font-semibold rounded-[12px] flex items-center justify-center mt-6"
         onClick={handleSendLetter}
         disabled={isSending}
       >

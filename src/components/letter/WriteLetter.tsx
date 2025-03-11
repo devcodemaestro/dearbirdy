@@ -32,7 +32,7 @@ export default function WriteLetter() {
   };
 
   return (
-    <div className="relative text-black">
+    <div className="max-h-[852px] relative text-black">
       <nav className="mt-[58px] w-[343px] flex justify-between py-4">
         <LeftArrow
           className="w-6 h-6 cursor-pointer"
@@ -40,7 +40,7 @@ export default function WriteLetter() {
           onClick={() => setStep(1)}
         />
         <button
-          className={`w-[57px] h-[40px] text-sm font-medium rounded-[10px] transition-all duration-200 ${
+          className={`w-[57px] h-[40px] cursor-pointer select-none text-sm font-medium rounded-[10px] transition-all duration-200 ${
             isNextEnabled
               ? "bg-[#84A667] text-[#F0F1EC]"
               : "bg-[#D1D1D6] text-[#8E8E93]"
@@ -85,11 +85,13 @@ export default function WriteLetter() {
       <LetterProgress letterLength={letter.length} />
 
       {/* 편지 가이드 모달 컴포넌트 적용 */}
-      <LetterGuideModal
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        type="letter"
-      />
+      <div className="relative flex justify-center">
+        <LetterGuideModal
+          isOpen={isDrawerOpen}
+          onClose={() => setIsDrawerOpen(false)}
+          type="letter"
+        />
+      </div>
     </div>
   );
 }

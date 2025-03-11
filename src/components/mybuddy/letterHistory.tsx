@@ -44,7 +44,7 @@ export default function LetterHistory() {
           <div className="w-[1px] h-[64px] bg-[#E5E5EA] mx-[20px]"></div>
           <div className="flex flex-col items-center px-[20px] py-[5px]">
             <span className="text-[#6B7178] text-[14px]">받은 편지</span>
-            <span className="text-[#6B7178] text-[16px] font-bold mt-[8px]">
+            <span className="text-[#6B7178] text-[16px] font-bold mt-[6px]">
               {replyLetter}
             </span>
           </div>
