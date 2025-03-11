@@ -17,15 +17,15 @@ import BookMarkIcon from "../Icons/Bookmark_icon";
 import BirdyTip from "./BirdyTip";
 import { Letter } from "@/app/(footershare)/letter-storage/page";
 import { useInView } from "react-intersection-observer";
+import { birdNameMap } from "@/constants/birdNameMap";
 
 const queryClient = new QueryClient();
 
 const YouthLetterStorage: React.FC = () => {
   const category = ["전체", "답장 기다리는 편지", "저장한 편지"];
-  const [cateNum, setCateNum] = React.useState<number>(1);
+  const [cateNum, setCateNum] = useState<number>(1);
   const { bookMark } = useBookMarkStore();
   const router = useRouter();
-
   const [showToast, setShowToast] = useState(false);
 
   const fetchLetters = async ({ pageParam }: { pageParam: number }) => {
@@ -46,6 +46,7 @@ const YouthLetterStorage: React.FC = () => {
         return undefined;
       },
     });
+
   const isFirstRender = useRef(true);
   const [shouldApplyCondition, setShouldApplyCondition] = useState(false);
 
@@ -53,8 +54,11 @@ const YouthLetterStorage: React.FC = () => {
     if (isFirstRender.current) {
       isFirstRender.current = false; // 첫 렌더링 후 false로 변경
     }
-    setShouldApplyCondition(data?.pages[0].totalPage !== 0);
-  }, [data]);
+    // ✅ '저장한 편지'일 경우에만 데이터 유무를 체크해서 비활성화
+    setShouldApplyCondition(
+      cateNum === 3 ? data?.pages[0].totalPage !== 0 : true
+    );
+  }, [data, cateNum]);
 
   const { ref, inView } = useInView();
 
@@ -74,16 +78,11 @@ const YouthLetterStorage: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="mb-[60px]">
-        {/* 헤더 */}
-        <header className="fixed top-0 w-[343px] flex gap-1 h-[115px] py-[11px] items-end bg-[#F9F8F3]">
+        <header className="cursor-pointer fixed top-0 w-[343px] flex gap-1 h-[115px] py-[11px] items-end bg-[#F9F8F3]">
           {category.map((title, idx) => (
             <span
               key={idx}
-              onClick={() => {
-                if (shouldApplyCondition) {
-                  setCateNum(idx + 1);
-                }
-              }}
+              onClick={() => setCateNum(idx + 1)} // ✅ 저장한 편지가 없을 때도 이동 가능하도록 변경
               className={`px-3.5 py-1.5 rounded-[20px] min-w-[53px] text-center ${
                 cateNum === idx + 1
                   ? "bg-[#292D32] text-[#FFF]"
@@ -94,55 +93,60 @@ const YouthLetterStorage: React.FC = () => {
             </span>
           ))}
         </header>
-        {/* 메인 */}
+
         {shouldApplyCondition ? (
           <main className="overflow-y-auto mt-[120px] min-h-[calc(100vh)]">
             <div className="cursor-pointer select-none grid w-full grid-cols-2 gap-2">
               {data?.pages.map((page) =>
-                page.dataList.map((letter: Letter) => (
-                  <div
-                    key={letter.letterStatusSeq}
-                    onClick={() =>
-                      router.push(`/letter-detail/${letter.letterStatusSeq}`)
-                    }
-                    className={`rounded-[16px] h-[182px] bg-white flex flex-col flex-1 p-4 ${
-                      !letter.read && letter.nickname !== "익명새"
-                        ? "border border-[#84A667] rounded-[16px] "
-                        : "none"
-                    } `}
-                  >
-                    <div className="flex justify-between">
-                      <Image
-                        src={`/images/birds/${letter.birdName}_60.svg`}
-                        alt="보관함 새 프로필"
-                        width={60}
-                        height={60}
-                      />
-                      <div onClick={(e) => e.stopPropagation()}>
-                        {/* 이벤트 전파 방지 */}
-                        <BookMarkIcon
-                          handleShowToast={handleShowToast}
-                          bookMarkToast={letter.saved}
-                          letterStatusSeq={letter.letterStatusSeq}
-                          fill={letter.saved ? "#84A667" : "none"}
-                          stroke={letter.saved ? "#84A667" : "#C7C7CC"}
+                page.dataList.map((letter: Letter) => {
+                  const birdKey =
+                    letter.birdName && birdNameMap[letter.birdName]
+                      ? birdNameMap[letter.birdName]
+                      : "default";
+
+                  return (
+                    <div
+                      key={letter.letterStatusSeq}
+                      onClick={() =>
+                        router.push(`/letter-detail/${letter.letterStatusSeq}`)
+                      }
+                      className={`rounded-[16px] w-[167px] h-[182px] bg-white flex flex-col flex-1 p-4 ${
+                        !letter.read && letter.nickname !== "익명새"
+                          ? "border border-[#84A667] rounded-[16px] "
+                          : "none"
+                      } `}
+                    >
+                      <div className="flex justify-between">
+                        <Image
+                          src={`/images/birds/${birdKey}_60.svg`}
+                          alt="보관함 새 프로필"
+                          width={60}
+                          height={60}
                         />
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <BookMarkIcon
+                            handleShowToast={handleShowToast}
+                            bookMarkToast={letter.saved}
+                            letterStatusSeq={letter.letterStatusSeq}
+                            fill={letter.saved ? "#84A667" : "none"}
+                            stroke={letter.saved ? "#84A667" : "#C7C7CC"}
+                          />
+                        </div>
+                      </div>
+                      <div className="text-[#292D32] text-[14px] font-normal leading-[22px]">
+                        {letter.nickname}
+                      </div>
+                      <div className="text-[#292D32] text-[16px] font-bold leading-[24px] overflow-hidden text-ellipsis whitespace-nowrap">
+                        {letter.title}
                       </div>
                     </div>
-                    <div className="text-[#292D32] text-[14px] font-normal leading-[22px]">
-                      {letter.nickname}
-                    </div>
-                    <div className="text-[#292D32] text-[16px] font-bold leading-[24px] overflow-hidden text-ellipsis whitespace-nowrap">
-                      {letter.title}
-                    </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
             <div ref={ref} className="h-10" />
           </main>
         ) : (
-          // 데이터가 없을때
           <>
             <main className="flex flex-grow mt-[120px]">
               <div className="flex flex-col items-center w-full rounded-[30px] border border-[#F4F5EF] bg-white px-4">
@@ -153,7 +157,6 @@ const YouthLetterStorage: React.FC = () => {
                   선배 버디님의 조언이 듣고 싶은 <br />
                   인생후배 버디들이 편지를 쓰고 있어요
                 </p>
-
                 <Image
                   src="/images/birds/letter_storage_bird.svg"
                   alt="편지보관함 새 이미지"
@@ -163,7 +166,6 @@ const YouthLetterStorage: React.FC = () => {
                 />
               </div>
             </main>
-
             <BirdyTip />
           </>
         )}

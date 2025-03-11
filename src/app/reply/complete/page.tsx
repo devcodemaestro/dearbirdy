@@ -30,7 +30,8 @@ const LetterReplyCompletePage: React.FC = () => {
     };
 
     loadAnimation();
-  }, [birdName]);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="w-full min-h-screen bg-[#f9f8f3] flex flex-col px-4">

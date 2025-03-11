@@ -237,7 +237,7 @@ export const getLetterHistory = async () => {
         access: accessToken,
       },
     });
-    console.log("마이페이지 api 테스트 중", response.data);
+    // console.log("마이페이지 api 테스트 중", response.data);
 
     return response.data;
   } catch (error) {

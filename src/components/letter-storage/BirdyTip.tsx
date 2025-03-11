@@ -1,4 +1,5 @@
 "use client";
+import { birdNameMap } from "@/constants/birdNameMap";
 import { birdyTip } from "@/services/userService";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -10,6 +11,10 @@ interface IData {
 
 const BirdyTip: React.FC = () => {
   const [tip, setTip] = useState<IData>();
+  const birdKey =
+    tip?.birdName && birdNameMap[tip?.birdName]
+      ? birdNameMap[tip?.birdName]
+      : "default";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +36,7 @@ const BirdyTip: React.FC = () => {
     <div className="flex flex-col p-[20px_24px] justify-center items-start rounded-[16px] bg-[#FFF] mt-4 px-6 py-5">
       <div className="flex items-center w-full gap-4">
         <Image
-          src={`/images/birds/${tip.birdName}_tip.svg`}
+          src={`/images/birds/${birdKey}_tip.svg`}
           alt="버디팁 새 프로필"
           width={61}
           height={60}

@@ -91,6 +91,6 @@ body {
 /* 페이지네이션 위치 조정 (SelectBird) */
 .select-bird-swiper .swiper-pagination {
   position: relative;
-  bottom: -15px;
+  /* bottom: -15px; */
   text-align: center;
 }

@@ -18,14 +18,14 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full max-h-[852px]">
       {/* Swiper 슬라이드 */}
       <Swiper
         pagination={{
           clickable: true,
         }}
         modules={[Pagination]}
-        className="onboarding-swiper w-full h-full"
+        className="onboarding-swiper w-full max-h-[852px]"
       >
         {onboardingSlides.map((slide, index) => (
           <SwiperSlide key={index} className="relative">
@@ -34,7 +34,7 @@ export default function OnboardingPage() {
             <img
               src={slide.image}
               alt={`onboarding-step-${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full max-h-[852px] object-cover"
             />
             <div className="pl-7 absolute inset-0 mt-12">
               {/* 페이지네이션 위치 - 콘텐츠 상단에 배치 */}

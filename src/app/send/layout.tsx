@@ -5,8 +5,8 @@ export default function SendLayout({
 }) {
   return (
     <>
-      <div className="relative px-4 max-w-[352px] min-h-[852px]">
-        <main className="flex-1">{children}</main>
+      <div className="relative px-4 max-w-[375px] max-h-[852px]">
+        <main>{children}</main>
       </div>
     </>
   );

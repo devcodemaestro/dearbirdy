@@ -20,7 +20,7 @@ export default function LetterGuideModal({
 
   return (
     <div
-      className={`fixed bottom-0 left-0 w-full h-[372px] bg-white shadow-lg px-4 rounded-t-[30px] transition-transform duration-500 ${
+      className={`fixed bottom-0  max-w-[375px] h-[372px] bg-white shadow-lg px-4 rounded-t-[30px] transition-transform duration-500 ${
         isOpen ? "animate-slide-up" : "translate-y-full opacity-0"
       }`}
     >

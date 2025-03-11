@@ -24,7 +24,7 @@ interface LetterState {
 
 export const useLetterStore = create<LetterState>((set) => ({
   step: 1,
-  myBirdName: "올빼미",
+  myBirdName: "",
   nickname: "", // ✅ 초기 닉네임 값 추가
   selectedBird: "",
   categoryName: null,
@@ -45,7 +45,7 @@ export const useLetterStore = create<LetterState>((set) => ({
   resetLetter: () =>
     set({
       step: 1,
-      myBirdName: "올빼미",
+      myBirdName: "",
       nickname: "", // ✅ 닉네임 초기화
       selectedBird: "",
       categoryName: null,

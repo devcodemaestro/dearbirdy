@@ -14,7 +14,7 @@ const Background: React.FC<BackgroundProps> = ({
 }) => {
   return (
     <div className={className}>
-      <Image src={src} alt={alt} sizes="max-width: 352px" fill priority />
+      <Image src={src} alt={alt} sizes="max-width: 375px" fill priority />
     </div>
   );
 };
