@@ -97,7 +97,7 @@ const YouthLetterStorage: React.FC = () => {
         {/* 메인 */}
         {shouldApplyCondition ? (
           <main className="overflow-y-auto mt-[120px] min-h-[calc(100vh)]">
-            <div className="grid w-full grid-cols-2 gap-2">
+            <div className="cursor-pointer select-none grid w-full grid-cols-2 gap-2">
               {data?.pages.map((page) =>
                 page.dataList.map((letter: Letter) => (
                   <div

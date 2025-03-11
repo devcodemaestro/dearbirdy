@@ -207,3 +207,66 @@ export const postLetter = async (payload: LetterPayload) => {
     throw error;
   }
 };
+
+// 마이페이지 - 버디 유형 모두 보기
+export const getMyPageBirdy = async () => {
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+
+    const response = await api.get(`/birdy/myPage/birdy`, {
+      headers: {
+        access: accessToken,
+      },
+    });
+    // console.log("마이페이지 api 테스트 중", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
+
+// 마이페이지 - 편지 주고 받은 수 확인
+export const getLetterHistory = async () => {
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+
+    const response = await api.get(`/letter/letter/history`, {
+      headers: {
+        access: accessToken,
+      },
+    });
+    console.log("마이페이지 api 테스트 중", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
+
+/** ✅ 사용자 정보 조회 API */
+export const getUserInfo = async () => {
+  // console.log("✅ 사용자 정보 요청 시작");
+
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+    if (!accessToken) {
+      throw new Error("❌ access_token이 없음. 로그인 필요");
+    }
+
+    const response = await api.get(`/user/info`, {
+      headers: {
+        access: `{${accessToken}}`,
+      },
+    });
+
+    // console.log("✅ 사용자 정보 조회 성공:", response.data);
+
+    return response.data; // ✅ response.data를 반환하여 활용 가능
+  } catch (error) {
+    console.error("❌ 사용자 정보 조회 실패:", error);
+    throw error;
+  }
+};

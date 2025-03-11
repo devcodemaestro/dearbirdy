@@ -1,10 +1,35 @@
 "use client";
 
-import { useLetterStore } from "@/store/useLetterStore";
+import { useEffect, useState } from "react";
+import { getUserInfo } from "@/services/userService"; // ✅ API 가져오기
 import Image from "next/image";
 
 export default function ProfileSection() {
-  const { myBirdName, nickname } = useLetterStore(); // ✅ 닉네임 가져오기
+  const [nickname, setNickname] = useState(""); // 닉네임 상태
+  const [myBirdName, setMyBirdName] = useState(""); // 새 이름 상태
+  const [roleName, setRoleName] = useState("");
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        console.log("🚀 사용자 정보 요청 시작");
+        const data = await getUserInfo();
+        console.log("✅ 사용자 정보 응답:", data);
+        const response = data.data;
+
+        if (response) {
+          setNickname(response.nickname ?? "익명의 사용자"); // ✅ 닉네임 설정
+          setMyBirdName(response.birdName ?? "익명새"); // ✅ 새 이름 설정
+          setRoleName(response.roleName ?? "익명");
+        }
+      } catch (error) {
+        console.error("❌ 사용자 정보 불러오기 실패:", error);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
   const roleText = myBirdName === "MENTEE" ? "인생후배" : "인생선배";
 
   return (

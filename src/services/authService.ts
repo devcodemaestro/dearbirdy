@@ -80,28 +80,3 @@ export const postAdditionalInfo = async (userData: {
     throw error;
   }
 };
-
-/** ✅ 사용자 정보 조회 API */
-export const getUserInfo = async () => {
-  // console.log("✅ 사용자 정보 요청 시작");
-
-  try {
-    const accessToken = useAuthStore.getState().accessToken;
-    if (!accessToken) {
-      throw new Error("❌ access_token이 없음. 로그인 필요");
-    }
-
-    const response = await api.get(`/user/info`, {
-      headers: {
-        access: `{${accessToken}}`,
-      },
-    });
-
-    // console.log("✅ 사용자 정보 조회 성공:", response.data);
-
-    return response.data; // ✅ response.data를 반환하여 활용 가능
-  } catch (error) {
-    console.error("❌ 사용자 정보 조회 실패:", error);
-    throw error;
-  }
-};
