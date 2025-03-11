@@ -13,16 +13,16 @@ export default function RootPage() {
       const onboardingComplete = localStorage.getItem("onboardingComplete");
 
       if (!onboardingComplete) {
-        console.log("✅ 온보딩이 필요함 → /onboarding 이동");
+        // console.log("✅ 온보딩이 필요함 → /onboarding 이동");
         router.replace("/onboarding"); // ✅ router.push → router.replace로 변경 (뒤로 가기 방지)
       } else {
-        console.log("✅ 온보딩 완료된 사용자 → /main 이동");
+        // console.log("✅ 온보딩 완료된 사용자 → /main 이동");
         router.replace("/main");
       }
 
       setLoading(false);
     }
-  }, []);
+  }, [router]);
 
   // ✅ 로딩 화면 추가하여 화면 깜빡임 방지
   if (loading) {

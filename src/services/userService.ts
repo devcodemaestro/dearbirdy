@@ -13,7 +13,7 @@ export const checkNickname = async (nickname: string): Promise<boolean> => {
       return false;
     }
 
-    console.log("✅ 액세스 토큰:", accessToken ? "토큰 있음" : "토큰 없음");
+    // console.log("✅ 액세스 토큰:", accessToken ? "토큰 있음" : "토큰 없음");
 
     const response = await api.get(`user/check-nickname?nickname=${nickname}`, {
       headers: {
@@ -21,7 +21,7 @@ export const checkNickname = async (nickname: string): Promise<boolean> => {
       },
     });
 
-    console.log("✅ 닉네임 중복 확인 응답:", response.data);
+    // console.log("✅ 닉네임 중복 확인 응답:", response.data);
 
     // API 응답 구조를 확인하고 적절히 처리
     if (response.data.code === 200) {
@@ -48,7 +48,7 @@ export const getLetterAll = async (pageNum: number) => {
       },
     });
 
-    console.log("편지 전체 데이터:", response.data);
+    // console.log("편지 전체 데이터:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching user info:", error);
@@ -101,7 +101,7 @@ export const getLetterSaved = async (pageNum: number) => {
 export const LetterSave = async (letterStatusSeq: number) => {
   try {
     const accessToken = useAuthStore.getState().accessToken;
-    console.log("letterStatusSeq: ", letterStatusSeq);
+    // console.log("letterStatusSeq: ", letterStatusSeq);
 
     const response = await api.get(
       `/letter/archive?letterStatusSeq=${letterStatusSeq}`,
@@ -111,7 +111,7 @@ export const LetterSave = async (letterStatusSeq: number) => {
         },
       }
     );
-    console.log("저장", response.data);
+    // console.log("저장", response.data);
 
     return response.data;
   } catch (error) {
@@ -129,7 +129,7 @@ export const birdyTip = async () => {
         access: accessToken,
       },
     });
-    console.log(response.data);
+    // console.log(response.data);
 
     return response.data;
   } catch (error) {
@@ -157,7 +157,7 @@ export interface BirdApiResponse {
 
 // ✅ API 호출 함수의 반환 타입을 명확하게 지정
 export const getBirdyInfo = async (): Promise<BirdApiResponse> => {
-  console.log("✅ 사용자 정보 요청 시작");
+  // console.log("✅ 사용자 정보 요청 시작");
 
   try {
     const accessToken = useAuthStore.getState().accessToken;
@@ -171,7 +171,7 @@ export const getBirdyInfo = async (): Promise<BirdApiResponse> => {
       },
     });
 
-    console.log("✅ 사용자 정보 조회 성공:", response.data);
+    // console.log("✅ 사용자 정보 조회 성공:", response.data);
     return response.data; // ✅ response.data를 반환하여 활용 가능
   } catch (error) {
     console.error("❌ 사용자 정보 조회 실패:", error);
@@ -200,10 +200,73 @@ export const postLetter = async (payload: LetterPayload) => {
       },
     });
 
-    console.log("✅ 편지 전송 성공:", response.data);
+    // console.log("✅ 편지 전송 성공:", response.data);
     return response.data;
   } catch (error) {
     console.error("❌ 편지 전송 실패:", error);
+    throw error;
+  }
+};
+
+// 마이페이지 - 버디 유형 모두 보기
+export const getMyPageBirdy = async () => {
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+
+    const response = await api.get(`/birdy/myPage/birdy`, {
+      headers: {
+        access: accessToken,
+      },
+    });
+    // console.log("마이페이지 api 테스트 중", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
+
+// 마이페이지 - 편지 주고 받은 수 확인
+export const getLetterHistory = async () => {
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+
+    const response = await api.get(`/letter/letter/history`, {
+      headers: {
+        access: accessToken,
+      },
+    });
+    console.log("마이페이지 api 테스트 중", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
+
+/** ✅ 사용자 정보 조회 API */
+export const getUserInfo = async () => {
+  // console.log("✅ 사용자 정보 요청 시작");
+
+  try {
+    const accessToken = useAuthStore.getState().accessToken;
+    if (!accessToken) {
+      throw new Error("❌ access_token이 없음. 로그인 필요");
+    }
+
+    const response = await api.get(`/user/info`, {
+      headers: {
+        access: `{${accessToken}}`,
+      },
+    });
+
+    // console.log("✅ 사용자 정보 조회 성공:", response.data);
+
+    return response.data; // ✅ response.data를 반환하여 활용 가능
+  } catch (error) {
+    console.error("❌ 사용자 정보 조회 실패:", error);
     throw error;
   }
 };

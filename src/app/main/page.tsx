@@ -13,15 +13,14 @@ export default function MainPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(false);
     if (accessToken) {
-      console.log("✅ 로그인된 사용자 → 메인 페이지로 이동");
-      setLoading(false);
+      // console.log("✅ 로그인된 사용자 → 메인 페이지로 이동");
       router.push("/main");
     } else {
-      console.log("✅ 온보딩 완료된 사용자 → 메인 페이지로 이동");
-      setLoading(false);
+      // console.log("✅ 온보딩 완료된 사용자 → 메인 페이지로 이동");
     }
-  }, [router]);
+  }, [accessToken, router]); // ✅ accessToken 추가
 
   if (loading)
     return (

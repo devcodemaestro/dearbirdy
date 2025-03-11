@@ -10,11 +10,13 @@ export default function MyBuddyIntro() {
       {/* 🐦 사용자 프로필 섹션 */}
       <ProfileSection />
 
-      {/* 📩 편지 기록 */}
-      <LetterHistory />
+      <div className="w-[375px] bg-[#F9F8F3] h-[455px] rounded-t-[20px] px-[16px] pt-[32px] pb-[24px] mt-[25px] flex flex-col gap-[24px]">
+        {/* 📩 편지 기록 */}
+        <LetterHistory />
 
-      {/* ⚙️ 설정 메뉴 */}
-      <SettingsMenu />
+        {/* ⚙️ 설정 메뉴 */}
+        <SettingsMenu />
+      </div>
     </div>
   );
 }

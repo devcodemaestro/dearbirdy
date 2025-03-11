@@ -58,7 +58,7 @@ const ReplyPage: React.FC = () => {
       letterStatusSeq,
     };
 
-    console.log("최종 전송 데이터:", replyForm);
+    // console.log("최종 전송 데이터:", replyForm);
 
     await postReply(replyForm);
     router.push("/reply/complete");

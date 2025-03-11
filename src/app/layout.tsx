@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="ko">
       <head>{/* 구글 폰트 관련 링크 제거 */}</head>
       <body
-        className={`${pretendard.variable} font-pretendard min-h-[852px] w-full max-w-[375px] mx-auto flex flex-col items-center justify-center`}
+        className={`${pretendard.variable} font-pretendard max-h-[852px] w-full max-w-[375px] mx-auto flex flex-col items-start justify-center`}
       >
         <Providers>{children}</Providers>
       </body>

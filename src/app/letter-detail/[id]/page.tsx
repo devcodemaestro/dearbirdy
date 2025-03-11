@@ -51,7 +51,7 @@ const LetterDetailId: React.FC = () => {
 
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-      console.log(parsedData);
+      // console.log(parsedData);
 
       setUserData(parsedData);
     }
@@ -104,7 +104,7 @@ const LetterDetailId: React.FC = () => {
     replyDate = formatDate(letter?.replyLetter?.creatAt ?? "");
   }
 
-  console.log("letter:", letter);
+  // console.log("letter:", letter);
 
   const throwClicked = () => {
     setShowThrowModal(true);

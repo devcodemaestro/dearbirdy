@@ -27,7 +27,7 @@ const ReplyPreview: React.FC<IProps> = ({ setPreviewModal }) => {
       }
     };
     fetchLetterDetail();
-  }, []);
+  }, [letterStatusSeq]);
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);

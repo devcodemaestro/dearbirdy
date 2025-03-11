@@ -32,7 +32,7 @@ const BuddyResultCard = ({ birdType }: BuddyResultCardProps) => {
   useEffect(() => {
     setHideNav(true);
     return () => setHideNav(false);
-  }, []);
+  }, [setHideNav]);
 
   return (
     <div className="flex flex-col items-center">

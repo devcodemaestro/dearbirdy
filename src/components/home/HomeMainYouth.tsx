@@ -41,7 +41,7 @@ const HomeMainYouth: React.FC<IProps> = ({ userData }) => {
             오늘은 무슨 고민이 있나요?
           </span>
           <div
-            className="flex w-full h-[50px] justify-center items-center  gap-1 mt-4 align-stretch rounded-lg bg-[#292D32]"
+            className="flex w-full cursor-pointer select-none  h-[50px] justify-center items-center  gap-1 mt-4 align-stretch rounded-lg bg-[#292D32]"
             onClick={() => router.push("/send")}
           >
             <HomeLetterIcon fill="#FFF" />

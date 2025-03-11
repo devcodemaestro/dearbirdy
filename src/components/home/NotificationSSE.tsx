@@ -23,7 +23,7 @@ const NotificationComponent = () => {
         );
 
         eventSource.onmessage = (event) => {
-          console.log("새 알림:", event.data);
+          // console.log("새 알림:", event.data);
           setNotifications((prev) => [...prev, event.data]); // 알림 리스트 추가
         };
 
