@@ -1,10 +1,13 @@
 "use client";
 import Toggle from "@/components/letter/Toggle";
 import { useLetterInfoStore } from "@/store/letterInfoStore";
-import Lottie from "lottie-react";
-// import Image from "next/image";
+import { birdNameMap } from "@/constants/birdNameMap"; // ✅ birdName 변환 맵 추가
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+
+// ✅ Lottie를 SSR에서 제외하여 클라이언트에서만 로드
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const LetterReplyCompletePage: React.FC = () => {
   const router = useRouter();
@@ -12,10 +15,22 @@ const LetterReplyCompletePage: React.FC = () => {
   const { nickname, birdName } = useLetterInfoStore();
 
   useEffect(() => {
-    import(`@/animations/${birdName}_deliver.json`).then((data) => {
-      setAnimationData(data.default);
-    });
-  });
+    const loadAnimation = async () => {
+      try {
+        // ✅ 한글 birdName을 영문으로 변환
+        const birdKey = birdNameMap[birdName] || "default";
+        const animationModule = await import(
+          `@/animations/${birdKey}_deliver.json`
+        );
+        setAnimationData(animationModule.default);
+      } catch (error) {
+        console.error("❌ Lottie 파일 로딩 실패:", error);
+        setAnimationData(null); // 에러 발생 시 안전한 상태 유지
+      }
+    };
+
+    loadAnimation();
+  }, [birdName]);
 
   return (
     <div className="w-full min-h-screen bg-[#f9f8f3] flex flex-col px-4">
@@ -29,11 +44,15 @@ const LetterReplyCompletePage: React.FC = () => {
         </div>
         {/* 애니메이션 */}
         <div className="flex justify-center items-center w-full h-[310px] mt-[48px]">
-          {animationData && (
+          {animationData ? (
             <Lottie
               animationData={animationData}
               style={{ width: 216, height: 167 }}
             />
+          ) : (
+            <p className="text-center text-[#6B7178]">
+              애니메이션을 불러오는 중...
+            </p>
           )}
         </div>
         <div></div>
@@ -42,7 +61,7 @@ const LetterReplyCompletePage: React.FC = () => {
             <p className="text-[#6B7178] text-center text-[14px] font-normal leading-[22px] tracking-[-0.056px]">
               답장을 확인하면 고마움 표시가 도착해요.
             </p>
-            <p className="text-[#6B7178] text-center  text-[14px] font-normal leading-[22px] tracking-[-0.056px]">
+            <p className="text-[#6B7178] text-center text-[14px] font-normal leading-[22px] tracking-[-0.056px]">
               고마움 표시가 오면 알림을 받을까요?
             </p>
           </div>

@@ -1,29 +1,31 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getUserInfo } from "@/services/userService"; // ✅ API 가져오기
+import { getUserInfo } from "@/services/userService";
 import Image from "next/image";
+import { birdNameMap } from "@/constants/birdNameMap"; // ✅ 외부에서 불러오기
 
 export default function ProfileSection() {
   const [nickname, setNickname] = useState(""); // 닉네임 상태
   const [myBirdName, setMyBirdName] = useState(""); // 새 이름 상태
   const [roleName, setRoleName] = useState("");
+  const [loading, setLoading] = useState(true); // ✅ 데이터 로딩 상태 추가
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        console.log("🚀 사용자 정보 요청 시작");
         const data = await getUserInfo();
-        console.log("✅ 사용자 정보 응답:", data);
         const response = data.data;
 
         if (response) {
-          setNickname(response.nickname ?? "익명의 사용자"); // ✅ 닉네임 설정
-          setMyBirdName(response.birdName ?? "익명새"); // ✅ 새 이름 설정
+          setNickname(response.nickname ?? "익명의 사용자");
+          setMyBirdName(response.birdName ?? "익명새");
           setRoleName(response.roleName ?? "익명");
         }
       } catch (error) {
         console.error("❌ 사용자 정보 불러오기 실패:", error);
+      } finally {
+        setLoading(false); // ✅ 데이터 로딩 완료 후 상태 변경
       }
     };
 
@@ -32,16 +34,31 @@ export default function ProfileSection() {
 
   const roleText = roleName === "MENTEE" ? "인생후배" : "인생선배";
 
+  // ✅ 한글 → 영문 변환 후 이미지 경로 설정
+  const getImageSrc = (birdName: string) => {
+    const englishName = birdNameMap[birdName] || "default";
+    return `/images/letter-slide/${englishName}_profile.png`;
+  };
+
+  // ✅ 데이터 로딩 중이면 표시
+  if (loading) {
+    return <p className="text-center mt-20">로딩 중...</p>;
+  }
+
   return (
     <>
       {/* 상단 프로필 이미지 */}
       <div className="mt-[123px]">
         <Image
-          src={`/images/letter-slide/${myBirdName}_profile.png`}
+          src={getImageSrc(myBirdName)}
           alt="프로필 이미지"
           width={184}
           height={184}
           className="rounded-full"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src =
+              "/images/letter-slide/default_profile.png";
+          }} // ✅ 이미지 로드 실패 시 기본 이미지 적용
         />
       </div>
 
