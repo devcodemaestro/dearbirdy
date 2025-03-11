@@ -11,12 +11,13 @@ import SignupNav from "@/components/signup/SignupNav";
 import { useSignupStore } from "@/store/useSignupStore";
 import { useBuddyTestStore } from "@/store/useBuddyTestStore";
 
-const SignUp = () => {
-  const { step, setStep, hideNav } = useSignupStore();
-  const { testStep, setTestStep } = useBuddyTestStore();
-  console.log(testStep);
+import { useRouter } from "next/navigation"; // ✅ useRouter import
 
-  // ✅ 새로고침 시 `sessionStorage`에서 `step`과 `testStep` 값을 복원
+const SignUp = () => {
+  const router = useRouter(); // ✅ useRouter 사용
+  const { step, setStep, hideNav } = useSignupStore();
+  const { setTestStep } = useBuddyTestStore();
+
   useEffect(() => {
     const savedSignupState = sessionStorage.getItem("signup-storage");
     if (savedSignupState) {
@@ -35,7 +36,7 @@ const SignUp = () => {
         console.error("❌ SignUp: BuddyTest sessionStorage 복원 오류", error);
       }
     }
-  }, [setStep, setTestStep]);
+  }, [setStep, setTestStep, router]); // ✅ router 추가
 
   return (
     <div className="w-full px-4">

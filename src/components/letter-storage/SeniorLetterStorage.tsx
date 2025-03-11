@@ -58,14 +58,14 @@ const SeniorLetterStorage: React.FC = () => {
       isFirstRender.current = false; // 첫 렌더링 후 false로 변경
     }
     setShouldApplyCondition(data?.pages[0].totalPage !== 0);
-  }, [isLoading]);
+  }, [data]);
   const { ref, inView } = useInView();
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage, inView]);
 
   const handleShowToast = () => {
     setShowToast(true);

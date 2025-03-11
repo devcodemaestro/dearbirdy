@@ -59,7 +59,7 @@ const LetterStorage: React.FC = () => {
 
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-      console.log(parsedData);
+      // console.log(parsedData);
 
       setUserData(parsedData);
     }
@@ -68,7 +68,7 @@ const LetterStorage: React.FC = () => {
   if (!userData) {
     return <p>로딩 중...</p>;
   }
-  console.log(userData);
+  // console.log(userData);
 
   return (
     <div className="px-4">

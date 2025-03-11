@@ -30,7 +30,7 @@ export default function LetterSent() {
           letter,
         });
 
-        console.log("✅ 편지 전송 성공:", response);
+        console.log("✅ 편지 전송 성공:", response.message);
       } catch (error) {
         console.error("❌ 편지 전송 실패:", error);
       } finally {

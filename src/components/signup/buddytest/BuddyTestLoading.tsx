@@ -37,7 +37,7 @@ const BuddyTestLoading = () => {
 
       // ✅ 결과 계산 및 저장
       const response = processTestResults(safeAnswers);
-      console.log("response", response);
+      // console.log("response", response);
       updateFormData({ birdName: response.result.name });
       setBirdType(response.result.name);
     } catch (error) {
