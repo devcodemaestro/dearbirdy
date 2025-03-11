@@ -2,10 +2,14 @@
 
 import { useLetterStore } from "@/store/useLetterStore";
 import { useRouter } from "next/navigation";
-import Lottie from "lottie-react";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import Toggle from "./Toggle";
 import { postLetter } from "@/services/userService";
+import { birdNameMap } from "@/constants/birdNameMap"; // ✅ birdName 변환 맵 추가
+
+// ✅ Lottie를 SSR에서 제외하여 클라이언트에서만 로드
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 export default function LetterSent() {
   const { myBirdName, selectedBird, title, letter, categoryName, resetLetter } =
@@ -15,7 +19,10 @@ export default function LetterSent() {
   const [isSending, setIsSending] = useState(false); // ✅ 로딩 상태 추가
 
   useEffect(() => {
-    import(`@/animations/${myBirdName}_deliver.json`).then((data) => {
+    // ✅ 한글 새 이름을 영문으로 변환
+    const birdKey = birdNameMap[myBirdName] || "default";
+
+    import(`@/animations/${birdKey}_deliver.json`).then((data) => {
       setAnimationData(data.default);
     });
 
@@ -41,6 +48,7 @@ export default function LetterSent() {
     sendLetter();
   }, [myBirdName, selectedBird, title, letter, categoryName]);
 
+  console.log("myBirdName", myBirdName);
   return (
     <div className="relative flex flex-col items-center text-black">
       {/* 상단 여백 */}

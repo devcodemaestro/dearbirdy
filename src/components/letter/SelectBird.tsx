@@ -9,12 +9,19 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { getBirdyInfo, postLetter } from "@/services/userService";
+import { birdNameMap } from "@/constants/birdNameMap"; // ✅ 외부에서 불러오기
 
 export interface Bird {
   birdName: string;
   traits: string;
   explanation: string;
 }
+
+// ✅ 한글 새 이름을 영문으로 변환하여 이미지 경로 생성하는 함수
+const getImageSrc = (birdName: string) => {
+  const englishName = birdNameMap[birdName] || "default";
+  return `/images/letter-slide/${englishName}_profile.png`;
+};
 
 export default function SelectBird() {
   const {
@@ -29,11 +36,9 @@ export default function SelectBird() {
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
-    async function fetchBirds() {
+    const fetchBirds = async () => {
       try {
         const response = await getBirdyInfo();
-        // console.log("🐦 가져온 새 데이터:", response);
-
         if (response?.data?.birdyList) {
           setBirds(response.data.birdyList);
         } else {
@@ -44,7 +49,7 @@ export default function SelectBird() {
         console.error("❌ 새 정보 불러오기 실패:", error);
         setBirds([]);
       }
-    }
+    };
     fetchBirds();
   }, []);
 
@@ -58,7 +63,7 @@ export default function SelectBird() {
 
     try {
       const response = await postLetter({
-        birdName: selectedBird,
+        birdName: selectedBird ?? "앵무새",
         categoryName: categoryName ?? "기타",
         title,
         letter,
@@ -73,6 +78,11 @@ export default function SelectBird() {
       setIsSending(false);
     }
   };
+
+  // ✅ 데이터가 없을 때 로딩 메시지 표시
+  if (birds.length === 0) {
+    return <p className="text-center mt-20">로딩 중...</p>;
+  }
 
   return (
     <div className="relative text-black flex flex-col items-center">
@@ -123,11 +133,15 @@ export default function SelectBird() {
               >
                 {/* 🐦 프로필 이미지 */}
                 <Image
-                  src={`/images/letter-slide/${bird.birdName}_profile.png`}
+                  src={getImageSrc(bird.birdName)} // ✅ 한글 → 영문 변환 후 이미지 적용
                   alt={bird.birdName}
                   width={100}
                   height={100}
                   className="mb-2"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      "/images/letter-slide/default_profile.png";
+                  }} // ✅ 이미지 로드 실패 시 기본 이미지 적용
                 />
 
                 {/* Traits (태그 형태) */}
