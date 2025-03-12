@@ -55,6 +55,7 @@ export default function SelectBird() {
       }
     };
     fetchBirds();
+    // eslint-disable-next-line
   }, []);
 
   const handleSendLetter = async () => {

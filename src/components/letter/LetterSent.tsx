@@ -61,6 +61,7 @@ export default function LetterSent() {
     })
       .catch((error) => console.error("❌ 편지 전송 실패:", error))
       .finally(() => setIsSending(false)); // 🛑 전송 종료
+    // eslint-disable-next-line
   }, []); // ✅ 한 번만 실행
 
   return (

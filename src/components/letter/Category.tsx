@@ -23,8 +23,8 @@ export default function Category() {
   };
 
   return (
-    <div className="relative text-black">
-      <nav className="pl-4 mt-[58px] w-[343px] justify-between py-4">
+    <div className="relative text-black w-full h-full">
+      <nav className="pl-4 mt-[58px] justify-between py-4">
         <LeftArrow
           className="w-6 h-6 cursor-pointer"
           stroke="#292D32"

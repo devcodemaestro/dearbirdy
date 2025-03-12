@@ -2,11 +2,11 @@
 import React from "react";
 import LeftArrow from "../Icons/common/LeftArrow";
 import { useSignupStore } from "@/store/useSignupStore";
-import { useBuddyTestStore } from "@/store/useBuddyTestStore"; // ✅ 버디테스트 상태 가져오기
+import { useBirdyTestStore } from "@/store/useBirdyTestStore"; // ✅ 버디테스트 상태 가져오기
 
 const NavBar = () => {
   const { step, prevStep } = useSignupStore();
-  const { testStep, prevTestStep } = useBuddyTestStore(); // ✅ Zustand에서 상태 가져오기
+  const { testStep, prevTestStep } = useBirdyTestStore(); // ✅ Zustand에서 상태 가져오기
 
   const handleBack = () => {
     if (step === 5 && testStep > 0) {

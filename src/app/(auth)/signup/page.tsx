@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import BuddyTest from "@/components/signup/buddytest/BuddyTest";
+import BirdyTest from "@/components/signup/birdytest/BirdyTest";
 import CategoryStep from "@/components/signup/CategoryStep";
 import CompleteStep from "@/components/signup/CompleteStep";
 import NicknameStep from "@/components/signup/NicknameStep";
@@ -9,14 +9,14 @@ import RoleStep from "@/components/signup/RoleStep";
 import SignupIntro from "@/components/signup/SignupIntro";
 import SignupNav from "@/components/signup/SignupNav";
 import { useSignupStore } from "@/store/useSignupStore";
-import { useBuddyTestStore } from "@/store/useBuddyTestStore";
+import { useBirdyTestStore } from "@/store/useBirdyTestStore";
 
 import { useRouter } from "next/navigation"; // ✅ useRouter import
 
 const SignUp = () => {
   const router = useRouter(); // ✅ useRouter 사용
   const { step, setStep, hideNav } = useSignupStore();
-  const { setTestStep } = useBuddyTestStore();
+  const { setTestStep } = useBirdyTestStore();
 
   useEffect(() => {
     const savedSignupState = sessionStorage.getItem("signup-storage");
@@ -28,12 +28,12 @@ const SignUp = () => {
       }
     }
 
-    const savedBuddyTestState = sessionStorage.getItem("buddytest-storage");
-    if (savedBuddyTestState) {
+    const savedBirdyTestState = sessionStorage.getItem("birdytest-storage");
+    if (savedBirdyTestState) {
       try {
-        setTestStep(JSON.parse(savedBuddyTestState).state.testStep);
+        setTestStep(JSON.parse(savedBirdyTestState).state.testStep);
       } catch (error) {
-        console.error("❌ SignUp: BuddyTest sessionStorage 복원 오류", error);
+        console.error("❌ SignUp: BirdyTest sessionStorage 복원 오류", error);
       }
     }
   }, [setStep, setTestStep, router]); // ✅ router 추가
@@ -46,7 +46,7 @@ const SignUp = () => {
       {step === 2 && <RoleStep />}
       {step === 3 && <CategoryStep />}
       {step === 4 && <CompleteStep />}
-      {step === 5 && <BuddyTest />}
+      {step === 5 && <BirdyTest />}
     </div>
   );
 };

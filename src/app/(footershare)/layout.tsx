@@ -14,10 +14,10 @@ export default function SharedLayout({
 
   // Footer를 숨길 페이지 목록
   const noFooterPages = [
-    "/mybuddy/settings",
-    "/mybuddy/faq",
-    "/mybuddy/find-buddy",
-    "/mybuddy/all-buddy-types",
+    "/mybirdy/settings",
+    "/mybirdy/faq",
+    "/mybirdy/find-birddy",
+    "/mybirdy/all-birdy-types",
   ];
 
   const report = false;
@@ -27,8 +27,10 @@ export default function SharedLayout({
     <>
       {report && <Report />}
       {limit && <Limit />}
-      <div className="w-[375px] max-h-[852px] bg-[#f9f8f3] flex flex-col items-center">
-        <main className="flex-1">{children}</main>
+      <div
+        className={`box-border font-pretendard min-h-screen min-w-[375px] xs:min-h-[852px] sm:min-h-screen sm:w-full `}
+      >
+        <div className="flex-1">{children}</div>
         {!noFooterPages.includes(pathname) && <Footer />}
       </div>
     </>
