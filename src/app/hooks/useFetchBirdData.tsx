@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getBirdData } from "@/services/buddyService";
+import { getBirdData } from "@/services/birdyService";
 
 interface BirdData {
   birdName: string;
