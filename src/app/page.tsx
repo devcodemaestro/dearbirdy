@@ -1,11 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import loadingEgg from "@/animations/loading_egg.json";
+import dynamic from "next/dynamic";
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false }); // ✅ 서버 사이드 렌더링 방지
 
 export default function RootPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const lottieRef = useRef(null);
 
   useEffect(() => {
     // ✅ 클라이언트 환경인지 확인 (Next.js는 SSR에서 실행될 수도 있음)
@@ -28,7 +32,12 @@ export default function RootPage() {
   if (loading) {
     return (
       <div className="h-screen flex justify-center items-center">
-        <p className="text-lg text-gray-500">로딩 중...</p>
+        <Lottie
+          lottieRef={lottieRef}
+          animationData={loadingEgg}
+          loop={true}
+          autoplay={true}
+        />
       </div>
     );
   }

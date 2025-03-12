@@ -22,11 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <head>{/* 구글 폰트 관련 링크 제거 */}</head>
       <body
-        className={`${pretendard.variable} font-pretendard max-h-[852px] w-full max-w-[375px] mx-auto flex flex-col items-start justify-center`}
+        className={`${pretendard.variable} box-border font-pretendard w-full min-h-[852px] min-w-[375px] xs:min-h-[852px] sm:min-h-screen sm:w-full`}
       >
-        <Providers>{children}</Providers>
+        {/* ✅ React Query Provider 적용 */}
+        <main className="w-full h-full">
+          <Providers>{children}</Providers>
+        </main>
       </body>
     </html>
   );

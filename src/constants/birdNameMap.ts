@@ -5,4 +5,5 @@ export const birdNameMap: Record<string, string> = {
   올빼미: "owl",
   카나리아: "canary",
   파랑새: "bluebird",
+  익명새: "default",
 };
