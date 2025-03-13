@@ -1,6 +1,6 @@
 // src/constants/settings.ts
 
-export type SettingType = "toggle" | "link";
+export type SettingType = "toggle" | "link" | "internal";
 
 export interface SettingItem {
   type: SettingType;
@@ -27,7 +27,7 @@ export const SETTINGS_OPTIONS: SettingSection[] = [
     category: "계정",
     items: [
       {
-        type: "link",
+        type: "internal",
         label: "내 정보 수정",
       },
     ],
@@ -38,12 +38,12 @@ export const SETTINGS_OPTIONS: SettingSection[] = [
       {
         type: "link",
         label: "개인정보 처리방침",
-        url: "https://important-pansy-82d.notion.site/Dearbirdy-1a01b9cea31e8070b6f5ec4c08fe0485?pvs=74",
+        url: "https://important-pansy-82d.notion.site/Dearbirdy-1b51b9cea31e8094b4fefdacee285ff7?pvs=4",
       },
       {
         type: "link",
         label: "서비스 이용안내",
-        url: "https://important-pansy-82d.notion.site/DearBirdy-1a01b9cea31e80209dcef7dd4a75f23f",
+        url: "https://important-pansy-82d.notion.site/DearBirdy-1b51b9cea31e80bb8702f6f0753d12df?pvs=4",
       },
       {
         type: "link",
