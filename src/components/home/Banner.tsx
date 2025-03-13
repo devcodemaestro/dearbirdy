@@ -12,7 +12,7 @@ const Banner: React.FC = () => {
         <p className="text-[#292D32] font-bold text-[16px] leading-[24px]">
           답답한 마음을 어떻게
           <br />
-          풀어내야할지 막막할 때는
+          풀어내야 할지 막막할 때는
         </p>
       </div>
       <Image

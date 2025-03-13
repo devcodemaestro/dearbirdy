@@ -25,9 +25,9 @@ export default function Category() {
   return (
     <div className="relative text-black w-full h-full">
       <div className="flex flex-col gap-8">
-        <nav>
+        <nav className="flex justify-between  py-4 border-b border-[#F0F1EC]">
           <LeftArrow
-            className="w-6 h-6 select-none cursor-pointer"
+            className="w-6 h-6 cursor-pointer select-none"
             stroke="#292D32"
             onClick={() => router.back()}
           />

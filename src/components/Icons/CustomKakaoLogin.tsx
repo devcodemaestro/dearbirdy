@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function CustomKakaoLogin() {
   return (
     <button
-      className="cursor-pointer select-none flex h-[50px] w-[343px] items-center justify-center gap-2 rounded-[12px] bg-[#FEE500] px-4"
+      className="cursor-pointer py-[13.5px] select-none flex h-full w-full items-center justify-center gap-2 rounded-[12px] bg-[#FEE500] px-4"
       onClick={() => {
         window.location.href = getKakaoLoginUrl();
       }}
@@ -16,7 +16,7 @@ export default function CustomKakaoLogin() {
         height={18}
       />
       <span className="text-[15px] font-semibold leading-[22.5px] text-[rgba(0,0,0,0.85)]">
-        카카오로 회원가입
+        카카오로 시작하기
       </span>
     </button>
   );
