@@ -9,6 +9,7 @@ import { useEffect } from "react";
 export default function MainPage() {
   const router = useRouter();
   const { accessToken } = useAuthStore();
+  // const accessToken = process.env.NEXT_PUBLIC_TOKEN;
 
   // ✅ 로그인된 사용자는 메인 페이지로 리디렉트
   useEffect(() => {
