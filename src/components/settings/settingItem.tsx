@@ -1,6 +1,7 @@
 import React from "react";
 import NextArrow from "@/components/common/NextArrow";
 import { SettingType } from "@/constants/settings";
+import { useRouter } from "next/navigation";
 
 interface ISettingItem {
   type: SettingType;
@@ -17,8 +18,17 @@ const SettingItem: React.FC<ISettingItem> = ({
   isToggled,
   onToggle,
 }) => {
+  const router = useRouter(); // ✅ 내부 이동을 위한 router 추가
+
   return (
-    <div className="w-full cursor-pointer select-none flex justify-between items-center px-4 mt-4">
+    <div
+      className="w-full cursor-pointer select-none flex justify-between items-center px-4 mt-4"
+      onClick={() => {
+        if (type === "internal") {
+          router.push("/mybirdy/my-account"); // ✅ "내 정보 수정" 클릭 시 이동
+        }
+      }}
+    >
       <span className="text-gray-700 text-[16px] font-medium">{label}</span>
 
       {type === "toggle" && (
@@ -36,7 +46,8 @@ const SettingItem: React.FC<ISettingItem> = ({
         </div>
       )}
 
-      {type === "link" && url && <NextArrow url={url} />}
+      {/* ✅ "내 정보 수정"도 NextArrow 아이콘 추가 */}
+      {(type === "link" || type === "internal") && <NextArrow url={url} />}
     </div>
   );
 };

@@ -24,9 +24,9 @@ const SettingsPage = () => {
             </span>
           </div>
 
-          {/* ✅ "알림" 카테고리일 때만, "편지 알림 받기" + "알림 받을 이메일"을 함께 표시 */}
+          {/* "알림" 카테고리일 때 추가 UI 표시 */}
           {section.category === "알림" ? (
-            <div className="w-[342px]  p-4 ">
+            <div className="w-full  p-4 ">
               {/* 편지 알림 받기 */}
               <div className="w-full flex justify-between items-center">
                 <span className="text-gray-700 text-[16px] font-medium">
@@ -47,7 +47,7 @@ const SettingsPage = () => {
               </div>
 
               {/* 알림 받을 이메일 */}
-              <div className="mt-3  bg-[#F4F5EF] border rounded-[10px]  p-4 ">
+              <div className="mt-3 w-full  bg-[#F4F5EF] border-1 border-[#E5E5EA] rounded-[10px] p-4 ">
                 <span className="block text-gray-600 text-sm">
                   알림 받을 이메일
                 </span>

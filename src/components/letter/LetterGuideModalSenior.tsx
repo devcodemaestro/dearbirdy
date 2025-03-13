@@ -9,7 +9,7 @@ interface LetterGuideModalProps {
   type: GuideType;
 }
 
-export default function LetterGuideModal({
+export default function LetterGuideModalSenior({
   isOpen,
   onClose,
   type,

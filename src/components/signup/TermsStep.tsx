@@ -130,7 +130,7 @@ const TermsStep: React.FC<TermsStepProps> = ({ onClose, isModal = false }) => {
                 </p>
               </div>
               <Link
-                href="https://important-pansy-82d.notion.site/Dearbirdy-1a01b9cea31e80c5b9b0db65096357b9?pvs=74"
+                href="https://important-pansy-82d.notion.site/Dearbirdy-1b51b9cea31e80f2b442d5324f6ad1fe?pvs=4"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -164,7 +164,7 @@ const TermsStep: React.FC<TermsStepProps> = ({ onClose, isModal = false }) => {
                 </p>
               </div>
               <Link
-                href="https://important-pansy-82d.notion.site/Dearbirdy-1a01b9cea31e8070b6f5ec4c08fe0485?pvs=74"
+                href="https://important-pansy-82d.notion.site/Dearbirdy-1b51b9cea31e8094b4fefdacee285ff7?pvs=4"
                 target="_blank"
                 rel="noopener noreferrer"
               >
