@@ -1,15 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 const Banner: React.FC = () => {
   return (
-    <Link
-      href="https://important-pansy-82d.notion.site/DearBirdy-1a01b9cea31e80209dcef7dd4a75f23f"
-      target="_blank" // 새 탭에서 열기
-      rel="noopener noreferrer" // 보안 강화
-      className="relative cursor-pointer select-none flex px-4 justify-between items-center content-center rounded-[12px] opacity-[0.99] bg-white overflow-hidden"
-    >
+    <div className="relative cursor-pointer select-none flex px-4 justify-between items-center content-center rounded-[12px] opacity-[0.99] bg-white overflow-hidden">
       <div className="absolute left-[16px] bottom-[-26px] w-[261px] h-[34px] rounded-full bg-[#FFD85BB2] bg-opacity-70 blur-[37px]"></div>
       <div className="flex flex-col">
         <span className="text-[#CAB29A] text-[12px] leading-[16px] font-normal">
@@ -27,7 +21,7 @@ const Banner: React.FC = () => {
         width={126}
         height={92}
       />
-    </Link>
+    </div>
   );
 };
 
