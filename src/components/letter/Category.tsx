@@ -24,8 +24,8 @@ export default function Category() {
 
   return (
     <div className="relative text-black w-full h-full">
-      <div className="flex flex-col gap-8">
-        <nav className="flex justify-between  py-4 border-b border-[#F0F1EC]">
+      <div className="flex flex-col gap-2">
+        <nav className="flex justify-between  py-4 ">
           <LeftArrow
             className="w-6 h-6 cursor-pointer select-none"
             stroke="#292D32"
@@ -33,17 +33,20 @@ export default function Category() {
           />
         </nav>
 
-        <div>
-          <p className="whitespace-break-spaces text-xl font-bold leading-7 tracking-tight">
-            {"어떤 이야기를 \n나누고 싶으신가요?"}
-          </p>
-          <p className="mt-1.5">아래 카테고리 중에서 선택해주세요</p>
-        </div>
-        <div className="grid grid-cols-2 gap-2 w-full max-w-full mx-auto">
-          {categories.map((category) => (
-            <div
-              key={category.id}
-              className={`w-full h-full py-4 px-3 select-none flex flex-col items-center justify-center 
+        <div className="flex flex-col gap-6">
+          <div>
+            <p className="whitespace-break-spaces text-xl font-bold leading-7 tracking-tight">
+              {"어떤 이야기를 \n나누고 싶으신가요?"}
+            </p>
+            <p className="mt-1.5">아래 카테고리 중에서 선택해주세요</p>
+          </div>
+
+          <div className="flex justify-center w-full">
+            <div className="grid grid-cols-2 gap-2 w-full max-w-[476px]">
+              {categories.map((category) => (
+                <div
+                  key={category.id}
+                  className={`w-full h-full py-4 px-3 select-none flex flex-col items-center justify-center 
                         bg-white rounded-2xl shadow-sm cursor-pointer border 
                         ${
                           categoryName === category.name
@@ -52,25 +55,27 @@ export default function Category() {
                               : "border-[#84A667]"
                             : "border-transparent"
                         }`}
-              onClick={() => handleCategoryClick(category.id, category.name)}
-            >
-              <Image
-                src={category.src}
-                alt={category.name}
-                width={50}
-                height={56}
-              />
-              <p className="text-[#6B7178] text-base font-medium leading-6 tracking-tight">
-                {category.description}
-              </p>
-              <p className="text-base font-bold leading-6 tracking-tight text-[#292D32]">
-                {category.name}
-              </p>
+                  onClick={() =>
+                    handleCategoryClick(category.id, category.name)
+                  }
+                >
+                  <Image
+                    src={category.src}
+                    alt={category.name}
+                    width={50}
+                    height={56}
+                  />
+                  <p className="text-[#6B7178] text-base font-medium leading-6 tracking-tight">
+                    {category.description}
+                  </p>
+                  <p className="text-base font-bold leading-6 tracking-tight text-[#292D32]">
+                    {category.name}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <style>
-          {`
+            <style>
+              {`
           @keyframes blink {
             0% { border-color: #84A667; }
             50% { border-color: transparent; }
@@ -80,7 +85,9 @@ export default function Category() {
             animation: blink 1s ease-in-out;
           }
         `}
-        </style>
+            </style>
+          </div>
+        </div>
       </div>
     </div>
   );
