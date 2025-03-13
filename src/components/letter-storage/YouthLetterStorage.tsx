@@ -18,6 +18,7 @@ import BirdyTip from "./BirdyTip";
 import { Letter } from "@/app/(footershare)/letter-storage/page";
 import { useInView } from "react-intersection-observer";
 import { birdNameMap } from "@/constants/birdNameMap";
+import HomeLetterIcon from "../Icons/Home_letter_icon";
 
 const queryClient = new QueryClient();
 
@@ -77,32 +78,41 @@ const YouthLetterStorage: React.FC = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="mb-[60px]">
-        <header className="cursor-pointer fixed top-0 w-[343px] flex gap-1 h-[115px] py-[11px] items-end bg-[#F9F8F3]">
-          {category.map((title, idx) => (
-            <span
-              key={idx}
-              onClick={() => setCateNum(idx + 1)} // ✅ 저장한 편지가 없을 때도 이동 가능하도록 변경
-              className={`px-3.5 py-1.5 rounded-[20px] min-w-[53px] text-center ${
-                cateNum === idx + 1
-                  ? "bg-[#292D32] text-[#FFF]"
-                  : "bg-[#F9F8F3] border border-[#E5E5EA] text-[#C7C7CC]"
-              }`}
-            >
-              {title}
-            </span>
-          ))}
-        </header>
+      <div className="mb-[60px] w-full h-full flex flex-col gap-2">
+        <div>
+          <header className="cursor-pointer fixed top-0 w-full flex gap-1 h-[115px] py-[11px] items-end bg-[#F9F8F3]">
+            {category.map((title, idx) => (
+              <span
+                key={idx}
+                onClick={() => setCateNum(idx + 1)} // ✅ 저장한 편지가 없을 때도 이동 가능하도록 변경
+                className={`px-3.5 py-1.5 rounded-[20px] min-w-[53px] text-center ${
+                  cateNum === idx + 1
+                    ? "bg-[#292D32] text-[#FFF]"
+                    : "bg-[#F9F8F3] border border-[#E5E5EA] text-[#C7C7CC]"
+                }`}
+              >
+                {title}
+              </span>
+            ))}
+          </header>
+        </div>
 
         {shouldApplyCondition ? (
-          <main className="overflow-y-auto mt-[120px] min-h-[calc(100vh)]">
-            <div className="cursor-pointer select-none grid w-full grid-cols-2 gap-2">
+          <main className="overflow-y-auto mt-[120px] min-h-[calc(100vh)] flex justify-center">
+            <div className="cursor-pointer select-none grid w-full max-w-[700px] grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2 justify-items-center">
               {data?.pages.map((page) =>
                 page.dataList.map((letter: Letter) => {
                   const birdKey =
                     letter.birdName && birdNameMap[letter.birdName]
                       ? birdNameMap[letter.birdName]
                       : "default";
+
+                  // console.log(
+                  //   "birdName:",
+                  //   letter.birdName,
+                  //   "-> birdKey:",
+                  //   birdKey
+                  // );
 
                   return (
                     <div
@@ -149,13 +159,13 @@ const YouthLetterStorage: React.FC = () => {
         ) : (
           <>
             <main className="flex flex-grow mt-[120px]">
-              <div className="flex flex-col items-center w-full rounded-[30px] border border-[#F4F5EF] bg-white px-4">
+              <div className="mt-4 self-stretch p-[24px_16px] flex flex-col items-center w-full rounded-[30px] border border-[#F4F5EF] bg-white px-4">
                 <p className="text-[#292D32] text-center font-medium text-[16px] leading-[24px] tracking-[-0.064px] mt-[32px]">
-                  조금만 기다려 주세요
+                  편지를 써보세요!
                 </p>
                 <p className="text-[#292D32] text-center font-bold text-[18px] leading-[26px] tracking-[-0.072px] mt-2">
-                  선배 버디님의 조언이 듣고 싶은 <br />
-                  인생후배 버디들이 편지를 쓰고 있어요
+                  나의 현재 고민을 편지에 쓰고 <br />
+                  버디에게 보내볼까요?
                 </p>
                 <Image
                   src="/images/birds/letter_storage_bird.svg"
@@ -164,6 +174,16 @@ const YouthLetterStorage: React.FC = () => {
                   height={260}
                   className="mt-8 mb-6"
                 />
+
+                <div
+                  className="flex w-full cursor-pointer select-none h-[50px] justify-center items-center gap-1 mt-4 align-stretch rounded-lg bg-[#292D32]"
+                  onClick={() => router.push("/send")}
+                >
+                  <HomeLetterIcon fill="#FFF" />
+                  <span className="text-center text-white font-pretendard text-base leading-6 tracking-[-0.064px]">
+                    편지쓰기
+                  </span>
+                </div>
               </div>
             </main>
             <BirdyTip />
