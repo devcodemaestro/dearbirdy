@@ -10,11 +10,11 @@ export default function AppRouter() {
   const { step } = useLetterStore();
 
   return (
-    <>
+    <div>
       {step === 1 && <Category />}
       {step === 2 && <WriteLetter />}
       {step === 3 && <SelectBird />}
       {step === 4 && <LetterSent />}
-    </>
+    </div>
   );
 }

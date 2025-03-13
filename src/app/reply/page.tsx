@@ -16,7 +16,16 @@ interface FormValues {
 
 const ReplyPage: React.FC = () => {
   const PROGRESS_MESSAGES = [
-    { limit: 11, text: "", color: "#C7C7CC" },
+    {
+      limit: 0,
+      text: "",
+      color: "#C7C7CC",
+    },
+    {
+      limit: 30,
+      text: "편지는 30자 이상부터 보낼 수 있어요",
+      color: "#C7C7CC",
+    },
     { limit: 80, text: "정성스런 편지를 써주면 좋겠어요", color: "#84A667" },
     { limit: 200, text: "차근차근 편지를 잘 써주고 계세요", color: "#84A667" },
     { limit: 250, text: "정성스런 편지를 잘 써주고 계세요", color: "#8DC3DB" },
@@ -185,9 +194,10 @@ rounded-[10px] border border-[#84A667] bg-white shadow-[1px_1px_8px_0px_#D2D4CB]
               {charCount}/300자
             </span>
           </div> */}
+          {/* 진행 메시지 */}
           <div className="flex items-center justify-between mt-2">
             <span className="text-sm text-[#6B7178]">
-              {progressMessage.text}
+              {letterLength > 0 ? progressMessage.text : ""}
             </span>
             <div
               className={`h-[22px] text-center text-sm bg-white rounded-md transition-all duration-200 ${
@@ -198,6 +208,7 @@ rounded-[10px] border border-[#84A667] bg-white shadow-[1px_1px_8px_0px_#D2D4CB]
               {charCount.length}/300자
             </div>
           </div>
+
           <div className="w-full h-[5px] bg-[#E5E5EA] mt-1">
             <div
               className="h-[5px]"

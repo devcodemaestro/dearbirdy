@@ -4,16 +4,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main
-      className="relative w-full min-h-screen px-4"
-      style={{
-        backgroundImage: "url('/images/common/background_main.svg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      {children}
-    </main>
+    <>
+      {/* <div className="box-border font-pretendard max-w-[357px] max-h-[852px] w-full min-h-[852px] min-w-[375px] xs:min-h-[852px] sm:min-h-screen sm:w-full"> */}
+      <div className="box-border font-pretendard max-w-[375px] max-h-[852px] min-h-[852px] min-w-[375px] xs:min-h-[852px] sm:min-h-screen sm:w-full mx-auto">
+        {children}
+      </div>
+    </>
   );
 }
