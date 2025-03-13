@@ -5,7 +5,7 @@ export default function SendLayout({
 }) {
   return (
     <>
-      <div className="relative px-4 max-w-[375px] max-h-[852px]">
+      <div className="flex-col items-start pt-14 pb-11 px-4 min-h-screen mx-auto">
         <main>{children}</main>
       </div>
     </>
