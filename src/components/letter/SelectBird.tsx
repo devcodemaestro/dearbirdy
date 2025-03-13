@@ -96,7 +96,7 @@ export default function SelectBird() {
   return (
     <div className="relative text-black flex flex-col items-center">
       {/* 상단 네비게이션 */}
-      <nav className="mt-[58px] w-[343px] flex justify-start py-4">
+      <nav className="w-full flex justify-start py-4">
         <LeftArrow
           className="w-6 h-6 cursor-pointer"
           stroke="#292D32"

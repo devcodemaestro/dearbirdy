@@ -6,9 +6,12 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { onboardingSlides } from "@/constants/onboarding";
+import { useState } from "react";
 
 export default function OnboardingPage() {
   const router = useRouter();
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const totalSlides = onboardingSlides.length;
 
   const handleSkip = () => {
     localStorage.setItem("onboardingComplete", "true");
@@ -18,14 +21,15 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="relative w-full max-h-[852px]">
+    <div className="relative max-w-[375px] max-h-[852px] mx-auto">
       {/* Swiper 슬라이드 */}
       <Swiper
         pagination={{
           clickable: true,
         }}
         modules={[Pagination]}
-        className="onboarding-swiper w-full max-h-[852px]"
+        className="onboarding-swiper max-w-[375px] max-h-[852px]"
+        onSlideChange={(swiper) => setCurrentSlide(swiper.activeIndex)}
       >
         {onboardingSlides.map((slide, index) => (
           <SwiperSlide key={index} className="relative">
@@ -52,12 +56,18 @@ export default function OnboardingPage() {
       </Swiper>
 
       {/* 건너뛰기 버튼 */}
-      <button
-        onClick={handleSkip}
-        className="bg-[#292D32] cursor-pointer absolute bottom-10 left-1/2 transform -translate-x-1/2 flex w-[342px] h-[50px] px-4 py-[13px] justify-center items-center flex-shrink-0 rounded-xl z-10 text-white font-bold shadow-md"
-      >
-        반가워요!
-      </button>
+      {/* ✅ 마지막 슬라이드에서만 버튼 표시 */}
+      {currentSlide === totalSlides - 1 && (
+        <button
+          onClick={handleSkip}
+          className="bg-[#292D32] absolute bottom-[44px] left-[16px] right-[16px] 
+             cursor-pointer flex w-auto h-[50px] px-4 py-[13px] 
+             justify-center items-center flex-shrink-0 
+             rounded-xl z-10 text-white font-bold shadow-md"
+        >
+          반가워요!
+        </button>
+      )}
     </div>
   );
 }
