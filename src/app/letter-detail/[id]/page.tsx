@@ -291,7 +291,6 @@ const LetterDetailId: React.FC = () => {
             stroke={letter.saved ? "#84A667" : "#C7C7CC"}
           />
         </header>
-
         {letter.replyLetter ? (
           // 받은 편지
           <main className="flex flex-col items-center justify-center">
@@ -394,7 +393,7 @@ const LetterDetailId: React.FC = () => {
           </main>
         ) : (
           // 답장 기다리고 있을때 배너
-          <div className="w-[342px] p-[14px] flex flex-col items-center gap-[8px] border border-[#4CA7D0] bg-[#F0FDFF] rounded-[14px]">
+          <div className="w-full p-[14px] flex flex-col items-center gap-[8px] border border-[#4CA7D0] bg-[#F0FDFF] rounded-[14px]">
             <p className="text-[#6B7178] text-center text-[14px] font-bold leading-[20px] tracking-[-0.056px]">
               따뜻한 말이 담긴 답장을 작성하고 있어요
             </p>
@@ -403,58 +402,60 @@ const LetterDetailId: React.FC = () => {
             </p>
           </div>
         )}
-
         {/* 보낸 편지 */}
-        <main className="flex flex-col items-center justify-center">
-          <div className="w-[343px] p-[16px] pt-[16px] pb-[20px] flex flex-col items-center gap-[24px] border border-[#F0F1EC] bg-[#FFF] rounded-[20px]">
-            <div className="flex flex-col w-full gap-4">
-              <div className="flex justify-start gap-2">
-                <Image
-                  src="/images/icons/direct_send_icon.svg"
-                  alt="보낸편지 아이콘"
-                  width={16}
-                  height={16}
-                />
-                <span className="text-[#8E8E93] font-pretendard text-[12px] font-normal leading-[16px] tracking-[-0.048px]">
-                  보낸 편지
-                </span>
+        <main className="">
+          <div className="flex flex-col items-center justify-center">
+            <div className="pt-[16px] px-4 pb-[20px] flex break-all flex-col items-center gap-[24px] border border-[#F0F1EC] bg-[#FFF] rounded-[20px]">
+              <div className="flex flex-col w-full gap-4">
+                <div className="flex justify-start gap-2">
+                  <Image
+                    src="/images/icons/direct_send_icon.svg"
+                    alt="보낸편지 아이콘"
+                    width={16}
+                    height={16}
+                  />
+                  <span className="text-[#8E8E93] font-pretendard text-[12px] font-normal leading-[16px] tracking-[-0.048px]">
+                    보낸 편지
+                  </span>
+                </div>
+                <div className="flex items-end justify-start gap-2">
+                  <Image
+                    src={`/images/birds/${sendReplyUserBirdKey}_50.svg`}
+                    alt="프로필 새 50"
+                    width={50}
+                    height={50}
+                  />
+                  <p className="text-[#292D32] text-[23px] leading-[27.6px] font-bold iceJaram-Rg">
+                    Dear. {letter.sendLetter.replyUser}
+                  </p>
+                  <span className="p-[1px_6px] rounded-[6px] bg-[#E5E5EA] text-[#6B7178] text-center text-[14px] font-medium leading-[20px] tracking-[-0.056px]">
+                    {letter.sendLetter.categoryName}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-end justify-start gap-2">
-                <Image
-                  src={`/images/birds/${sendReplyUserBirdKey}_50.svg`}
-                  alt="프로필 새 50"
-                  width={50}
-                  height={50}
-                />
-                <p className="text-[#292D32] text-[23px] leading-[27.6px] font-bold iceJaram-Rg">
-                  Dear. {letter.sendLetter.replyUser}
-                </p>
-                <span className="p-[1px_6px] rounded-[6px] bg-[#E5E5EA] text-[#6B7178] text-center text-[14px] font-medium leading-[20px] tracking-[-0.056px]">
-                  {letter.sendLetter.categoryName}
-                </span>
-              </div>
-            </div>
-            <p className="w-full h-[240px] text-[#292D32] text-[16px] font-normal leading-[24px] tracking-[-0.064px]   ">
-              {letter.sendLetter.letter}
-            </p>
-            <div className="flex flex-col items-start w-full gap-2 ">
-              <p className="text-right text-[#8E8E93] text-xs font-normal leading-4 tracking-[-0.048px]">
-                {sendDate}
+              <p className="w-full h-[240px] text-[#292D32] text-[16px] font-normal leading-[24px] tracking-[-0.064px]   ">
+                {letter.sendLetter.letter}
               </p>
-              <div className="flex items-center justify-center gap-2">
-                <Image
-                  src={`/images/birds/${sendUserBirdKey}_24.svg`}
-                  alt="프로필 새 24"
-                  width={24}
-                  height={24}
-                />
-                <span className="text-right text-[#292D32] font-sandoll-baikzongyulpil text-[18px] leading-[21.6px] font-bold iceJaram-Rg">
-                  from. {letter.sendLetter.sendUser}
-                </span>
+              <div className="flex flex-col items-start w-full gap-2 ">
+                <p className="text-right text-[#8E8E93] text-xs font-normal leading-4 tracking-[-0.048px]">
+                  {sendDate}
+                </p>
+                <div className="flex items-center justify-center gap-2">
+                  <Image
+                    src={`/images/birds/${sendUserBirdKey}_24.svg`}
+                    alt="프로필 새 24"
+                    width={24}
+                    height={24}
+                  />
+                  <span className="text-right text-[#292D32] font-sandoll-baikzongyulpil text-[18px] leading-[21.6px] font-bold iceJaram-Rg">
+                    from. {letter.sendLetter.sendUser}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </main>
+
         <div className="h-2"></div>
       </div>
     </div>
