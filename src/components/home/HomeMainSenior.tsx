@@ -24,10 +24,10 @@ const HomeMainSenior: React.FC<IProps> = ({ userData }) => {
   // console.log("시니어 birdKey", birdKey);
 
   return (
-    <main className="flex-grow mt-[8px] px-4">
-      <div className="">
+    <main className="flex flex-col min-h-screen p-4">
+      <div className="flex flex-col flex-1 gap-4">
         <Banner />
-        <div className="flex flex-col items-center mt-4 self-stretch p-[24px_16px] rounded-[24px] border border-[#F0F1EC] bg-[#FFF]">
+        <div className="flex flex-col items-center p-[3vh] rounded-[24px] border border-[#F0F1EC] bg-[#FFF]">
           {serviceLimit ? (
             <SendMessageLimit />
           ) : (
@@ -52,7 +52,7 @@ const HomeMainSenior: React.FC<IProps> = ({ userData }) => {
             onClick={() => router.push("/letter-storage")}
           >
             <HomeLetterIcon fill="#FFF" />
-            <span className="text-center text-white font-pretendard text-base leading-6 tracking-[-0.064px]">
+            <span className="text-center flex text-white font-pretendard text-base leading-6 tracking-[-0.064px]">
               편지 보기
             </span>
           </div>

@@ -1,30 +1,20 @@
 "use client";
 
-import { useLetterStore } from "@/store/useLetterStore";
-import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
-import { useEffect, useState, useRef } from "react";
-import Toggle from "./Toggle";
-import { postLetter } from "@/services/userService";
 import { birdNameMap } from "@/constants/birdNameMap"; // ✅ birdName 변환 맵 추가
+import { useLetterStore } from "@/store/useLetterStore";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Toggle from "./Toggle";
 
 // ✅ Lottie를 SSR에서 제외하여 클라이언트에서만 로드
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 export default function LetterSent() {
-  const {
-    myBirdName,
-    setMyBirdName,
-    selectedBird,
-    title,
-    letter,
-    categoryName,
-    resetLetter,
-  } = useLetterStore();
+  const { myBirdName, setMyBirdName, selectedBird, resetLetter } =
+    useLetterStore();
   const router = useRouter();
   const [animationData, setAnimationData] = useState(null);
-  const [isSending, setIsSending] = useState(false); // ✅ 로딩 상태 추가
-  const hasSent = useRef(false); // ✅ 중복 실행 방지
 
   /** ✅ 페이지 진입 시 세션스토리지에서 사용자 새 이름을 가져옴 */
   useEffect(() => {
@@ -35,7 +25,7 @@ export default function LetterSent() {
         setMyBirdName(parsedData.birdName);
       }
     }
-  }, [setMyBirdName]); // ✅ 한 번만 실행
+  }, [setMyBirdName]);
 
   /** ✅ 애니메이션 로드 */
   useEffect(() => {
@@ -46,23 +36,6 @@ export default function LetterSent() {
       .then((data) => setAnimationData(data.default))
       .catch((err) => console.error("❌ 애니메이션 로드 실패:", err));
   }, [myBirdName]); // ✅ myBirdName이 설정된 후 실행
-
-  /** ✅ API 호출하여 편지 보내기 */
-  useEffect(() => {
-    if (hasSent.current) return; // ✅ 이미 실행된 경우 실행하지 않음
-    hasSent.current = true; // ✅ 실행 상태 기록
-
-    setIsSending(true);
-    postLetter({
-      birdName: selectedBird,
-      categoryName: categoryName ?? "기타", // 기본값 처리
-      title,
-      letter,
-    })
-      .catch((error) => console.error("❌ 편지 전송 실패:", error))
-      .finally(() => setIsSending(false)); // 🛑 전송 종료
-    // eslint-disable-next-line
-  }, []); // ✅ 한 번만 실행
 
   return (
     <div className="relative flex flex-col items-center text-black">
@@ -104,9 +77,8 @@ export default function LetterSent() {
           resetLetter();
           router.push("/home");
         }}
-        disabled={isSending} // ✅ 로딩 중 버튼 비활성화
       >
-        {isSending ? "전송 중..." : "홈으로"}
+        홈으로
       </button>
     </div>
   );

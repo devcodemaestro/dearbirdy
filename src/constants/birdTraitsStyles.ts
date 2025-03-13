@@ -1,4 +1,3 @@
-// src/constants/birdTraitsStyles.ts
 export interface BirdTraitStyle {
   background: string;
   textColor: string;

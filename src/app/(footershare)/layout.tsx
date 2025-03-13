@@ -28,9 +28,9 @@ export default function SharedLayout({
       {report && <Report />}
       {limit && <Limit />}
       <div
-        className={`box-border font-pretendard min-h-screen min-w-[375px] xs:min-h-[852px] sm:min-h-screen sm:w-full `}
+        className={`box-border font-pretendard min-h-screen min-w-[375px] max-w-[476px] xs:min-h-[852px] sm:min-h-screen sm:w-full `}
       >
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 w-full justify-center">{children}</div>
         {!noFooterPages.includes(pathname) && <Footer />}
       </div>
     </>

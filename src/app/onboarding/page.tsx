@@ -21,14 +21,14 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="relative max-w-[375px] max-h-[852px] mx-auto">
+    <div className="relative max-w-[476px] max-h-[852px] mx-auto">
       {/* Swiper 슬라이드 */}
       <Swiper
         pagination={{
           clickable: true,
         }}
         modules={[Pagination]}
-        className="onboarding-swiper max-w-[375px] max-h-[852px]"
+        className="onboarding-swiper max-w-[476px] max-h-[852px]"
         onSlideChange={(swiper) => setCurrentSlide(swiper.activeIndex)}
       >
         {onboardingSlides.map((slide, index) => (
