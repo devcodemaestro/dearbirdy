@@ -11,7 +11,7 @@ const SendMessage: React.FC<IProps> = ({ userData }) => {
   const widthClass = quota >= 10 ? "w-[90px]" : "w-[82px]";
 
   return (
-    <div className="cursor-pointer select-none flex justify-end w-full">
+    <div className="flex justify-end w-full">
       <div
         className={`flex justify-start items-center gap-[2px] p-[4px_8px_4px_6px] h-[32px] rounded-[8px] bg-[#D6E173] ${widthClass}`}
       >

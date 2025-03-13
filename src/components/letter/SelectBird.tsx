@@ -10,6 +10,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { getBirdyInfo, postLetter } from "@/services/userService";
 import { birdNameMap } from "@/constants/birdNameMap"; // ✅ 외부에서 불러오기
+import { BIRD_TRAIT_STYLES } from "@/constants/birdTraitsStyles";
 
 export interface Bird {
   birdName: string;
@@ -42,6 +43,7 @@ export default function SelectBird() {
     const fetchBirds = async () => {
       try {
         const response = await getBirdyInfo();
+        console.log("response", response);
         if (response?.data?.birdyList) {
           setBirds(response.data.birdyList);
           setSelectedBird(response.data.birdyList[0]?.birdName); // ✅ 첫 번째 새를 기본 선택
@@ -94,7 +96,7 @@ export default function SelectBird() {
   }
 
   return (
-    <div className="relative text-black flex flex-col items-center">
+    <div className="relative text-black flex flex-col items-center max-w-[476px]">
       {/* 상단 네비게이션 */}
       <nav className="w-full flex justify-start py-4">
         <LeftArrow
@@ -115,69 +117,83 @@ export default function SelectBird() {
       </p>
 
       {/* Swiper 카드 영역 */}
-      <div className="mt-[21px] w-[360px]">
-        <Swiper
-          modules={[Pagination]}
-          spaceBetween={10} // ✅ 카드 간격 유지
-          slidesPerView="auto" // ✅ Centered Auto 적용
-          centeredSlides={true} // ✅ 가운데 정렬
-          onSlideChange={(swiper) => {
-            setActiveIndex(swiper.realIndex); // ✅ 현재 보여지는 슬라이드의 인덱스 저장
-            setSelectedBird(birds[swiper.realIndex]?.birdName); // ✅ 자동으로 선택된 새 변경
-          }}
-          className="select-bird-swiper"
-          pagination={{
-            clickable: true,
-            renderBullet: (index, className) => {
-              return `<span class="${className}" style="background-color: ${
-                index === activeIndex ? "#84A667" : "#E5E5EA"
-              }; width: 8px; height: 8px; border-radius: 50%; margin: 21px 4px 0 4px;"></span>`;
-            },
-          }}
-        >
-          {birds.map((bird, index) => (
-            <SwiperSlide key={index} className="max-w-[306px]">
-              <div className="w-full h-[492px] bg-white rounded-xl flex flex-col items-center justify-center px-4 py-10 cursor-pointer">
-                {/* 🐦 프로필 이미지 */}
-                <Image
-                  src={getImageSrc(bird.birdName)} // ✅ 한글 → 영문 변환 후 이미지 적용
-                  alt={bird.birdName}
-                  width={100}
-                  height={100}
-                  className="mb-2"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      "/images/letter-slide/default_profile.png";
-                  }} // ✅ 이미지 로드 실패 시 기본 이미지 적용
-                />
-
-                {/* Traits (태그 형태) */}
-                <div className="bg-[rgba(255,216,91,0.10)] w-[100px] h-[24px] flex items-center justify-center rounded-[6px] mb-2">
-                  <span className="text-[#ECBF30] text-[14px] font-medium leading-[20px] tracking-[-0.056px]">
-                    {bird.traits}
-                  </span>
-                </div>
-                {/* 새 이름 */}
-                <p className="text-[#292D32] text-center text-[16px] font-bold leading-[24px] tracking-[-0.064px] mb-4">
-                  {bird.birdName}
-                </p>
-                {/* 설명 박스 */}
-                <div className="w-[274px] h-[224px] p-[16px] border border-[#F0F1EC] bg-[#F9F8F3] rounded-[10px]">
-                  {bird.explanation.split("\n").map((text, i) => (
-                    <p
-                      key={i}
-                      className={`text-[#292D32] text-[16px] ${
-                        i === 0 ? "font-medium" : "font-normal"
-                      } leading-[24px] tracking-[-0.064px]`}
+      <div className=" max-w-[360px]">
+        <div className="mt-[21px] w-full  min-w-[360px]">
+          <Swiper
+            modules={[Pagination]}
+            spaceBetween={10} // ✅ 카드 간격 유지
+            slidesPerView="auto" // ✅ Centered Auto 적용
+            centeredSlides={true} // ✅ 가운데 정렬
+            onSlideChange={(swiper) => {
+              setActiveIndex(swiper.realIndex); // ✅ 현재 보여지는 슬라이드의 인덱스 저장
+              setSelectedBird(birds[swiper.realIndex]?.birdName); // ✅ 자동으로 선택된 새 변경
+            }}
+            className="select-bird-swiper"
+            pagination={{
+              clickable: true,
+              renderBullet: (index, className) => {
+                return `<span class="${className}" style="background-color: ${
+                  index === activeIndex ? "#84A667" : "#E5E5EA"
+                }; width: 8px; height: 8px; border-radius: 50%; margin: 21px 4px 0 4px;"></span>`;
+              },
+            }}
+          >
+            {birds.map((bird, index) => (
+              <SwiperSlide key={index} className="max-w-[306px]">
+                <div className="w-full h-[492px] bg-white rounded-xl flex flex-col items-center justify-center px-4 py-10 cursor-pointer">
+                  {/* 🐦 프로필 이미지 */}
+                  <Image
+                    src={getImageSrc(bird.birdName)} // ✅ 한글 → 영문 변환 후 이미지 적용
+                    alt={bird.birdName}
+                    width={100}
+                    height={100}
+                    className="mb-2"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        "/images/letter-slide/default_profile.png";
+                    }} // ✅ 이미지 로드 실패 시 기본 이미지 적용
+                  />
+                  {/* Traits (태그 형태) */}
+                  <div
+                    className="w-[100px] h-[24px] flex items-center justify-center rounded-[6px] mb-2"
+                    style={{
+                      background:
+                        BIRD_TRAIT_STYLES[bird.birdName]?.background ||
+                        "rgba(0,0,0,0.1)",
+                    }}
+                  >
+                    <span
+                      className="text-[14px] font-medium leading-[20px] tracking-[-0.056px]"
+                      style={{
+                        color:
+                          BIRD_TRAIT_STYLES[bird.birdName]?.textColor || "#000",
+                      }}
                     >
-                      {text}
-                    </p>
-                  ))}
+                      {bird.traits}
+                    </span>
+                  </div>
+                  {/* 새 이름 */}
+                  <p className="text-[#292D32] text-center text-[16px] font-bold leading-[24px] tracking-[-0.064px] mb-4">
+                    {bird.birdName}
+                  </p>
+                  {/* 설명 박스 */}
+                  <div className="w-[274px] h-[224px] p-[16px] border border-[#F0F1EC] bg-[#F9F8F3] rounded-[10px]">
+                    {bird.explanation.split("\n").map((text, i) => (
+                      <p
+                        key={i}
+                        className={`text-[#292D32] text-[16px] ${
+                          i === 0 ? "font-medium" : "font-normal"
+                        } leading-[24px] tracking-[-0.064px]`}
+                      >
+                        {text}
+                      </p>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
 
       {/* 하단 버튼 */}

@@ -36,7 +36,7 @@ const Home: React.FC = () => {
   }
 
   return (
-    <>
+    <div className="justify-center items-center">
       <Header userData={userData} />
 
       {userData.roleName === "MENTOR" ? (
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
       ) : (
         <HomeMainYouth userData={userData} />
       )}
-    </>
+    </div>
   );
 };
 
